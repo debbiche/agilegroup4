@@ -22,6 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.agilegroup4.src.QuestionOverviewActivity"
+            android:label="@string/title_activity_question_overview" >
+        </activity>
     </application>
 
 </manifest>

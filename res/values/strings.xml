@@ -8,5 +8,10 @@
     <string name="text_login_username">username</string>
     <string name="button_login">login</string>
     <string name="title_activity_question_overview">QuestionOverviewActivity</string>
-
+    <string name="title_activity_main_menu">MainMenuActivity</string>
+	<string name="button_users">Users</string>
+	<string name="button_questions">Questions</string>
+	<string name="button_tags">Tags</string>
+	<string name="button_profile">Profile</string>
+	<string name="button_settings">Settings</string>
 </resources>

@@ -25,6 +25,8 @@
         <activity
             android:name="com.agilegroup4.src.QuestionOverviewActivity"
             android:label="@string/title_activity_question_overview" >
+            android:name="com.agilegroup4.src.MainMenuActivity"
+            android:label="@string/title_activity_main_menu" >
         </activity>
     </application>
 

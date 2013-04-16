@@ -1,8 +1,8 @@
 package com.agilegroup4.src;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -26,7 +26,10 @@ public class LoginActivity extends Activity {
 	public void loginButton(View view){
 		// read username and save in String userID
 		EditText editText = (EditText) findViewById(R.id.text_login_username);
-		String userID = editText.getText().toString();
+		int userID = Integer.getInteger(editText.getText().toString());
+		
+		// pn = (EditText) findViewById(R.id.add_p_number);
+    	//int pnumber = Integer.getInteger(pn.getText().toString());
 		
 		// TODO: check for username in DB
 		

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -30,6 +31,23 @@ public class LoginActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent;
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	    	case R.id.menuitem_newuser:
+	    		// Implement adding a new user functionality
+	    		return true;
+	        case R.id.menuitem_mainmenu:
+				intent = new Intent(this, MainMenuActivity.class);
+				startActivity(intent);
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 	public void loginButton(View view){

@@ -23,7 +23,7 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 		super(context, name, factory, version);
 		this.context = context;
 		loadDB();
-		super.close();
+		//super.close();
 
 		// TODO Auto-generated constructor stub
 	}
@@ -32,6 +32,8 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 		if (dbExists())
 		{
 			System.out.println("Database already exists, not loading it again!");
+			this.db = SQLiteDatabase.openDatabase(dbPath + dbName,
+					null, SQLiteDatabase.OPEN_READONLY | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 			return;
 		}
 		else {
@@ -45,20 +47,21 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 				outputDB.write(buffer, 0, length);
 				length = inputDB.read(buffer);
 			}
-			// outputDB.flush();
+			outputDB.flush();
 			inputDB.close();
 			outputDB.close();
 
 			db = SQLiteDatabase.openDatabase(dbPath + dbName, null,
-					SQLiteDatabase.OPEN_READONLY);
-			db.close();
+					SQLiteDatabase.OPEN_READONLY | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+			//db.close();
 		}
 	
 
 	}
 
 	public SQLiteDatabase getDb() {
-		return db;
+		if (this.db == null ) System.out.println("DB IS NULL INSIDE GET!!");
+		return this.db;
 	}
 
 	public void setDb(SQLiteDatabase db) {
@@ -67,8 +70,8 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 
 	private boolean dbExists() {
 		try {
-			SQLiteDatabase db = SQLiteDatabase.openDatabase(dbPath + dbName,
-					null, SQLiteDatabase.OPEN_READONLY);
+			db = SQLiteDatabase.openDatabase(dbPath + dbName,
+					null, SQLiteDatabase.OPEN_READONLY | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 			if (db != null)
 				return true;
 			else

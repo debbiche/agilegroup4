@@ -49,7 +49,7 @@ public class LoginActivity extends Activity {
 		EditText editText = (EditText) findViewById(R.id.text_login_username);
 		String inputTest = editText.getText().toString();
 		int userID = Integer.parseInt(inputTest);
-		// TODO: catch exeption here
+		// TODO: catch NullPointerException here
 		
 		// TODO: check for username in DB
 		

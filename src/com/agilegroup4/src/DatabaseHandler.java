@@ -3,6 +3,7 @@ package com.agilegroup4.src;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+/* DatabaseHandler handles database queries, inserts, deletes, ... uns */
 public class DatabaseHandler {
 	
 	private DatabaseLoader dbLoader;
@@ -19,6 +20,7 @@ public class DatabaseHandler {
 		dbLoader.close();
 	}
 	
-		
-	
+	public void queryForUserID (int userID){
+		db.rawQuery("select * from users where id = ?", new String[] {Integer.toString(userID)});
+	}
 }

@@ -16,14 +16,7 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		try {
-			DatabaseLoader h = new DatabaseLoader(getApplicationContext(), null, null, 1);
-			h.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 System.out.println("Testinggggg");
+		DatabaseHandler dbHandler = new DatabaseHandler(getApplicationContext());
 	}
 
 	@Override
@@ -55,9 +48,7 @@ public class LoginActivity extends Activity {
 		EditText editText = (EditText) findViewById(R.id.text_login_username);
 		String inputTest = editText.getText().toString();
 		int userID = Integer.parseInt(inputTest);
-		
-		// pn = (EditText) findViewById(R.id.add_p_number);
-    	//int pnumber = Integer.getInteger(pn.getText().toString());
+		// TODO: catch exeption here
 		
 		// TODO: check for username in DB
 		

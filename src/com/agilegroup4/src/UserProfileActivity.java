@@ -2,7 +2,9 @@ package com.agilegroup4.src;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 
 public class UserProfileActivity extends Activity {
 
@@ -19,4 +21,17 @@ public class UserProfileActivity extends Activity {
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent;
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.menuitem_mainmenu:
+				intent = new Intent(this, MainMenuActivity.class);
+				startActivity(intent);
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
 }

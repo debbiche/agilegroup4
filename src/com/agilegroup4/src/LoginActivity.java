@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 
 public class LoginActivity extends Activity {
-	public final static String EXTRA_USERNAME = "com.agilegroup4.USERNAME";
+	public final static String EXTRA_USERNAME = "USERNAME";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,8 @@ public class LoginActivity extends Activity {
 	public void loginButton(View view){
 		// read username and save in String userID
 		EditText editText = (EditText) findViewById(R.id.text_login_username);
-		int userID = Integer.getInteger(editText.getText().toString());
+		String inputTest = editText.getText().toString();
+		int userID = Integer.parseInt(inputTest);
 		
 		// pn = (EditText) findViewById(R.id.add_p_number);
     	//int pnumber = Integer.getInteger(pn.getText().toString());

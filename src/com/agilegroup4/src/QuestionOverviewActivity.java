@@ -2,7 +2,9 @@ package com.agilegroup4.src;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.widget.TextView;
 
 public class QuestionOverviewActivity extends Activity {
 
@@ -10,6 +12,11 @@ public class QuestionOverviewActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question_overview);
+		
+		Intent intent = getIntent();
+		String userID = intent.getStringExtra(LoginActivity.EXTRA_USERNAME);
+
+	    ((TextView)findViewById(R.id.pop_text)).setText(userID);
 	}
 
 	@Override

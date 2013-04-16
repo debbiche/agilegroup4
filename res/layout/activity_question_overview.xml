@@ -9,6 +9,7 @@
     tools:context=".QuestionOverviewActivity" >
 
     <TextView
+        android:id="@+id/pop_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />

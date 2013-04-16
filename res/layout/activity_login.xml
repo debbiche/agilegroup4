@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="@string/text_login_username" >
+            android:hint="@string/text_login_username"
+            android:inputType="number" >
 
             <requestFocus />
         </EditText>

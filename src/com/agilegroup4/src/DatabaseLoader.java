@@ -57,6 +57,14 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 
 	}
 
+	public SQLiteDatabase getDb() {
+		return db;
+	}
+
+	public void setDb(SQLiteDatabase db) {
+		this.db = db;
+	}
+
 	private boolean dbExists() {
 		try {
 			SQLiteDatabase db = SQLiteDatabase.openDatabase(dbPath + dbName,

@@ -1,13 +1,15 @@
 package com.agilegroup4.src;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
 
 public class LoginActivity extends Activity {
+	public final static String EXTRA_USERNAME = "com.agilegroup4.USERNAME";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +22,6 @@ public class LoginActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 Log.v("Database","I started db");
 		 System.out.println("Testinggggg");
 	}
 
@@ -32,11 +33,18 @@ public class LoginActivity extends Activity {
 	}
 
 	public void loginButton(View view){
-		String userID;
-
+		// read username and save in String userID
+		EditText editText = (EditText) findViewById(R.id.text_login_username);
+		int userID = Integer.getInteger(editText.getText().toString());
 		
+		// pn = (EditText) findViewById(R.id.add_p_number);
+    	//int pnumber = Integer.getInteger(pn.getText().toString());
 		
+		// TODO: check for username in DB
+		
+		// login successful --> open Question Overview Activity and hand over "user data"
 		Intent intent = new Intent(this, QuestionOverviewActivity.class);
+		intent.putExtra(EXTRA_USERNAME, userID);	// TODO: this might be a different field and should be obtained from DB
 		startActivity(intent);
 	}
 	

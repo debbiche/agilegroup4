@@ -22,7 +22,6 @@ public class DatabaseLoader extends SQLiteOpenHelper{
 		super(context, name, factory, version);
 		this.context = context;
 		loadDB();
-		Log.v("Database","I started db from handler");
 		super.close();
 		 
 		// TODO Auto-generated constructor stub

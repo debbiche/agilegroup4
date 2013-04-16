@@ -1,6 +1,7 @@
 package com.agilegroup4.src;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -21,21 +22,30 @@ public class MainMenuActivity extends Activity {
 	}
 	
 	public void handleMenuItemOnClick(View view){
+		Intent intent;
 		switch(view.getId()){
 		case R.id.button_profile: 
-			// Go to profile activity
+			intent = new Intent(this, UserProfileActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.button_questions: 
-			// Go to questions activity
+			intent = new Intent(this, QuestionOverviewActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.button_users: 
-			// Go to user activity
+			intent = new Intent(this, UsersActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.button_tags: 
-			// Go to tags activity
+			intent = new Intent(this, TagsOverviewActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.button_settings: 
-			// Go to settings activity
+			intent = new Intent(this, SettingsActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.button_logout: 
+			// Add logout functionality
 			break;
 		}
 	}

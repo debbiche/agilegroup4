@@ -42,6 +42,14 @@
             android:name="com.agilegroup4.src.QuestionActivity"
             android:label="@string/title_activity_question" >
         </activity>
+        <activity
+            android:name="com.agilegroup4.src.TagsOverviewActivity"
+            android:label="@string/title_activity_tags_overview" >
+        </activity>
+        <activity
+            android:name="com.agilegroup4.src.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>

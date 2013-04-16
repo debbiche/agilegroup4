@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+/* DatabaseHandler handles database queries, inserts, deletes, ... uns */
 public class DatabaseHandler {
 	
 	private DatabaseLoader dbLoader;
@@ -25,7 +26,4 @@ public class DatabaseHandler {
 		Cursor cur = db.rawQuery("select * from users where id = ?", new String[] {Integer.toString(userID)});
 		System.out.println("Query result: " + cur.getCount());
 	}
-	
-		
-	
 }

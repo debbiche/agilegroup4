@@ -11,12 +11,13 @@ import android.widget.EditText;
 
 public class LoginActivity extends Activity {
 	public final static String EXTRA_USERNAME = "USERNAME";
+	public static DatabaseHandler dbHandler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		DatabaseHandler dbHandler = new DatabaseHandler(getApplicationContext());
+		dbHandler = new DatabaseHandler(getApplicationContext());
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class LoginActivity extends Activity {
 		EditText editText = (EditText) findViewById(R.id.text_login_username);
 		String inputTest = editText.getText().toString();
 		int userID = Integer.parseInt(inputTest);
-		// TODO: catch exeption here
+		// TODO: catch NullPointerException here
 		
 		// TODO: check for username in DB
 		

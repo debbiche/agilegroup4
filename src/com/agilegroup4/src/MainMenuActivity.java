@@ -16,6 +16,7 @@ public class MainMenuActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		// The menu option is not available in this activity
 		return true;
 	}
 	

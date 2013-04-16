@@ -4,11 +4,7 @@
         android:id="@+id/menuitem_newuser"
         android:orderInCategory="100"
         android:showAsAction="never"
+        android:icon="@drawable/ic_menu_add"
         android:title="@string/menuitem_newuser"/>
-     <item
-        android:id="@+id/menuitem_mainmenu"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/menuitem_mainmenu"/>
-
+    
 </menu>

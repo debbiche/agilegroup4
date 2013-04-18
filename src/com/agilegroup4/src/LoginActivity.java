@@ -15,8 +15,6 @@ public class LoginActivity extends Activity {
 	public final static String EXTRA_USERNAME = "USERNAME";
 	public static final String PREFS_NAME = "SETTINGS";
 	public static DatabaseHandler dbHandler;
-	public boolean loggedIn;
-	public int userId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +24,10 @@ public class LoginActivity extends Activity {
 		
 		// Get loggedin state
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-		loggedIn = settings.getBoolean("loggedIn", false);
+		int userId = settings.getInt("userID", 0);
 		
 		// Check if already logged in
-		if(loggedIn) {
-			userId = settings.getInt("userID", 0);
+		if(userId != 0) {
 			Intent intent = new Intent(this, QuestionOverviewActivity.class);
 			intent.putExtra(EXTRA_USERNAME, userId);	// TODO: this might be a different field and should be obtained from DB
 			startActivity(intent);
@@ -77,7 +74,6 @@ public class LoginActivity extends Activity {
 			// save userID to skip further logins
 			SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		    SharedPreferences.Editor editor = settings.edit();
-		    editor.putBoolean("loggedIn", true);
 		    editor.putInt("userID", userID);
 		    editor.commit();
 			

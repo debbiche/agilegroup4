@@ -61,20 +61,27 @@ public class LoginActivity extends Activity {
 		// read username and save in String userID
 		// TODO: catch NullPointerException here
 		EditText editText = (EditText) findViewById(R.id.text_login_username);
-		String inputTest = editText.getText().toString();
-		int userID = Integer.parseInt(inputTest);
+		String inputText = editText.getText().toString();
+		int userID = 0;
+		
+		// check for username input not being empty
+		if(!inputText.equals("") && inputText != null){
+			userID = Integer.parseInt(inputText);
+		}
 		
 		// check for username in DB
 		if(dbHandler.userExists(userID)){
 			
 			// login successful --> open Question Overview Activity and hand over "user data"
 			
+			// save userID to skip further logins
 			SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		    SharedPreferences.Editor editor = settings.edit();
 		    editor.putBoolean("loggedIn", true);
 		    editor.putInt("userID", userID);
 		    editor.commit();
-						
+			
+		    // call next activity
 			Intent intent = new Intent(this, QuestionOverviewActivity.class);
 			intent.putExtra(EXTRA_USERNAME, userID);	// TODO: this might be a different field and should be obtained from DB
 			startActivity(intent);

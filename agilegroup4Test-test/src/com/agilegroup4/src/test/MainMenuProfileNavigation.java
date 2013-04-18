@@ -1,13 +1,11 @@
 package com.agilegroup4.src.test;
 
-import org.junit.Test;
-
-import com.agilegroup4.src.MainMenuActivity;
-import com.agilegroup4.src.UserProfileActivity;
-
+import android.app.Activity;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
+
+import com.agilegroup4.src.*;
 
 public class MainMenuProfileNavigation extends ActivityInstrumentationTestCase2<MainMenuActivity> {
 
@@ -19,26 +17,32 @@ public class MainMenuProfileNavigation extends ActivityInstrumentationTestCase2<
 		super.setUp(); 
 	}
 	
-	@Test
+	/**
+	 * Test user profile button navigation.
+	 */
+	
 	public void testOpenUserProfileActivity() {
-		// register next activity that need to be monitored.
+		// Start monitor on intended activity.
 		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(UserProfileActivity.class.getName(), null, false);
 
-		// open current activity.
+		// Open main menu activity that includes the navigation options.
 		MainMenuActivity myActivity = getActivity();
+		// Get the navigation option for user profile activity
 		final Button button = (Button) myActivity.findViewById(com.agilegroup4.src.R.id.button_profile);
 		myActivity.runOnUiThread(new Runnable() {
 		  @Override
 		  public void run() {
-			// click button and open next activity.
+			// Click button and open next activity.
 		    button.performClick();
 		  }
 		});
 
+		// Next activity is opened and casted to intended activity type.
 		UserProfileActivity userProfileActivity = (UserProfileActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5);
-		// next activity is opened and captured.
-		assertNotNull(userProfileActivity);
-		userProfileActivity .finish();
+		
+		// We assert that the cast and fetch has gone right.
+		assertNotNull("Failed to go to user profile activity after navigation test.", userProfileActivity);
+		userProfileActivity.finish();
 	}
 
 }

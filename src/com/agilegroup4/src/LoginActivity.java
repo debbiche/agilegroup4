@@ -52,11 +52,18 @@ public class LoginActivity extends Activity {
 		// TODO: catch NullPointerException here
 		
 		// TODO: check for username in DB
+		if(dbHandler.userExists(userID)){
+			// login successful --> open Question Overview Activity and hand over "user data"
+			Intent intent = new Intent(this, QuestionOverviewActivity.class);
+			intent.putExtra(EXTRA_USERNAME, userID);	// TODO: this might be a different field and should be obtained from DB
+			startActivity(intent);
+		} else {
+			// prompt: user not found
+		}
 		
-		// login successful --> open Question Overview Activity and hand over "user data"
-		Intent intent = new Intent(this, QuestionOverviewActivity.class);
-		intent.putExtra(EXTRA_USERNAME, userID);	// TODO: this might be a different field and should be obtained from DB
-		startActivity(intent);
+		
+		
+		
 	}
 	
 }

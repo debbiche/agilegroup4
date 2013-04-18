@@ -54,6 +54,8 @@ public class LoginTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 		
 		// We assert that the cast and fetch has gone right.
 		assertNotNull("Failed to go to question overview activity after navigation test.", questionOverviewActivity);
+		
+		//assertTrue(questionOverviewActivity.findViewById(com.agilegroup4.src.R.id.pop_text).toString().contains("Chris Jester-Young"));
 		questionOverviewActivity.finish();
 	}
 

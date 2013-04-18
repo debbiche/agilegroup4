@@ -51,6 +51,7 @@ public class MainMenuActivity extends Activity {
 		    editor.putInt("userID", 0);
 		    editor.commit();
 			intent = new Intent(this, LoginActivity.class);
+			intent.putExtra("action", "Logout");
 			startActivity(intent);
 			break;
 		}

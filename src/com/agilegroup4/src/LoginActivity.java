@@ -35,7 +35,11 @@ public class LoginActivity extends Activity {
 			startActivity(intent);
 		}
 		
-		// Check if we just logged out 
+		checkLoggedOut();
+	}
+	
+	// Check if we just logged out
+	public void checkLoggedOut(){ 
 		if (getIntent().getExtras() == null)  
 			return;
 		
@@ -53,7 +57,6 @@ public class LoginActivity extends Activity {
 			
 			alert.show();
 		}
-		
 	}
 
 	@Override

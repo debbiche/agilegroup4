@@ -30,7 +30,6 @@ public class LoginActivity extends Activity {
 		// Check if already logged in
 		if(userId != 0) {
 			Intent intent = new Intent(this, QuestionOverviewActivity.class);
-			intent.putExtra(EXTRA_USERNAME, userId);	// TODO: this might be a different field and should be obtained from DB
 			startActivity(intent);
 		}
 		
@@ -100,7 +99,6 @@ public class LoginActivity extends Activity {
 			
 		    // call next activity
 			Intent intent = new Intent(this, QuestionOverviewActivity.class);
-			intent.putExtra(EXTRA_USERNAME, userID);	// TODO: this might be a different field and should be obtained from DB
 			startActivity(intent);
 		} else {
 			

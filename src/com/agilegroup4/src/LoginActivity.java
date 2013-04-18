@@ -1,8 +1,9 @@
 package com.agilegroup4.src;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,10 +36,6 @@ public class LoginActivity extends Activity {
 	    	case R.id.menuitem_newuser:
 	    		// Implement adding a new user functionality
 	    		return true;
-	        case R.id.menuitem_mainmenu:
-				intent = new Intent(this, MainMenuActivity.class);
-				startActivity(intent);
-	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -58,7 +55,12 @@ public class LoginActivity extends Activity {
 			intent.putExtra(EXTRA_USERNAME, userID);	// TODO: this might be a different field and should be obtained from DB
 			startActivity(intent);
 		} else {
-			// prompt: user not found
+			AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+			alert.setTitle("Error");
+			alert.setMessage("User not found!");
+
+			alert.show();
 		}
 		
 		

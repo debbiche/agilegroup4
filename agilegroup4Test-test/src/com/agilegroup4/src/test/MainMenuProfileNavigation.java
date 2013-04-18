@@ -20,7 +20,6 @@ public class MainMenuProfileNavigation extends ActivityInstrumentationTestCase2<
 	/**
 	 * Test user profile button navigation.
 	 */
-	
 	public void testOpenUserProfileActivity() {
 		// Start monitor on intended activity.
 		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(UserProfileActivity.class.getName(), null, false);
@@ -38,7 +37,7 @@ public class MainMenuProfileNavigation extends ActivityInstrumentationTestCase2<
 		});
 
 		// Next activity is opened and casted to intended activity type.
-		UserProfileActivity userProfileActivity = (UserProfileActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5);
+		UserProfileActivity userProfileActivity = (UserProfileActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 50000);
 		
 		// We assert that the cast and fetch has gone right.
 		assertNotNull("Failed to go to user profile activity after navigation test.", userProfileActivity);

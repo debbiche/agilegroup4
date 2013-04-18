@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+/*
+ * TODO: the return button at this screen should always close the application*/
 public class LoginActivity extends Activity {
 	public final static String EXTRA_USERNAME = "USERNAME";
 	public static final String PREFS_NAME = "SETTINGS";
@@ -26,12 +28,32 @@ public class LoginActivity extends Activity {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		int userId = settings.getInt("userID", 0);
 		
+		
 		// Check if already logged in
 		if(userId != 0) {
 			Intent intent = new Intent(this, QuestionOverviewActivity.class);
-			intent.putExtra(EXTRA_USERNAME, userId);	// TODO: this might be a different field and should be obtained from DB
 			startActivity(intent);
 		}
+		
+		// Check if we just logged out 
+		if (getIntent().getExtras() == null)  
+			return;
+		
+		String action = getIntent().getStringExtra("action");
+		
+		if (action.equals("Logout")){
+			AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+			alert.setTitle("Success!");
+			alert.setMessage("Logged out.");
+			
+			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			}});	
+			
+			alert.show();
+		}
+		
 	}
 
 	@Override
@@ -79,7 +101,6 @@ public class LoginActivity extends Activity {
 			
 		    // call next activity
 			Intent intent = new Intent(this, QuestionOverviewActivity.class);
-			intent.putExtra(EXTRA_USERNAME, userID);	// TODO: this might be a different field and should be obtained from DB
 			startActivity(intent);
 		} else {
 			

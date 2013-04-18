@@ -59,13 +59,14 @@ public class LoginActivity extends Activity {
 
 	public void loginButton(View view){
 		// read username and save in String userID
+		// TODO: catch NullPointerException here
 		EditText editText = (EditText) findViewById(R.id.text_login_username);
 		String inputTest = editText.getText().toString();
 		int userID = Integer.parseInt(inputTest);
-		// TODO: catch NullPointerException here
 		
-		// TODO: check for username in DB
+		// check for username in DB
 		if(dbHandler.userExists(userID)){
+			
 			// login successful --> open Question Overview Activity and hand over "user data"
 			
 			SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -78,6 +79,7 @@ public class LoginActivity extends Activity {
 			intent.putExtra(EXTRA_USERNAME, userID);	// TODO: this might be a different field and should be obtained from DB
 			startActivity(intent);
 		} else {
+			
 			AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 			alert.setTitle("Sorry!");
@@ -85,15 +87,9 @@ public class LoginActivity extends Activity {
 			
 			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-			}});
-			
+			}});	
 			
 			alert.show();
-		}
-		
-		
-		
-		
+		}	
 	}
-	
 }

@@ -24,8 +24,8 @@ public class DatabaseHandler {
 		dbLoader.close();
 	}
 	
-	// returns a user object for a given id
-	// returns null if the user doesn't exist
+	/* returns a user object for a given id
+	 * returns null if the user doesn't exist */
 	public User getUserById(int userID){
 		
 		Cursor cursor = queryUsersTableForID(userID);
@@ -56,7 +56,7 @@ public class DatabaseHandler {
 		return null;
 	}
 	
-	// check for a user with this ID exists in the DB
+	// check if a user with this ID exists in the DB
 	public boolean userExists(int userID){
 		
 		Cursor cursor = queryUsersTableForID(userID);
@@ -68,7 +68,6 @@ public class DatabaseHandler {
 				cursor.close();
 				return true;
 			} 	
-			//cursor.getString(cursor.getColumnIndex("display_name"));
 		} else {
 			return false;
 		}

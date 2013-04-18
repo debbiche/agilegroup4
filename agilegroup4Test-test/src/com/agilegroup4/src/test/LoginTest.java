@@ -23,7 +23,7 @@ public class LoginTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 	 */
 	public void testLoginActivity() {
 		// Start monitor on intended activity.
-		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(LoginActivity.class.getName(), null, false);
+		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(QuestionOverviewActivity.class.getName(), null, false);
 
 		// Open login activity
 		LoginActivity loginActivity = getActivity();
@@ -51,7 +51,6 @@ public class LoginTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 		}catch(java.lang.ClassCastException e){
 			questionOverviewActivity = null;
 		}
-		
 		
 		// We assert that the cast and fetch has gone right.
 		assertNotNull("Failed to go to question overview activity after navigation test.", questionOverviewActivity);

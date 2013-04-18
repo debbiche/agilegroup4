@@ -18,7 +18,7 @@ public class QuestionOverviewActivity extends Activity {
 		Intent intent = getIntent();
 		int userID = intent.getIntExtra(LoginActivity.EXTRA_USERNAME, 0);
 		
-	    ((TextView)findViewById(R.id.pop_text)).setText(Integer.toString(userID)); 
+	    ((TextView)findViewById(R.id.pop_text)).setText(LoginActivity.dbHandler.getUserById(userID).getDisplay_name()); 
 	}
 
 	@Override

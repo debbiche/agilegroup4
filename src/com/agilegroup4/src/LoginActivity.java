@@ -57,9 +57,14 @@ public class LoginActivity extends Activity {
 		} else {
 			AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-			alert.setTitle("Error");
-			alert.setMessage("User not found!");
-
+			alert.setTitle("Sorry!");
+			alert.setMessage("User not found...");
+			
+			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			}});
+			
+			
 			alert.show();
 		}
 		

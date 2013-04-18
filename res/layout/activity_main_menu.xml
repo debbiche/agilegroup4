@@ -35,13 +35,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_settings"
-        android:onClick="handleMenuItemOnCLick" />
+        android:onClick="handleMenuItemOnClick" />
      <Button
         android:id="@+id/button_logout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_logout"
-        android:onClick="handleMenuItemOnCLick" />
+        android:onClick="handleMenuItemOnClick" />
      
     
 </LinearLayout>

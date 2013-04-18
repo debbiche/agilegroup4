@@ -1,9 +1,9 @@
 package com.agilegroup4.src;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -15,10 +15,10 @@ public class QuestionOverviewActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question_overview);
 		
-		Intent intent = getIntent();
-		int userID = intent.getIntExtra(LoginActivity.EXTRA_USERNAME, 0);
+		SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+		int userID = settings.getInt("userID", 0);
 		
-	    ((TextView)findViewById(R.id.pop_text)).setText(Integer.toString(userID)); 
+	    ((TextView)findViewById(R.id.pop_text)).setText("Hej " + LoginActivity.dbHandler.getUserById(userID).getDisplay_name() + " how's it hanging?"); 
 	}
 
 	@Override

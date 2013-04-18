@@ -27,10 +27,10 @@ public class LoginActivity extends Activity {
 		// Get loggedin state
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		loggedIn = settings.getBoolean("loggedIn", false);
-		userId = settings.getInt("userID", 0);
 		
 		// Check if already logged in
 		if(loggedIn) {
+			userId = settings.getInt("userID", 0);
 			Intent intent = new Intent(this, QuestionOverviewActivity.class);
 			intent.putExtra(EXTRA_USERNAME, userId);	// TODO: this might be a different field and should be obtained from DB
 			startActivity(intent);

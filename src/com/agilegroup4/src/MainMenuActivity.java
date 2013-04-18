@@ -2,6 +2,7 @@ package com.agilegroup4.src;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -45,6 +46,12 @@ public class MainMenuActivity extends Activity {
 			break;
 		case R.id.button_logout: 
 			// Add logout functionality
+			SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+		    SharedPreferences.Editor editor = settings.edit();
+		    editor.putBoolean("loggedIn", false);
+		    editor.commit();
+			intent = new Intent(this, LoginActivity.class);
+			startActivity(intent);
 			break;
 		}
 	}

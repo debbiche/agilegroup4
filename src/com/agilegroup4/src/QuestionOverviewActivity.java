@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class QuestionOverviewActivity extends Activity {
+	
+	public final static int NR_OF_POSTS = 10;
 
 	// This is the Adapter being used to display the list's data
 	SimpleCursorAdapter mAdapter;
@@ -64,7 +66,7 @@ public class QuestionOverviewActivity extends Activity {
 		ArrayList<Question> questions = LoginActivity.dbHandler.getQuestions();
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		final ArrayList<String> titles = new ArrayList<String>();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < NR_OF_POSTS; i++) {
 			titles.add(questions.get(i).getTitle());
 		}
 

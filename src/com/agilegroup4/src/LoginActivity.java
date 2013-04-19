@@ -22,7 +22,9 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		dbHandler = new DatabaseHandler(getApplicationContext());
+		
+		if(!checkLoggedOut())
+			dbHandler = new DatabaseHandler(getApplicationContext());
 		
 		// Get loggedin state
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -34,14 +36,13 @@ public class LoginActivity extends Activity {
 			Intent intent = new Intent(this, QuestionOverviewActivity.class);
 			startActivity(intent);
 		}
-		
-		checkLoggedOut();
+	
 	}
 	
 	// Check if we just logged out
-	public void checkLoggedOut(){ 
+	public boolean checkLoggedOut(){ 
 		if (getIntent().getExtras() == null)  
-			return;
+			return false;
 		
 		String action = getIntent().getStringExtra("action");
 		
@@ -56,7 +57,10 @@ public class LoginActivity extends Activity {
 			}});	
 			
 			alert.show();
+			return true;
 		}
+		else
+			return false;
 	}
 
 	@Override

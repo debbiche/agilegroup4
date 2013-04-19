@@ -1,10 +1,11 @@
 package com.agilegroup4.src;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class QuestionActivity extends Activity {
 
@@ -12,6 +13,10 @@ public class QuestionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question);
+		
+		int action = getIntent().getIntExtra("questionId", 0);
+		TextView view = (TextView) findViewById(R.id.question_id);
+		view.setText("Question id: " + action);
 	}
 
 	@Override

@@ -63,11 +63,13 @@ public class QuestionOverviewActivity extends Activity {
 	public void displayQuestions() {
 		DatabaseHandler.queryQuestions();
 		ArrayList<Question> questions = DatabaseHandler.getQuestions();
+		final HashMap<String,Integer> map = new HashMap<String,Integer>();
 		
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		final ArrayList<String> titles = new ArrayList<String>();
 		for (int i = 0; i < NR_OF_POSTS; i++) {
 			titles.add(questions.get(i).getTitle());
+			map.put(questions.get(i).getTitle(), questions.get(i).getId());
 		}
 
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
@@ -89,10 +91,16 @@ public class QuestionOverviewActivity extends Activity {
 								view.setAlpha(1);
 							}
 						});*/
-					
+				Intent intent = new Intent(getThis(), QuestionActivity.class);
+				intent.putExtra("questionId", map.get(adapter.getItem(position)));
+				startActivity(intent);	
 			}
 
 		});
+	}
+	
+	private QuestionOverviewActivity getThis(){
+		return this;
 	}
 	
 	/*

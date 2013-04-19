@@ -23,7 +23,7 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		if(!checkLoggedOut())
+		//if(!checkLoggedOut())
 			dbHandler = new DatabaseHandler(getApplicationContext());
 		
 		// Get loggedin state
@@ -36,7 +36,7 @@ public class LoginActivity extends Activity {
 			Intent intent = new Intent(this, QuestionOverviewActivity.class);
 			startActivity(intent);
 		}
-	
+		checkLoggedOut();
 	}
 	
 	// Check if we just logged out

@@ -21,9 +21,6 @@ public class DatabaseHandler {
 			e.printStackTrace();
 		}
 		db = dbLoader.getDb();	
-		queryQuestions();
-		queryUsersTableForID(13);
-		dbLoader.close();
 	}
 	
 	public ArrayList<Question> getQuestions(){

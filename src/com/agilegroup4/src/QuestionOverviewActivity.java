@@ -120,5 +120,11 @@ public class QuestionOverviewActivity extends Activity {
 		}
 
 	}
+	
+	public void onBackPressed(){
+		// call next activity
+		Intent intent = new Intent(this, MainMenuActivity.class);
+		startActivity(intent);
+	}
 
 }

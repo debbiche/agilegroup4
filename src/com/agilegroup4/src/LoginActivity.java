@@ -122,4 +122,8 @@ public class LoginActivity extends Activity {
 			alert.show();
 		}	
 	}
+	
+	public void onBackPressed(){
+		System.exit(0);
+	}
 }

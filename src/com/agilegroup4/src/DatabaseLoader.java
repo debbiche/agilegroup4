@@ -60,7 +60,6 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 	}
 
 	public SQLiteDatabase getDb() {
-		if (this.db == null ) System.out.println("DB IS NULL INSIDE GET!!");
 		return this.db;
 	}
 

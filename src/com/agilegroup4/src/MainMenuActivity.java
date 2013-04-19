@@ -48,9 +48,10 @@ public class MainMenuActivity extends Activity {
 			// Add logout functionality
 			SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
 		    SharedPreferences.Editor editor = settings.edit();
-		    editor.putBoolean("loggedIn", false);
+		    editor.putInt("userID", 0);
 		    editor.commit();
 			intent = new Intent(this, LoginActivity.class);
+			intent.putExtra("action", "Logout");
 			startActivity(intent);
 			break;
 		}

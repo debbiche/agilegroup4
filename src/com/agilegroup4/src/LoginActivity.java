@@ -11,30 +11,56 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+/*
+ * TODO: the return button at this screen should always close the application*/
 public class LoginActivity extends Activity {
 	public final static String EXTRA_USERNAME = "USERNAME";
 	public static final String PREFS_NAME = "SETTINGS";
 	public static DatabaseHandler dbHandler;
-	public boolean loggedIn;
-	public int userId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		dbHandler = new DatabaseHandler(getApplicationContext());
+		
+		//if(!checkLoggedOut())
+			dbHandler = new DatabaseHandler(getApplicationContext());
 		
 		// Get loggedin state
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-		loggedIn = settings.getBoolean("loggedIn", false);
+		int userId = settings.getInt("userID", 0);
+		
 		
 		// Check if already logged in
-		if(loggedIn) {
-			userId = settings.getInt("userID", 0);
+		if(userId != 0) {
 			Intent intent = new Intent(this, QuestionOverviewActivity.class);
-			intent.putExtra(EXTRA_USERNAME, userId);	// TODO: this might be a different field and should be obtained from DB
 			startActivity(intent);
 		}
+		checkLoggedOut();
+	}
+	
+	// Check if we just logged out
+	public boolean checkLoggedOut(){ 
+		if (getIntent().getExtras() == null)  
+			return false;
+		
+		String action = getIntent().getStringExtra("action");
+		
+		if (action.equals("Logout")){
+			AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+			alert.setTitle("Success!");
+			alert.setMessage("Logged out.");
+			
+			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			}});	
+			
+			alert.show();
+			return true;
+		}
+		else
+			return false;
 	}
 
 	@Override
@@ -60,22 +86,27 @@ public class LoginActivity extends Activity {
 		// read username and save in String userID
 		// TODO: catch NullPointerException here
 		EditText editText = (EditText) findViewById(R.id.text_login_username);
-		String inputTest = editText.getText().toString();
-		int userID = Integer.parseInt(inputTest);
+		String inputText = editText.getText().toString();
+		int userID = 0;
+		
+		// check for username input not being empty
+		if(!inputText.equals("") && inputText != null){
+			userID = Integer.parseInt(inputText);
+		}
 		
 		// check for username in DB
 		if(dbHandler.userExists(userID)){
 			
 			// login successful --> open Question Overview Activity and hand over "user data"
 			
+			// save userID to skip further logins
 			SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		    SharedPreferences.Editor editor = settings.edit();
-		    editor.putBoolean("loggedIn", true);
 		    editor.putInt("userID", userID);
 		    editor.commit();
-						
+			
+		    // call next activity
 			Intent intent = new Intent(this, QuestionOverviewActivity.class);
-			intent.putExtra(EXTRA_USERNAME, userID);	// TODO: this might be a different field and should be obtained from DB
 			startActivity(intent);
 		} else {
 			

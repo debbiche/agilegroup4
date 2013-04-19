@@ -21,6 +21,7 @@ import android.widget.ListView;
 
 public class QuestionOverviewActivity extends Activity {
 	
+	// Controls the number of questions that are displayed
 	public final static int NR_OF_POSTS = 10;
 
 	// This is the Adapter being used to display the list's data
@@ -34,10 +35,6 @@ public class QuestionOverviewActivity extends Activity {
 		SharedPreferences settings = getSharedPreferences(
 				LoginActivity.PREFS_NAME, 0);
 		int userID = settings.getInt("userID", 0);
-
-		// ((TextView)findViewById(R.id.pop_text)).setText("Hej " +
-		// LoginActivity.dbHandler.getUserById(userID).getDisplay_name() +
-		// " how's it hanging?");
 
 		displayQuestions();
 	}
@@ -66,6 +63,7 @@ public class QuestionOverviewActivity extends Activity {
 	public void displayQuestions() {
 		DatabaseHandler.queryQuestions();
 		ArrayList<Question> questions = DatabaseHandler.getQuestions();
+		
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		final ArrayList<String> titles = new ArrayList<String>();
 		for (int i = 0; i < NR_OF_POSTS; i++) {
@@ -82,7 +80,7 @@ public class QuestionOverviewActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
 				final String item = (String) parent.getItemAtPosition(position);
-				/*
+				/* Does not work at the moment, need different API level.
 				view.animate().setDuration(2000).alpha(0).withEndAction(new Runnable() {
 							@Override
 							public void run() {
@@ -91,11 +89,15 @@ public class QuestionOverviewActivity extends Activity {
 								view.setAlpha(1);
 							}
 						});*/
+					
 			}
 
 		});
 	}
-
+	
+	/*
+	 * Puts the elements in the listview.
+	 */
 	private class StableArrayAdapter extends ArrayAdapter<String> {
 
 		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();

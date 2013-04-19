@@ -62,8 +62,8 @@ public class QuestionOverviewActivity extends Activity {
 	}
 
 	public void displayQuestions() {
-		LoginActivity.dbHandler.queryQuestions();
-		ArrayList<Question> questions = LoginActivity.dbHandler.getQuestions();
+		DatabaseHandler.queryQuestions();
+		ArrayList<Question> questions = DatabaseHandler.getQuestions();
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		final ArrayList<String> titles = new ArrayList<String>();
 		for (int i = 0; i < NR_OF_POSTS; i++) {

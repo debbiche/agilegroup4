@@ -26,6 +26,10 @@ public class DatabaseHandler {
 		dbLoader.close();
 	}
 	
+	public ArrayList<Question> getQuestions(){
+		return questions;
+	}
+	
 	/* returns a user object for a given id
 	 * returns null if the user doesn't exist */
 	public User getUserById(int userID){

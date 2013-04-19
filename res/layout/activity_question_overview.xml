@@ -13,5 +13,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
+    
+    <TableLayout android:id="@+id/tableLayout1" 
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent">
+    	<TableRow android:id="@+id/tableRow1" 
+    	    android:layout_width="wrap_content" 
+    	    android:layout_height="wrap_content">
+            <TextView android:id="@+id/oneText" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content">
+            </TextView>
+    	</TableRow>
+    	    	<TableRow android:id="@+id/tableRow2" 
+    	    android:layout_width="wrap_content" 
+    	    android:layout_height="wrap_content">
+            <TextView android:id="@+id/twoText" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content">
+            </TextView>
+    	</TableRow> 
+    </TableLayout>
+       
 
 </RelativeLayout>

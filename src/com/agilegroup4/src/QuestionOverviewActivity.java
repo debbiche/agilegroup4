@@ -1,15 +1,21 @@
 package com.agilegroup4.src;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class QuestionOverviewActivity extends Activity {
+public class QuestionOverviewActivity extends Activity{
 
+    // This is the Adapter being used to display the list's data
+    SimpleCursorAdapter mAdapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -19,6 +25,8 @@ public class QuestionOverviewActivity extends Activity {
 		int userID = settings.getInt("userID", 0);
 		
 	    ((TextView)findViewById(R.id.pop_text)).setText("Hej " + LoginActivity.dbHandler.getUserById(userID).getDisplay_name() + " how's it hanging?"); 
+	
+	    displayQuestions();
 	}
 
 	@Override
@@ -41,5 +49,16 @@ public class QuestionOverviewActivity extends Activity {
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
+	
+	public void displayQuestions(){
+		LoginActivity.dbHandler.queryQuestions();
+		ArrayList<Question> questions = LoginActivity.dbHandler.getQuestions();
+		TextView rowOne = (TextView) findViewById(R.id.oneText);
+		TextView rowTwo = (TextView) findViewById(R.id.twoText);
+		rowOne.setText(questions.get(1).getTitle());
+		rowTwo.setText(questions.get(2).getTitle());
+	}
+
+
 
 }

@@ -16,15 +16,17 @@ import android.widget.EditText;
 public class LoginActivity extends Activity {
 	public final static String EXTRA_USERNAME = "USERNAME";
 	public static final String PREFS_NAME = "SETTINGS";
-	public static DatabaseHandler dbHandler;
-
+	//public static DatabaseHandler dbHandler;
+ 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
+		DatabaseHandler.initDB(getApplicationContext());
+		
 		//if(!checkLoggedOut())
-			dbHandler = new DatabaseHandler(getApplicationContext());
+			//dbHandler = new DatabaseHandler();
 		
 		// Get loggedin state
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -95,7 +97,7 @@ public class LoginActivity extends Activity {
 		}
 		
 		// check for username in DB
-		if(dbHandler.userExists(userID)){
+		if(DatabaseHandler.userExists(userID)){
 			
 			// login successful --> open Question Overview Activity and hand over "user data"
 			

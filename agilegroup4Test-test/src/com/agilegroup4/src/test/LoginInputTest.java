@@ -29,21 +29,22 @@ public class LoginInputTest extends ActivityInstrumentationTestCase2<LoginActivi
 
 		//Get the input field from the userlogin activity
 		final EditText userInputText = (EditText) loginActivity.findViewById(com.agilegroup4.src.R.id.text_login_username);
-
+		
+		//Create test input
+		final String input = "1";
+		
 		loginActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run(){
-				//Create test input
-				String input = "1";	
 
 				//Insert input into input field
-				userInputText.setText(input);		
-
+				userInputText.setText(input);	
+				
 				//Assert that input field contains input
-				Assert.assertTrue(userInputText.getText().toString().equals(input));	
+				Assert.assertTrue(userInputText.getText().toString().equals(input));
 			}
-		});
+		});		
 	}
-	}
+}
 
 	

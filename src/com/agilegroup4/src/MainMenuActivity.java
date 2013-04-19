@@ -47,7 +47,7 @@ public class MainMenuActivity extends Activity {
 			startActivity(intent);
 			break;
 		case R.id.button_logout:
-
+			// Check if the user really wants to log out.
 			checkLogout();
 			break;
 		}

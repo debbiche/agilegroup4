@@ -1,6 +1,5 @@
 package com.agilegroup4.src.test;
 
-import android.app.Activity;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;

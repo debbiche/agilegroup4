@@ -74,7 +74,6 @@ public class LoginActivity extends Activity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Intent intent;
 	    // Handle item selection
 	    switch (item.getItemId()) {
 	    	case R.id.menuitem_newuser:

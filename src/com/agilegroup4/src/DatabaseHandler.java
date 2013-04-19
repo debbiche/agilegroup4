@@ -1,6 +1,8 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
+
+import com.agilegroup4.helper.Question;
 import com.agilegroup4.helper.User;
 import android.content.Context;
 import android.database.Cursor;

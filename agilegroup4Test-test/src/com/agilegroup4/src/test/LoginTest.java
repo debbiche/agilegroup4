@@ -20,33 +20,6 @@ public class LoginTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 	}
 
 	/**
-	 * Tests if userLogin field input is saved correctly
-	 */	
-	public void testLoginInput() throws Throwable {
-
-		// Open login activity
-		LoginActivity loginActivity = getActivity();
-
-		//Get the input field from the userlogin activity
-		final EditText userInputText = (EditText) loginActivity.findViewById(com.agilegroup4.src.R.id.text_login_username);
-
-
-		loginActivity.runOnUiThread(new Runnable() {
-			@Override
-			public void run(){
-				//Create test input
-				String input = "1";	
-
-				//Insert input into input field
-				userInputText.setText(input);		
-
-				//Assert that input field contains input
-				Assert.assertTrue(userInputText.getText().toString().equals(input));	
-			}
-		});
-	}
-
-	/**
 	 * Test ???.
 	 */
 	public void testLoginActivity() {
@@ -86,6 +59,7 @@ public class LoginTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 		
 		//assertTrue(questionOverviewActivity.findViewById(com.agilegroup4.src.R.id.pop_text).toString().contains("Chris Jester-Young"));
 		questionOverviewActivity.finish();
+		loginActivity.finish();
 	}
 
 }

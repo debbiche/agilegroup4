@@ -11,20 +11,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-/*
- * TODO: the return button at this screen should always close the application*/
+/* The login Activity is responsible for handling the login
+ * and as it is always the first Activity to be called
+ * it handles all necessary initializations (DB init, SharedPreferences) in the onCreate function
+ * */
 public class LoginActivity extends Activity {
 	public final static String EXTRA_USERNAME = "USERNAME";
 	public static final String PREFS_NAME = "SETTINGS";
-	public static DatabaseHandler dbHandler;
-
+	//public static DatabaseHandler dbHandler;
+ 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
+		DatabaseHandler.initDB(getApplicationContext());
+		
 		//if(!checkLoggedOut())
-			dbHandler = new DatabaseHandler(getApplicationContext());
+			//dbHandler = new DatabaseHandler();
 		
 		// Get loggedin state
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -40,6 +44,8 @@ public class LoginActivity extends Activity {
 	}
 	
 	// Check if we just logged out
+	// If the login activity is called because the user logged out
+	// a info about the log out shall be displayed
 	public boolean checkLoggedOut(){ 
 		if (getIntent().getExtras() == null)  
 			return false;
@@ -82,8 +88,10 @@ public class LoginActivity extends Activity {
 	    }
 	}
 
+	// function called when login button is pressed
 	public void loginButton(View view){
-		// read username and save in String userID
+		
+		// read username from text field and save in String inputText
 		// TODO: catch NullPointerException here
 		EditText editText = (EditText) findViewById(R.id.text_login_username);
 		String inputText = editText.getText().toString();
@@ -95,21 +103,22 @@ public class LoginActivity extends Activity {
 		}
 		
 		// check for username in DB
-		if(dbHandler.userExists(userID)){
+		if(DatabaseHandler.userExists(userID)){
 			
-			// login successful --> open Question Overview Activity and hand over "user data"
-			
+			// login successful
+
 			// save userID to skip further logins
 			SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		    SharedPreferences.Editor editor = settings.edit();
 		    editor.putInt("userID", userID);
 		    editor.commit();
 			
-		    // call next activity
+		    // start next activity
 			Intent intent = new Intent(this, QuestionOverviewActivity.class);
 			startActivity(intent);
 		} else {
 			
+			// create alert informing the user about non existent user
 			AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 			alert.setTitle("Sorry!");
@@ -121,5 +130,10 @@ public class LoginActivity extends Activity {
 			
 			alert.show();
 		}	
+	}
+	
+	// the return button at this screen shall always close the application
+	public void onBackPressed(){
+		System.exit(0);
 	}
 }

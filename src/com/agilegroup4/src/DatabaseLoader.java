@@ -8,42 +8,48 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/*
+ * This class is responsible for loading the database when 
+ * the application is started for the first time
+ */
 public class DatabaseLoader extends SQLiteOpenHelper {
 
 	private SQLiteDatabase db;
 	private Context context;
-	private String dbPath = "data/data/com.agilegroup4.src/databases"; // Android
-																		// DB
-																		// folder
+	private String dbPath = "data/data/com.agilegroup4.src/databases";
 	private String dbName = "StackOverflow";
 	private InputStream inputDB;
 	private OutputStream outputDB;
 
-	public DatabaseLoader(Context context, String name, CursorFactory factory,int version) throws Exception {
+	public DatabaseLoader(Context context, String name, CursorFactory factory,
+			int version) throws Exception {
 		super(context, name, factory, version);
 		this.context = context;
 		loadDB();
-		//super.close();
+		// super.close();
 
-		// TODO Auto-generated constructor stub
 	}
 
+	/*
+	 * Checks if the db has been previously loaded. If not then it is loaded
+	 * into a newly (empty) created database
+	 */
 	private void loadDB() throws Exception {
-		if (dbExists())
-		{
-			System.out.println("Database already exists, not loading it again!");
-			this.db = SQLiteDatabase.openDatabase(dbPath + dbName,
-					null, SQLiteDatabase.OPEN_READONLY | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+		if (dbExists()) {
+			System.out
+					.println("Database already exists, not loading it again!");
+			this.db = SQLiteDatabase.openDatabase(dbPath + dbName, null,
+					SQLiteDatabase.OPEN_READONLY
+							| SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 			return;
-		}
-		else {
+		} else {
 			System.out.println("Database not loaded, loading it now...");
 			this.getWritableDatabase(); // open empty DB
-			inputDB = context.getAssets().open("so.sqlite");
+			inputDB = context.getAssets().open("so.sqlite"); // load db file
 			outputDB = new FileOutputStream(dbPath + dbName);
 			byte[] buffer = new byte[1024];
 			int length = inputDB.read(buffer);
-			while (length > 0) {
+			while (length > 0) { // copy db file contents into the new empty db
 				outputDB.write(buffer, 0, length);
 				length = inputDB.read(buffer);
 			}
@@ -52,10 +58,10 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 			outputDB.close();
 
 			db = SQLiteDatabase.openDatabase(dbPath + dbName, null,
-					SQLiteDatabase.OPEN_READONLY | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
-			//db.close();
+					SQLiteDatabase.OPEN_READONLY
+							| SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+			// db.close();
 		}
-	
 
 	}
 
@@ -67,10 +73,14 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 		this.db = db;
 	}
 
+	/*
+	 * Checks if the db exists or not
+	 */
 	private boolean dbExists() {
 		try {
-			db = SQLiteDatabase.openDatabase(dbPath + dbName,
-					null, SQLiteDatabase.OPEN_READONLY | SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+			db = SQLiteDatabase.openDatabase(dbPath + dbName, null,
+					SQLiteDatabase.OPEN_READONLY
+							| SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 			if (db != null)
 				return true;
 			else

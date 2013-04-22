@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+<<<<<<< HEAD
 import com.agilegroup4.model.Question;
+=======
+import com.agilegroup4.helper.Question;
+>>>>>>> 5f575dac0068c5d9506400eeea8f827c9f8d9648
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,6 +25,7 @@ import android.widget.ListView;
 
 public class QuestionOverviewActivity extends Activity {
 	
+	// Controls the number of questions that are displayed
 	public final static int NR_OF_POSTS = 10;
 
 	// This is the Adapter being used to display the list's data
@@ -34,10 +39,6 @@ public class QuestionOverviewActivity extends Activity {
 		SharedPreferences settings = getSharedPreferences(
 				LoginActivity.PREFS_NAME, 0);
 		int userID = settings.getInt("userID", 0);
-
-		// ((TextView)findViewById(R.id.pop_text)).setText("Hej " +
-		// LoginActivity.dbHandler.getUserById(userID).getDisplay_name() +
-		// " how's it hanging?");
 
 		displayQuestions();
 	}
@@ -64,12 +65,15 @@ public class QuestionOverviewActivity extends Activity {
 	}
 
 	public void displayQuestions() {
-		LoginActivity.dbHandler.queryQuestions();
-		ArrayList<Question> questions = LoginActivity.dbHandler.getQuestions();
+		DatabaseHandler.queryQuestions();
+		ArrayList<Question> questions = DatabaseHandler.getQuestions();
+		final HashMap<String,Integer> map = new HashMap<String,Integer>();
+		
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		final ArrayList<String> titles = new ArrayList<String>();
 		for (int i = 0; i < NR_OF_POSTS; i++) {
 			titles.add(questions.get(i).getTitle());
+			map.put(questions.get(i).getTitle(), questions.get(i).getId());
 		}
 
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
@@ -82,7 +86,7 @@ public class QuestionOverviewActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
 				final String item = (String) parent.getItemAtPosition(position);
-				/*
+				/* Does not work at the moment, need different API level.
 				view.animate().setDuration(2000).alpha(0).withEndAction(new Runnable() {
 							@Override
 							public void run() {
@@ -91,11 +95,21 @@ public class QuestionOverviewActivity extends Activity {
 								view.setAlpha(1);
 							}
 						});*/
+				Intent intent = new Intent(getThis(), QuestionActivity.class);
+				intent.putExtra("questionId", map.get(adapter.getItem(position)));
+				startActivity(intent);	
 			}
 
 		});
 	}
-
+	
+	private QuestionOverviewActivity getThis(){
+		return this;
+	}
+	
+	/*
+	 * Puts the elements in the listview.
+	 */
 	private class StableArrayAdapter extends ArrayAdapter<String> {
 
 		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
@@ -119,6 +133,12 @@ public class QuestionOverviewActivity extends Activity {
 			return true;
 		}
 
+	}
+	
+	public void onBackPressed(){
+		// call next activity
+		Intent intent = new Intent(this, MainMenuActivity.class);
+		startActivity(intent);
 	}
 
 }

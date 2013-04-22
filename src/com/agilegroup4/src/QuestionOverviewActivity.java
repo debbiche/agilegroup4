@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.agilegroup4.model.Question;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

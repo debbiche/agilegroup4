@@ -1,7 +1,10 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
-import com.agilegroup4.helper.User;
+
+import com.agilegroup4.model.Question;
+import com.agilegroup4.model.User;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

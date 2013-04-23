@@ -7,7 +7,9 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,12 +41,22 @@ public class QuestionActivity extends Activity {
 		int questionId = getIntent().getIntExtra("questionId", 0);
 		
 		questions = DatabaseHandler.getQuestions();
-		question = findQuestion(questionId);
-		
-		//answers = getAnswers(questionId);
-		
+		question = findQuestion(1);
+		//answers = question.getAnswers();
+		System.out.println("answers size: " + question.getAnswers().size());
 		displayQuestion();
-		//displayAnswers();
+		genDumAns();
+		displayAnswers();
+	}
+	
+	private void genDumAns(){
+		Answer one = new Answer(1,"answer one");
+		Answer two = new Answer(1,"answer two");
+		Answer three = new Answer(1,"answer three");
+		answers = new ArrayList<Answer>();
+		answers.add(one);
+		answers.add(two);
+		answers.add(three);
 	}
 	
 	/**
@@ -56,6 +68,8 @@ public class QuestionActivity extends Activity {
 		title.setText(question.getTitle());
 		Helper h = new Helper();
 		body.setText(h.convertHTMLtoString(question.getBody()));
+		title.setTypeface(null,Typeface.BOLD);
+		body.setMovementMethod(new ScrollingMovementMethod());
 	}
 	
 	/**
@@ -85,8 +99,8 @@ public class QuestionActivity extends Activity {
 				final String item = (String) parent.getItemAtPosition(position);
 				Intent intent = new Intent(getThis(), QuestionActivity.class);
 				// Send along answer id to CommentsActivity
-				intent.putExtra("answerId", ids.get(adapter.getItemId(position)));
-				startActivity(intent);	
+				intent.putExtra("answerId", ids.get((int) id));
+				//startActivity(intent);	
 			}
 
 		});

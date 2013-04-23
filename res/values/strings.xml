@@ -24,5 +24,6 @@
     <string name="button_logout">Logout</string>
     <string name="search_hint">Search questions by freetext or tag</string>
     <string name="title_activity_searchable">SearchableActivity</string>
+    <string name="answers">Answers:</string>
 
 </resources>

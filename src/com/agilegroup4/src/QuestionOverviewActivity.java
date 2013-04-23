@@ -3,13 +3,7 @@ package com.agilegroup4.src;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-<<<<<<< HEAD
 import com.agilegroup4.model.Question;
-=======
-import com.agilegroup4.helper.Question;
->>>>>>> 5f575dac0068c5d9506400eeea8f827c9f8d9648
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

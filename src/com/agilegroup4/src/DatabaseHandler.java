@@ -2,14 +2,9 @@ package com.agilegroup4.src;
 
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 import com.agilegroup4.model.Question;
 import com.agilegroup4.model.User;
 
-=======
-import com.agilegroup4.helper.Question;
-import com.agilegroup4.helper.User;
->>>>>>> 5f575dac0068c5d9506400eeea8f827c9f8d9648
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

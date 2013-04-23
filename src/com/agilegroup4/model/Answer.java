@@ -7,7 +7,6 @@ public class Answer {
 	private int id;
 	//private String title;
 	private String body;
-	private ArrayList<Comment> comments = new ArrayList<Comment>();
 	
 	public Answer(int id, String body){
 		//this.title = title;

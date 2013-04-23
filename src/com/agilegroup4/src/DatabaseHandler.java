@@ -1,13 +1,15 @@
 package com.agilegroup4.src;
 
-import java.awt.font.NumericShaper;
 import java.util.ArrayList;
-import com.agilegroup4.model.Answer;
-import com.agilegroup4.model.Question;
-import com.agilegroup4.model.User;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.agilegroup4.model.Answer;
+import com.agilegroup4.model.Comment;
+import com.agilegroup4.model.Question;
+import com.agilegroup4.model.User;
 
 /* DatabaseHandler handles database queries, inserts, deletes, ...
  * 

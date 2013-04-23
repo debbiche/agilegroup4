@@ -7,7 +7,9 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,11 +42,9 @@ public class QuestionActivity extends Activity {
 		
 		questions = DatabaseHandler.getQuestions();
 		question = findQuestion(questionId);
-		
-		//answers = getAnswers(questionId);
-		
+		answers = question.getAnswers();
 		displayQuestion();
-		//displayAnswers();
+		displayAnswers();
 	}
 	
 	/**
@@ -56,6 +56,8 @@ public class QuestionActivity extends Activity {
 		title.setText(question.getTitle());
 		Helper h = new Helper();
 		body.setText(h.convertHTMLtoString(question.getBody()));
+		title.setTypeface(null,Typeface.BOLD);
+		body.setMovementMethod(new ScrollingMovementMethod());
 	}
 	
 	/**
@@ -85,8 +87,8 @@ public class QuestionActivity extends Activity {
 				final String item = (String) parent.getItemAtPosition(position);
 				Intent intent = new Intent(getThis(), QuestionActivity.class);
 				// Send along answer id to CommentsActivity
-				intent.putExtra("answerId", ids.get(adapter.getItemId(position)));
-				startActivity(intent);	
+				intent.putExtra("answerId", ids.get((int) id));
+				//startActivity(intent);	
 			}
 
 		});

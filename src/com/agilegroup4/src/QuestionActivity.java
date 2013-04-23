@@ -70,8 +70,9 @@ public class QuestionActivity extends Activity {
 		// HashMap needed for displaying the bodies of the answers in the listview
 		final ArrayList<String> bodies = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
+		Helper help = new Helper();
 		for (int i = 0; i < answers.size(); i++) {
-			bodies.add(answers.get(i).getBody());
+			bodies.add(help.convertHTMLtoString(answers.get(i).getBody()));
 			ids.put(i, answers.get(i).getId());
 		}
 

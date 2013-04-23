@@ -1,6 +1,5 @@
 package com.agilegroup4.src;
 
-import java.awt.font.NumericShaper;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -131,8 +130,12 @@ public class DatabaseHandler {
 									+ " WHERE post_type_id = 1 LIMIT ?", new String[] {Integer.toString(numberOfQuestions)});
 					
 					
+//					Cursor answersCursor = db.rawQuery(
+//							"SELECT id, parent_id, body FROM posts"
+//									+ " WHERE post_type_id = ?", new String[] {Integer.toString(2)});
+//					
 					
-			
+					
 			questionsCursor.moveToFirst();
 			int questionCounter = 0;
 			while (questionsCursor.isAfterLast() == false) {
@@ -140,26 +143,30 @@ public class DatabaseHandler {
 						questionsCursor.getString(1), questionsCursor
 								.getString(2)));
 
-//				Cursor answersCursor = db.rawQuery("SELECT id,body "
-//						+ "FROM posts WHERE parent_id = ?",
-//						new String[] { Integer.toString(questionsCursor
-//								.getInt(0)) });
-//
-//				answersCursor.moveToFirst();
-//				while (answersCursor.isAfterLast() == false) {
-//					questions
-//							.get(questionCounter)
-//							.getAnswers()
-//							.add(new Answer(answersCursor.getInt(0),
-//									answersCursor.getString(1)));
-//
-//					answersCursor.moveToNext();
-//					System.out.println("Added an answer!");
-//				}
+				Cursor answersCursor = db.rawQuery("SELECT id,body "
+						+ "FROM posts WHERE parent_id = ?",
+						new String[] { Integer.toString(questionsCursor
+								.getInt(0)) });
+
+				answersCursor.moveToFirst();
+				while (answersCursor.isAfterLast() == false) {
+				//	if (answersCursor.getInt(1) == (questions.get(questionCounter).getId())){
+					questions
+							.get(questionCounter)
+							.getAnswers()
+							.add(new Answer(answersCursor.getInt(0), answersCursor.getString(1)));
+					//System.out.println("Added an answer!");
+				//	}
+					answersCursor.moveToNext();
+					
+				}
+			
+				answersCursor.close();
 				questionsCursor.moveToNext();
 				questionCounter++;
 
 			}
+			System.out.println("Done added questions and their answers!");
 			questionsCursor.close();
 			queriedQuestions = 1;
 		}

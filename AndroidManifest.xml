@@ -41,9 +41,12 @@
         <activity
             android:name="com.agilegroup4.src.QuestionActivity"
             android:label="@string/title_activity_question" >
+
+            <!-- enable the search dialog to send searches to SearchableActivity -->
             <meta-data
-            	android:name="android.app.searchable"
-            	android:resource="@xml/searchable" />
+                android:name="android.app.default_searchable"
+                android:value=".SearchableActivity" />
+
         </activity>
         <activity
             android:name="com.agilegroup4.src.TagsOverviewActivity"
@@ -58,14 +61,18 @@
             android:label="@string/title_activity_comments" >
         </activity>
         <activity
+
             android:name="com.agilegroup4.src.SearchableActivity"
             android:label="@string/title_activity_searchable" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
+
             <meta-data
-            	android:name="android.app.searchable"
-            	android:resource="@xml/searchable" />
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
         </activity>
     </application>
 

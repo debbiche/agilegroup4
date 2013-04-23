@@ -89,7 +89,7 @@ public class QuestionOverviewActivity extends Activity {
 				Intent intent = new Intent(getThis(), QuestionActivity.class);
 				// Send along question id to QuestionActivity
 				intent.putExtra("questionId", ids.get((int) id));
-				startActivity(intent);	
+				startActivity(intent);
 			}
 
 		});

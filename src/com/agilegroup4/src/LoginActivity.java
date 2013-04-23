@@ -114,7 +114,7 @@ public class LoginActivity extends Activity {
 		    editor.commit();
 			
 		    // start next activity
-			Intent intent = new Intent(this, QuestionOverviewActivity.class);
+			Intent intent = new Intent(this, MainMenuActivity.class);
 			startActivity(intent);
 		} else {
 			

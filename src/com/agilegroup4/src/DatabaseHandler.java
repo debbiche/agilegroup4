@@ -1,10 +1,9 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
-
+import com.agilegroup4.model.Answer;
 import com.agilegroup4.model.Question;
 import com.agilegroup4.model.User;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -125,25 +124,29 @@ public class DatabaseHandler {
 					"SELECT id,title,body FROM posts"
 							+ " WHERE title <> \"NULL\"", null);
 			questionsCursor.moveToFirst();
+			int questionCounter = 0;
 			while (questionsCursor.isAfterLast() == false) {
 				questions.add(new Question(questionsCursor.getInt(0),
 						questionsCursor.getString(1), questionsCursor
 								.getString(2)));
 
-				// Cursor answersCursor = db.rawQuery("SELECT id,body " +
-				// "FROM posts WHERE parent_id = ?",
-				// new String[] {Integer.toString(questionsCursor.getInt(0))});
-				//
-				// answersCursor.moveToFirst();
-				// while(answersCursor.isAfterLast() == false){
-				// System.out.println("Answer: " + answersCursor.getString(1));
-				// answersCursor.moveToNext();
-				// }
-				// System.out.println("###############################");
-				// System.out.println("Answers found for " +
-				// questionsCursor.getInt(0) + " is " + answersCursor.getCount()
-				// );
+				Cursor answersCursor = db.rawQuery("SELECT id,body "
+						+ "FROM posts WHERE parent_id = ?",
+						new String[] { Integer.toString(questionsCursor
+								.getInt(0)) });
+
+				answersCursor.moveToFirst();
+				while (answersCursor.isAfterLast() == false) {
+					questions
+							.get(questionCounter)
+							.getAnswers()
+							.add(new Answer(answersCursor.getInt(0),
+									answersCursor.getString(1)));
+
+					answersCursor.moveToNext();
+				}
 				questionsCursor.moveToNext();
+				questionCounter++;
 
 			}
 			queriedQuestions = 1;

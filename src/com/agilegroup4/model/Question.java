@@ -7,7 +7,7 @@ public class Question {
 	private int id;
 	private String title;
 	private String body;
-	private ArrayList<String> answers = new ArrayList<String>();
+	private ArrayList<Answer> answers = new ArrayList<Answer>();
 	
 	public Question(int id, String title, String body){
 		this.title = title;
@@ -27,10 +27,10 @@ public class Question {
 	public void setBody(String body) {
 		this.body = body;
 	}
-	public ArrayList<String> getAnswers() {
+	public ArrayList<Answer> getAnswers() {
 		return answers;
 	}
-	public void setAnswers(ArrayList<String> answers) {
+	public void setAnswers(ArrayList<Answer> answers) {
 		this.answers = answers;
 	}
 

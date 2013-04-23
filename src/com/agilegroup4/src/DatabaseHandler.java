@@ -1,13 +1,15 @@
 package com.agilegroup4.src;
 
-import java.awt.font.NumericShaper;
 import java.util.ArrayList;
-import com.agilegroup4.model.Answer;
-import com.agilegroup4.model.Question;
-import com.agilegroup4.model.User;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.agilegroup4.model.Answer;
+import com.agilegroup4.model.Comment;
+import com.agilegroup4.model.Question;
+import com.agilegroup4.model.User;
 
 /* DatabaseHandler handles database queries, inserts, deletes, ...
  * 
@@ -169,4 +171,25 @@ public class DatabaseHandler {
 			queriedQuestions = 1;
 		}
 	}
+	
+	public static ArrayList<Answer> getAnswers(Integer questionId) {
+		ArrayList<Answer> answers = new ArrayList<Answer>();
+		
+		Cursor answersCursor = db.rawQuery(
+				"SELECT id,body" +
+				"FROM posts" +
+				" WHERE title parent_id = " + questionId, null);
+		//TODO complete the code for handling the query.
+		
+		return answers;
+	}
+	
+	public static ArrayList<Comment> getComments(Integer postId) {
+		ArrayList<Comment> comments = new ArrayList<Comment>();
+		
+		//TODO write code for querying the comments.
+		
+		return comments;
+	}
+	
 }

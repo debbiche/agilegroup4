@@ -8,11 +8,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".QuestionOverviewActivity" >
 
-    <ListView 
-    android:id="@+id/listview"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    <LinearLayout android:id="@+id/footer" android:layout_width="fill_parent"
+    android:layout_height="wrap_content" android:orientation="horizontal"
+    android:layout_alignParentTop="true" style="@android:style/ButtonBar">
 
-       
+    <Button android:id="@+id/latestButton" android:layout_width="0dp"
+        android:layout_height="wrap_content" android:layout_weight="1"
+        android:text="@string/button_filter1" />
+
+    <Button android:id="@+id/importantButton" android:layout_width="0dp"
+        android:layout_height="wrap_content" android:layout_weight="1"
+        android:text="@string/button_filter2" />
+    
+    <Button android:id="@+id/answeredButton" android:layout_width="0dp"
+        android:layout_height="wrap_content" android:layout_weight="1"
+        android:text="@string/button_filter3" />
+	</LinearLayout>
+    
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/footer" />
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.agilegroup4.src;
 
+import java.awt.font.NumericShaper;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -121,11 +122,17 @@ public class DatabaseHandler {
 	 * object created here and use get the title of each questions to put in the
 	 * list view elements.
 	 */
-	public static void queryQuestions() {
+	public static void queryQuestions(int numberOfQuestions) {
 		if (queriedQuestions == 0) {
-			Cursor questionsCursor = db.rawQuery(
-					"SELECT id,title,body FROM posts"
-							+ " WHERE title <> \"NULL\"", null);
+			
+			
+					Cursor questionsCursor = db.rawQuery(
+							"SELECT id,title,body FROM posts"
+									+ " WHERE post_type_id = 1 LIMIT ?", new String[] {Integer.toString(numberOfQuestions)});
+					
+					
+					
+			
 			questionsCursor.moveToFirst();
 			int questionCounter = 0;
 			while (questionsCursor.isAfterLast() == false) {
@@ -133,25 +140,27 @@ public class DatabaseHandler {
 						questionsCursor.getString(1), questionsCursor
 								.getString(2)));
 
-				Cursor answersCursor = db.rawQuery("SELECT id,body "
-						+ "FROM posts WHERE parent_id = ?",
-						new String[] { Integer.toString(questionsCursor
-								.getInt(0)) });
-
-				answersCursor.moveToFirst();
-				while (answersCursor.isAfterLast() == false) {
-					questions
-							.get(questionCounter)
-							.getAnswers()
-							.add(new Answer(answersCursor.getInt(0),
-									answersCursor.getString(1)));
-
-					answersCursor.moveToNext();
-				}
+//				Cursor answersCursor = db.rawQuery("SELECT id,body "
+//						+ "FROM posts WHERE parent_id = ?",
+//						new String[] { Integer.toString(questionsCursor
+//								.getInt(0)) });
+//
+//				answersCursor.moveToFirst();
+//				while (answersCursor.isAfterLast() == false) {
+//					questions
+//							.get(questionCounter)
+//							.getAnswers()
+//							.add(new Answer(answersCursor.getInt(0),
+//									answersCursor.getString(1)));
+//
+//					answersCursor.moveToNext();
+//					System.out.println("Added an answer!");
+//				}
 				questionsCursor.moveToNext();
 				questionCounter++;
 
 			}
+			questionsCursor.close();
 			queriedQuestions = 1;
 		}
 	}

@@ -18,7 +18,7 @@ public class Helper {
 	}
 	
 	public String removeBackslashNFromString(String input){
-		return input.replace("\n", "");
+		return input.replace("\\n", "");
 	}
 	
 }

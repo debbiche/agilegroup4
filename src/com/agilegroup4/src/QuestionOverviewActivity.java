@@ -127,6 +127,18 @@ public class QuestionOverviewActivity extends Activity {
 
 	}
 	
+	public void filterLatest(){
+		
+	}
+	
+	public void filterImportant(){
+		
+	}
+	
+	public void filterAnswers(){
+		
+	}
+	
 	public void onBackPressed(){
 		// call next activity
 		Intent intent = new Intent(this, MainMenuActivity.class);

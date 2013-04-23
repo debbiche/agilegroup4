@@ -63,7 +63,7 @@ public class QuestionOverviewActivity extends Activity {
 
 	public void displayQuestions() {
 	
-		DatabaseHandler.queryQuestions(100);
+		DatabaseHandler.queryQuestions(30);
 		questions = DatabaseHandler.getQuestions();
 		
 		// HashMap for connecting question id with position in the list for the question

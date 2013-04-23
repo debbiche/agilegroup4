@@ -7,10 +7,12 @@ public class Answer {
 	private int id;
 	//private String title;
 	private String body;
+	private  int parent_id;
 	private ArrayList<Comment> comments = new ArrayList<Comment>();
 	
 	public Answer(int id, String body){
 		//this.title = title;
+		this.parent_id = parent_id;
 		this.body = body;
 		this.setId(id);
 	}

@@ -111,7 +111,6 @@ public class DatabaseHandler {
 	private static Cursor queryUsersTableForID(int userID) {
 		Cursor curUserID = db.rawQuery("select * from users where id = ?",
 				new String[] { Integer.toString(userID) });
-		curUserID.close(); //should close cursor?
 		return curUserID;
 	}
 

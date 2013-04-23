@@ -41,22 +41,10 @@ public class QuestionActivity extends Activity {
 		int questionId = getIntent().getIntExtra("questionId", 0);
 		
 		questions = DatabaseHandler.getQuestions();
-		question = findQuestion(1);
-		//answers = question.getAnswers();
-		System.out.println("answers size: " + question.getAnswers().size());
+		question = findQuestion(questionId);
+		answers = question.getAnswers();
 		displayQuestion();
-		genDumAns();
 		displayAnswers();
-	}
-	
-	private void genDumAns(){
-		Answer one = new Answer(1,"answer one");
-		Answer two = new Answer(1,"answer two");
-		Answer three = new Answer(1,"answer three");
-		answers = new ArrayList<Answer>();
-		answers.add(one);
-		answers.add(two);
-		answers.add(three);
 	}
 	
 	/**

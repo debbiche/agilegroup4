@@ -41,6 +41,9 @@
         <activity
             android:name="com.agilegroup4.src.QuestionActivity"
             android:label="@string/title_activity_question" >
+            <meta-data
+            	android:name="android.app.searchable"
+            	android:resource="@xml/searchable" />
         </activity>
         <activity
             android:name="com.agilegroup4.src.TagsOverviewActivity"

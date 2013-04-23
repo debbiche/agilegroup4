@@ -59,7 +59,7 @@ public class QuestionOverviewActivity extends Activity {
 	}
 
 	public void displayQuestions() {
-		DatabaseHandler.queryQuestions();
+		DatabaseHandler.queryQuestions(100);
 		ArrayList<Question> questions = DatabaseHandler.getQuestions();
 		final HashMap<String,Integer> map = new HashMap<String,Integer>();
 		

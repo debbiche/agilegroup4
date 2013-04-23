@@ -73,7 +73,7 @@ public class QuestionOverviewActivity extends Activity {
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		for (int i = 0; i < NR_OF_POSTS; i++) {
 			titles.add(questions.get(i).getTitle());
-			ids.put(i, questions.get(i).getId());
+			ids.put(i,questions.get(i).getId());
 		}
 
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
@@ -81,14 +81,14 @@ public class QuestionOverviewActivity extends Activity {
 		listview.setAdapter(adapter);
 
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+			
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
 				final String item = (String) parent.getItemAtPosition(position);
 				Intent intent = new Intent(getThis(), QuestionActivity.class);
 				// Send along question id to QuestionActivity
-				intent.putExtra("questionId", ids.get(adapter.getItemId(position)));
+				intent.putExtra("questionId", ids.get((int) id));
 				startActivity(intent);	
 			}
 

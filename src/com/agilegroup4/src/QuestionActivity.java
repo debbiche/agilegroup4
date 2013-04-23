@@ -1,17 +1,114 @@
 package com.agilegroup4.src;
 
-import android.os.Bundle;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.agilegroup4.helpers.Helper;
+import com.agilegroup4.model.Answer;
+import com.agilegroup4.model.Question;
 
 public class QuestionActivity extends Activity {
 
+	// Current question
+	private Question question;
+	
+	// Current answers for the question
+	private ArrayList<Answer> answers;
+	
+	// List of questions from QuestionOverview
+	private ArrayList<Question> questions;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question);
+		
+		int questionId = getIntent().getIntExtra("questionId", 0);
+		
+		questions = DatabaseHandler.getQuestions();
+		question = findQuestion(questionId);
+		
+		//answers = getAnswers(questionId);
+		
+		displayQuestion();
+		//displayAnswers();
+	}
+	
+	/**
+	 * Displays question title and body
+	 */
+	private void displayQuestion(){
+		TextView title = (TextView) findViewById(R.id.question_title);
+		TextView body = (TextView) findViewById(R.id.question_body);
+		title.setText(question.getTitle());
+		Helper h = new Helper();
+		body.setText(h.convertHTMLtoString(question.getBody()));
+	}
+	
+	/**
+	 * Display the answers title and body
+	 */
+	public void displayAnswers() {
+		
+		// HashMap for connecting answer id with position in the list for the question
+		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();
+		// HashMap needed for displaying the bodies of the answers in the listview
+		final ArrayList<String> bodies = new ArrayList<String>();
+		final ListView listview = (ListView) findViewById(R.id.listview);
+		for (int i = 0; i < answers.size(); i++) {
+			bodies.add(answers.get(i).getBody());
+			ids.put(i, answers.get(i).getId());
+		}
+
+		final StableArrayAdapter adapter = new StableArrayAdapter(this,
+				android.R.layout.simple_list_item_1, bodies);
+		listview.setAdapter(adapter);
+
+		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, final View view,
+					int position, long id) {
+				final String item = (String) parent.getItemAtPosition(position);
+				Intent intent = new Intent(getThis(), QuestionActivity.class);
+				// Send along answer id to CommentsActivity
+				intent.putExtra("answerId", ids.get(adapter.getItemId(position)));
+				startActivity(intent);	
+			}
+
+		});
+	}
+	
+	/**
+	 * Search for a question
+	 * @param qId question id
+	 * @return the question
+	 */
+	private Question findQuestion(int qId){
+		Question q;
+		for (int i = 0; i < questions.size(); i++) {
+			q = questions.get(i);
+			if (q.getId() == qId)
+				return q;
+		}
+		return null;
+	}
+	
+	private QuestionActivity getThis(){
+		return this;
 	}
 
 	@Override
@@ -33,6 +130,34 @@ public class QuestionActivity extends Activity {
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
+	}
+	
+	/*
+	 * Puts the elements in the listview.
+	 */
+	private class StableArrayAdapter extends ArrayAdapter<String> {
+
+		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+
+		public StableArrayAdapter(Context context, int textViewResourceId,
+				List<String> objects) {
+			super(context, textViewResourceId, objects);
+			for (int i = 0; i < objects.size(); ++i) {
+				mIdMap.put(objects.get(i), i);
+			}
+		}
+
+		@Override
+		public long getItemId(int position) {
+			String item = getItem(position);
+			return mIdMap.get(item);
+		}
+
+		@Override
+		public boolean hasStableIds() {
+			return true;
+		}
+
 	}
 
 }

@@ -3,9 +3,7 @@ package com.agilegroup4.src;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.agilegroup4.helper.Question;
-
+import com.agilegroup4.model.Question;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +24,9 @@ public class QuestionOverviewActivity extends Activity {
 
 	// This is the Adapter being used to display the list's data
 	SimpleCursorAdapter mAdapter;
+	
+	// Containing the questions in the question overview
+	ArrayList<Question> questions;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +62,18 @@ public class QuestionOverviewActivity extends Activity {
 	}
 
 	public void displayQuestions() {
-		DatabaseHandler.queryQuestions();
-		ArrayList<Question> questions = DatabaseHandler.getQuestions();
+	
+		DatabaseHandler.queryQuestions(30);
+		questions = DatabaseHandler.getQuestions();
 		
-		final ListView listview = (ListView) findViewById(R.id.listview);
+		// HashMap for connecting question id with position in the list for the question
+		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();
+		// HashMap needed for displaying the titles in the listview
 		final ArrayList<String> titles = new ArrayList<String>();
+		final ListView listview = (ListView) findViewById(R.id.listview);
 		for (int i = 0; i < NR_OF_POSTS; i++) {
 			titles.add(questions.get(i).getTitle());
+			ids.put(i,questions.get(i).getId());
 		}
 
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
@@ -75,24 +81,22 @@ public class QuestionOverviewActivity extends Activity {
 		listview.setAdapter(adapter);
 
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+			
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
 				final String item = (String) parent.getItemAtPosition(position);
-				/* Does not work at the moment, need different API level.
-				view.animate().setDuration(2000).alpha(0).withEndAction(new Runnable() {
-							@Override
-							public void run() {
-								titles.remove(item);
-								adapter.notifyDataSetChanged();
-								view.setAlpha(1);
-							}
-						});*/
-					
+				Intent intent = new Intent(getThis(), QuestionActivity.class);
+				// Send along question id to QuestionActivity
+				intent.putExtra("questionId", ids.get((int) id));
+				startActivity(intent);
 			}
 
 		});
+	}
+	
+	private QuestionOverviewActivity getThis(){
+		return this;
 	}
 	
 	/*

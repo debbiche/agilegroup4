@@ -47,18 +47,43 @@ public class MainMenuActivity extends Activity {
 			startActivity(intent);
 			break;
 		case R.id.button_logout:
-
-			SharedPreferences settings = getSharedPreferences(
-					LoginActivity.PREFS_NAME, 0);
-			SharedPreferences.Editor editor = settings.edit();
-			editor.putInt("userID", 0);
-			editor.commit();
-			intent = new Intent(this, LoginActivity.class);
-			intent.putExtra("action", "Logout");
-			startActivity(intent);
-
+			// Check if the user really wants to log out.
+			checkLogout();
 			break;
 		}
 	}
 
+	private void checkLogout() {
+		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which) {
+				case DialogInterface.BUTTON_POSITIVE:
+					// Yes button clicked
+					SharedPreferences settings = getSharedPreferences(
+							LoginActivity.PREFS_NAME, 0);
+					SharedPreferences.Editor editor = settings.edit();
+					editor.putInt("userID", 0);
+					editor.commit();
+					Intent intent = new Intent(getThis(), LoginActivity.class);
+					intent.putExtra("action", "Logout");
+					startActivity(intent);
+					break;
+
+				case DialogInterface.BUTTON_NEGATIVE:
+					// No button clicked
+					break;
+				}
+			}
+		};
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Are you sure you want to log out?")
+				.setPositiveButton("Log Out", dialogClickListener)
+				.setNegativeButton("Cancel", dialogClickListener).show();
+	}
+	
+	private MainMenuActivity getThis(){
+		return this;
+	}
 }

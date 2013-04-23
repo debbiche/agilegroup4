@@ -2,11 +2,14 @@ package com.agilegroup4.src;
 
 import java.util.ArrayList;
 
-import com.agilegroup4.helper.Question;
-import com.agilegroup4.helper.User;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.agilegroup4.model.Answer;
+import com.agilegroup4.model.Comment;
+import com.agilegroup4.model.Question;
+import com.agilegroup4.model.User;
 
 /* DatabaseHandler handles database queries, inserts, deletes, ...
  * 
@@ -118,34 +121,75 @@ public class DatabaseHandler {
 	 * object created here and use get the title of each questions to put in the
 	 * list view elements.
 	 */
-	public static void queryQuestions() {
+	public static void queryQuestions(int numberOfQuestions) {
 		if (queriedQuestions == 0) {
-			Cursor questionsCursor = db.rawQuery(
-					"SELECT id,title,body FROM posts"
-							+ " WHERE title <> \"NULL\"", null);
+			
+			
+					Cursor questionsCursor = db.rawQuery(
+							"SELECT id,title,body FROM posts"
+									+ " WHERE post_type_id = 1 LIMIT ?", new String[] {Integer.toString(numberOfQuestions)});
+					
+					
+//					Cursor answersCursor = db.rawQuery(
+//							"SELECT id, parent_id, body FROM posts"
+//									+ " WHERE post_type_id = ?", new String[] {Integer.toString(2)});
+//					
+					
+					
 			questionsCursor.moveToFirst();
+			int questionCounter = 0;
 			while (questionsCursor.isAfterLast() == false) {
 				questions.add(new Question(questionsCursor.getInt(0),
 						questionsCursor.getString(1), questionsCursor
 								.getString(2)));
 
-				// Cursor answersCursor = db.rawQuery("SELECT id,body " +
-				// "FROM posts WHERE parent_id = ?",
-				// new String[] {Integer.toString(questionsCursor.getInt(0))});
-				//
-				// answersCursor.moveToFirst();
-				// while(answersCursor.isAfterLast() == false){
-				// System.out.println("Answer: " + answersCursor.getString(1));
-				// answersCursor.moveToNext();
-				// }
-				// System.out.println("###############################");
-				// System.out.println("Answers found for " +
-				// questionsCursor.getInt(0) + " is " + answersCursor.getCount()
-				// );
+				Cursor answersCursor = db.rawQuery("SELECT id,body "
+						+ "FROM posts WHERE parent_id = ?",
+						new String[] { Integer.toString(questionsCursor
+								.getInt(0)) });
+
+				answersCursor.moveToFirst();
+				while (answersCursor.isAfterLast() == false) {
+				//	if (answersCursor.getInt(1) == (questions.get(questionCounter).getId())){
+					questions
+							.get(questionCounter)
+							.getAnswers()
+							.add(new Answer(answersCursor.getInt(0), answersCursor.getString(1)));
+					//System.out.println("Added an answer!");
+				//	}
+					answersCursor.moveToNext();
+					
+				}
+			
+				answersCursor.close();
 				questionsCursor.moveToNext();
+				questionCounter++;
 
 			}
+			System.out.println("Done added questions and their answers!");
+			questionsCursor.close();
 			queriedQuestions = 1;
 		}
 	}
+	
+	public static ArrayList<Answer> getAnswers(Integer questionId) {
+		ArrayList<Answer> answers = new ArrayList<Answer>();
+		
+		Cursor answersCursor = db.rawQuery(
+				"SELECT id,body" +
+				"FROM posts" +
+				" WHERE title parent_id = " + questionId, null);
+		//TODO complete the code for handling the query.
+		
+		return answers;
+	}
+	
+	public static ArrayList<Comment> getComments(Integer postId) {
+		ArrayList<Comment> comments = new ArrayList<Comment>();
+		
+		//TODO write code for querying the comments.
+		
+		return comments;
+	}
+	
 }

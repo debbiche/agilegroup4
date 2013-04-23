@@ -1,4 +1,4 @@
-package com.agilegroup4.helper;
+package com.agilegroup4.model;
 
 /* This class represents a user 
  * with the attributes being equal to the entries in the database */

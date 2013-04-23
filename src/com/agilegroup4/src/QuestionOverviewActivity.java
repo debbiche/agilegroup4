@@ -88,8 +88,8 @@ public class QuestionOverviewActivity extends Activity {
 				final String item = (String) parent.getItemAtPosition(position);
 				Intent intent = new Intent(getThis(), QuestionActivity.class);
 				// Send along question id to QuestionActivity
-				intent.putExtra("questionId", ids.get(adapter.getItemId(position)));
-				startActivity(intent);	
+				intent.putExtra("questionId", ids.get((int) id));
+				startActivity(intent);
 			}
 
 		});

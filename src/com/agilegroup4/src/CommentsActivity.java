@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.agilegroup4.helpers.Helper;
 import com.agilegroup4.model.Comment;
@@ -21,15 +22,13 @@ public class CommentsActivity extends Activity {
 	// The current comments
 	private ArrayList<Comment> comments;
 	
-	// The current question id or the answer id that the comments relates to
-	private int id;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comments);
 		
-		id = getIntent().getIntExtra("id", 0);
+		int id = getIntent().getIntExtra("id", 0);
+	
 		//comments = get comments from the id
 		comments = createTestComments();
 		displayComments();
@@ -62,8 +61,8 @@ public class CommentsActivity extends Activity {
 		final ArrayList<String> commentbodies = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		Helper help = new Helper();
-		for (int i = 0; i < commentbodies.size(); i++){
-			//commentbodies.add(help.convertHTMLtoString(comments.get text from comments));
+		for (int i = 0; i < comments.size(); i++){
+			commentbodies.add(help.convertHTMLtoString(comments.get(i).getText()));
 		}
 
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
@@ -103,9 +102,9 @@ public class CommentsActivity extends Activity {
 	
 	public ArrayList<Comment> createTestComments(){
 		ArrayList<Comment> ret = new ArrayList<Comment>();
-		Comment one = new Comment();
-		Comment two = new Comment();
-		Comment three = new Comment();
+		Comment one = new Comment(1, "Comment one");
+		Comment two = new Comment(2, "Comment two");
+		Comment three = new Comment(3, "Comment three");
 		ret.add(one);
 		ret.add(two);
 		ret.add(three);

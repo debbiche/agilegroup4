@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,8 +35,9 @@ public class QuestionActivity extends Activity {
 	// List of questions from QuestionOverview
 	private ArrayList<Question> questions;
 	
-	// The scale of the question text relative the phones pixel
-	public final static int HEIGHT_SCALE = 1/2;
+	// The max lines of the questionbody
+	public final static int MAX_LINES_WITH_COMMENTS = 15;
+	public final static int MAX_LINES_WITHOUT_COMMENTS = 20;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,27 +59,34 @@ public class QuestionActivity extends Activity {
 	private void displayQuestion(){
 		TextView title = (TextView) findViewById(R.id.question_title);
 		TextView body = (TextView) findViewById(R.id.question_body);
+		Button commentsButton = (Button) findViewById(R.id.comments_button);
 		title.setText(question.getTitle());
 		Helper h = new Helper();
 		body.setText(h.convertHTMLtoString(question.getBody()));
 		title.setTypeface(null,Typeface.BOLD);
-		
-		DisplayMetrics dm = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		body.setMovementMethod(new ScrollingMovementMethod());
 		
-		if (answers.size() > 0){
-			body.setHeight((HEIGHT_SCALE)*dm.heightPixels);
-		}
+		if (answers.size() > 0)
+			body.setMaxLines(MAX_LINES_WITH_COMMENTS);
+		else
+			body.setMaxLines(MAX_LINES_WITHOUT_COMMENTS);
 		
 		if (hasComment(question)) {
-			body.setClickable(true);
-			body.setOnClickListener(new View.OnClickListener() {
+			commentsButton.setVisibility(View.VISIBLE);
+			//int com = size of comments
+			int com = 3;
+			String buttontext = " comments";
+			if (com == 1)
+				buttontext = " comment";
+			commentsButton.setText(com + buttontext);
+			
+			
+			commentsButton.setOnClickListener(new View.OnClickListener() {
 		        public void onClick(View v) {
 					Intent intent = new Intent(getThis(), CommentsActivity.class);
-					// Send along answer id to CommentsActivity
-					intent.putExtra("questionId", question.getId());
-					//startActivity(intent);
+					// Send along question id to CommentsActivity
+					intent.putExtra("id", question.getId());
+					startActivity(intent);
 		        }
 		    });
 		}
@@ -129,8 +138,8 @@ public class QuestionActivity extends Activity {
 				if(hasComment(answers.get((int) id))){
 					Intent intent = new Intent(getThis(), CommentsActivity.class);
 					// Send along answer id to CommentsActivity
-					intent.putExtra("answerId", ids.get((int) id));
-					//startActivity(intent);
+					intent.putExtra("id", ids.get((int) id));
+					startActivity(intent);
 				}
 			}
 		});

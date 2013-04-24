@@ -50,6 +50,10 @@
             android:name="com.agilegroup4.src.TagsOverviewActivity"
             android:label="@string/title_activity_tags_overview" >
         </activity>
+         <activity
+            android:name="com.agilegroup4.src.CommentsActivity"
+            android:label="@string/title_activity_comments" >
+        </activity>
         <activity
             android:name="com.agilegroup4.src.SettingsActivity"
             android:label="@string/title_activity_settings" >

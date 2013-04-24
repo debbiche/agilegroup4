@@ -10,11 +10,13 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,6 +34,10 @@ public class QuestionActivity extends Activity {
 	
 	// List of questions from QuestionOverview
 	private ArrayList<Question> questions;
+	
+	// The max lines of the questionbody
+	public final static int MAX_LINES_WITH_COMMENTS = 15;
+	public final static int MAX_LINES_WITHOUT_COMMENTS = 20;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +59,60 @@ public class QuestionActivity extends Activity {
 	private void displayQuestion(){
 		TextView title = (TextView) findViewById(R.id.question_title);
 		TextView body = (TextView) findViewById(R.id.question_body);
+		Button commentsButton = (Button) findViewById(R.id.comments_button);
 		title.setText(question.getTitle());
 		Helper h = new Helper();
 		body.setText(h.convertHTMLtoString(question.getBody()));
 		title.setTypeface(null,Typeface.BOLD);
 		body.setMovementMethod(new ScrollingMovementMethod());
+		
+		if (answers.size() > 0)
+			body.setMaxLines(MAX_LINES_WITH_COMMENTS);
+		else
+			body.setMaxLines(MAX_LINES_WITHOUT_COMMENTS);
+		
+		if (hasComment(question)) {
+			commentsButton.setVisibility(View.VISIBLE);
+			//int com = size of comments
+			int com = 3;
+			String buttontext = " comments";
+			if (com == 1)
+				buttontext = " comment";
+			commentsButton.setText(com + buttontext);
+			
+			
+			commentsButton.setOnClickListener(new View.OnClickListener() {
+		        public void onClick(View v) {
+					Intent intent = new Intent(getThis(), CommentsActivity.class);
+					// Send along question id to CommentsActivity
+					intent.putExtra("id", question.getId());
+					startActivity(intent);
+		        }
+		    });
+		}
+		
 	}
 	
+	public boolean hasComment(Question q){
+		return true;
+	}
+	
+	public boolean hasComment(Answer a){
+		return true;
+	}
+	
+	
 	/**
-	 * Display the answers title and body
+	 * Display the answers
 	 */
 	public void displayAnswers() {
+		TextView answ = (TextView) findViewById(R.id.question_answers);
+		int ans = answers.size();
+		String answertext = " answers";
+		if (ans == 1)
+			answertext = " answer";
+		answ.setText(ans + answertext);
+		answ.setTypeface(null,Typeface.BOLD);
 		
 		// HashMap for connecting answer id with position in the list for the question
 		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();
@@ -79,19 +128,20 @@ public class QuestionActivity extends Activity {
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
 				android.R.layout.simple_list_item_1, bodies);
 		listview.setAdapter(adapter);
-
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
 				final String item = (String) parent.getItemAtPosition(position);
-				Intent intent = new Intent(getThis(), QuestionActivity.class);
-				// Send along answer id to CommentsActivity
-				intent.putExtra("answerId", ids.get((int) id));
-				//startActivity(intent);	
+				
+				if(hasComment(answers.get((int) id))){
+					Intent intent = new Intent(getThis(), CommentsActivity.class);
+					// Send along answer id to CommentsActivity
+					intent.putExtra("id", ids.get((int) id));
+					startActivity(intent);
+				}
 			}
-
 		});
 	}
 	

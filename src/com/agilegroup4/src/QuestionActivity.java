@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,9 @@ public class QuestionActivity extends Activity {
 	
 	// List of questions from QuestionOverview
 	private ArrayList<Question> questions;
+	
+	// The scale of the question text relative the phones pixel
+	public final static int HEIGHT_SCALE = 1/2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +61,28 @@ public class QuestionActivity extends Activity {
 		Helper h = new Helper();
 		body.setText(h.convertHTMLtoString(question.getBody()));
 		title.setTypeface(null,Typeface.BOLD);
+		
+		DisplayMetrics dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		body.setMovementMethod(new ScrollingMovementMethod());
+		
+		if (answers.size() > 0){
+			body.setHeight((HEIGHT_SCALE)*dm.heightPixels);
+		}
+		
 	}
 	
 	/**
-	 * Display the answers title and body
+	 * Display the answers
 	 */
 	public void displayAnswers() {
+		TextView answ = (TextView) findViewById(R.id.question_answers);
+		int ans = answers.size();
+		String answertext = " answers";
+		if (ans == 1)
+			answertext = " answer";
+		answ.setText(ans + answertext);
+		answ.setTypeface(null,Typeface.BOLD);
 		
 		// HashMap for connecting answer id with position in the list for the question
 		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();
@@ -79,7 +98,6 @@ public class QuestionActivity extends Activity {
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
 				android.R.layout.simple_list_item_1, bodies);
 		listview.setAdapter(adapter);
-
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override

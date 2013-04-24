@@ -23,7 +23,6 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="button_logout">Logout</string>
     <string name="search_hint">Search questions by freetext or tag</string>
-    <string name="answers">Answers:</string>
     <string name="title_activity_searchable">SearchableActivity</string>
     <string name="button_filter1">latest</string>
     <string name="button_filter2">impor</string>

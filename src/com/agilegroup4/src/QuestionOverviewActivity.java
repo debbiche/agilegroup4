@@ -144,5 +144,11 @@ public class QuestionOverviewActivity extends Activity {
 		Intent intent = new Intent(this, MainMenuActivity.class);
 		startActivity(intent);
 	}
+	
+	@Override //invoked when Searchbutton pressed, just for testing
+	public boolean onSearchRequested() {
+	    System.out.println("search pressed");
+	    return super.onSearchRequested();
+	}
 
 }

@@ -104,12 +104,11 @@ public class QuestionActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
 				final String item = (String) parent.getItemAtPosition(position);
-				Intent intent = new Intent(getThis(), QuestionActivity.class);
+				Intent intent = new Intent(getThis(), CommentsActivity.class);
 				// Send along answer id to CommentsActivity
 				intent.putExtra("answerId", ids.get((int) id));
-				//startActivity(intent);	
+				startActivity(intent);	
 			}
-
 		});
 	}
 	

@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class CommentsActivity extends Activity {
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

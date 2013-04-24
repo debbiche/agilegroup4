@@ -70,7 +70,28 @@ public class QuestionActivity extends Activity {
 			body.setHeight((HEIGHT_SCALE)*dm.heightPixels);
 		}
 		
+		if (hasComment(question)) {
+			body.setClickable(true);
+			body.setOnClickListener(new View.OnClickListener() {
+		        public void onClick(View v) {
+					Intent intent = new Intent(getThis(), CommentsActivity.class);
+					// Send along answer id to CommentsActivity
+					intent.putExtra("questionId", question.getId());
+					//startActivity(intent);
+		        }
+		    });
+		}
+		
 	}
+	
+	public boolean hasComment(Question q){
+		return true;
+	}
+	
+	public boolean hasComment(Answer a){
+		return true;
+	}
+	
 	
 	/**
 	 * Display the answers
@@ -104,10 +125,13 @@ public class QuestionActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
 				final String item = (String) parent.getItemAtPosition(position);
-				Intent intent = new Intent(getThis(), CommentsActivity.class);
-				// Send along answer id to CommentsActivity
-				intent.putExtra("answerId", ids.get((int) id));
-				startActivity(intent);	
+				
+				if(hasComment(answers.get((int) id))){
+					Intent intent = new Intent(getThis(), CommentsActivity.class);
+					// Send along answer id to CommentsActivity
+					intent.putExtra("answerId", ids.get((int) id));
+					//startActivity(intent);
+				}
 			}
 		});
 	}

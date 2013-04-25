@@ -18,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.agilegroup4.helpers.ImportantComparator;
+import com.agilegroup4.helpers.LatestComparator;
 import com.agilegroup4.model.Question;
 
 public class QuestionOverviewActivity extends Activity {
@@ -132,12 +134,15 @@ public class QuestionOverviewActivity extends Activity {
 	
 	public void filterLatest(View view){
 		
-		//Collections.sort(questions, new Comparator <Question>);
+		Collections.sort(questions, new LatestComparator());
 		
 		displayQuestions();
 	}
 	
 	public void filterImportant(View view){
+		
+		Collections.sort(questions, new ImportantComparator());
+		
 		displayQuestions();
 	}
 	
@@ -155,15 +160,6 @@ public class QuestionOverviewActivity extends Activity {
 	public boolean onSearchRequested() {
 	    System.out.println("search pressed");
 	    return super.onSearchRequested();
-	}
-	
-	/* compares two Question objects.
-	 * returns 
-	 * */
-	private boolean compare(Question q1, Question q2, int compareBy){
-		
-		
-		return true;
 	}
 
 }

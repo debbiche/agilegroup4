@@ -1,14 +1,14 @@
 package com.agilegroup4.model;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
-public class Question implements Comparator<Question>{
+public class Question{
 
 	private int id;
 	private String title;
 	private String body;
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
+	private String creationDate;
 	
 	public Question(int id, String title, String body){
 		this.title = title;
@@ -43,11 +43,11 @@ public class Question implements Comparator<Question>{
 		this.id = id;
 	}
 
-	@Override
-	public int compare(Question arg0, Question arg1) {
-		// TODO Auto-generated method stub
-		return 0;
+	public String getCreationDate() {
+		return creationDate;
 	}
 
-	
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
+	}	
 }

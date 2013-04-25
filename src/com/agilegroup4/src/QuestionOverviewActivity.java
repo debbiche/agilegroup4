@@ -1,9 +1,10 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import com.agilegroup4.model.Question;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.agilegroup4.model.Question;
 
 public class QuestionOverviewActivity extends Activity {
 	
@@ -63,7 +66,7 @@ public class QuestionOverviewActivity extends Activity {
 
 	public void displayQuestions() {
 	
-		DatabaseHandler.queryQuestions(30);
+		DatabaseHandler.queryQuestions(60);
 		questions = DatabaseHandler.getQuestions();
 		
 		// HashMap for connecting question id with position in the list for the question
@@ -127,22 +130,40 @@ public class QuestionOverviewActivity extends Activity {
 
 	}
 	
-	public void filterLatest(){
+	public void filterLatest(View view){
 		
+		//Collections.sort(questions, new Comparator <Question>);
+		
+		displayQuestions();
 	}
 	
-	public void filterImportant(){
-		
+	public void filterImportant(View view){
+		displayQuestions();
 	}
 	
-	public void filterAnswers(){
-		
+	public void filterAnswers(View view){
+		displayQuestions();
 	}
 	
 	public void onBackPressed(){
 		// call next activity
 		Intent intent = new Intent(this, MainMenuActivity.class);
 		startActivity(intent);
+	}
+	
+	@Override //invoked when Searchbutton pressed, just for testing
+	public boolean onSearchRequested() {
+	    System.out.println("search pressed");
+	    return super.onSearchRequested();
+	}
+	
+	/* compares two Question objects.
+	 * returns 
+	 * */
+	private boolean compare(Question q1, Question q2, int compareBy){
+		
+		
+		return true;
 	}
 
 }

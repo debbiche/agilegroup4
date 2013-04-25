@@ -1,8 +1,9 @@
 package com.agilegroup4.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class Question {
+public class Question implements Comparator<Question>{
 
 	private int id;
 	private String title;
@@ -50,6 +51,12 @@ public class Question {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	@Override
+	public int compare(Question arg0, Question arg1) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

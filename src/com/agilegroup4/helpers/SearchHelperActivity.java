@@ -1,4 +1,4 @@
-package com.agilegroup4.src;
+package com.agilegroup4.helpers;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ import android.widget.ListView;
 import com.agilegroup4.model.Question;
 import com.agilegroup4.src.DatabaseHandler;
 
-public class SearchableActivity extends ListActivity {
+public class SearchHelperActivity extends ListActivity {
 
 	// List of questions from QuestionOverview
 	private ArrayList<Question> questions;

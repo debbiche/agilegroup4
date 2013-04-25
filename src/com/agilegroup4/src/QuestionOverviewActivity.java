@@ -127,22 +127,30 @@ public class QuestionOverviewActivity extends Activity {
 
 	}
 	
-	public void filterLatest(){
+	public void filterLatest(View view){
+		//questions.
 		
+		displayQuestions();
 	}
 	
-	public void filterImportant(){
-		
+	public void filterImportant(View view){
+		displayQuestions();
 	}
 	
-	public void filterAnswers(){
-		
+	public void filterAnswers(View view){
+		displayQuestions();
 	}
 	
 	public void onBackPressed(){
 		// call next activity
 		Intent intent = new Intent(this, MainMenuActivity.class);
 		startActivity(intent);
+	}
+	
+	@Override //invoked when Searchbutton pressed, just for testing
+	public boolean onSearchRequested() {
+	    System.out.println("search pressed");
+	    return super.onSearchRequested();
 	}
 
 }

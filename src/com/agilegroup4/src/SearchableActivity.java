@@ -11,12 +11,13 @@ import android.widget.ListView;
 
 
 import com.agilegroup4.model.Question;
+import com.agilegroup4.model.QuestionList;
 
 public class SearchableActivity extends ListActivity {
 
 	// List of questions from QuestionOverview
 	private ArrayList<Question> questions;
-	private ArrayList<Question> searchResultQuestions;
+	private QuestionList searchResultQuestions;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,24 +41,27 @@ public class SearchableActivity extends ListActivity {
 		//}
 		//System.out.println(intent.getStringExtra("action"));
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			String query = intent.getStringExtra(SearchManager.QUERY);
+			String query = intent.getStringExtra(SearchManager.QUERY).toLowerCase();
 			doSearch(query);
 		}
 	}
 	//Searches questions titles and body for input search query and returns ArrayList of questions
 	//to QuestionsOverview for presentation
 	private void doSearch(String query) { 
-		searchResultQuestions = new ArrayList<Question>();
+		searchResultQuestions = new QuestionList();
 		questions =  DatabaseHandler.getQuestions();
 		for(int i = 0; i < questions.size(); i++){
-			if(questions.get(i).getTitle().contains(query) || questions.get(i).getBody().contains(query) )
+			if(questions.get(i).getTitle().toLowerCase().contains(query) || questions.get(i).getBody().toLowerCase().contains(query) )
 			{
 				System.out.println("Found question with title: " + questions.get(i).getTitle());
 				searchResultQuestions.add(questions.get(i));
 			}
 		}
+		
+		Bundle b = new Bundle();
+        b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object
 		Intent intent = new Intent(this, QuestionOverviewActivity.class);
-		intent.putExtra("questionsData", searchResultQuestions);
+		intent.putExtras(b);
 		startActivity(intent);
 	}
 		

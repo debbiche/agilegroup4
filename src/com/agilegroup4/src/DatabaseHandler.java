@@ -17,11 +17,11 @@ import com.agilegroup4.model.User;
  */
 public class DatabaseHandler {
 
-	private static int loaded = 0;
-	private static int queriedQuestions = 0;
-	private static DatabaseLoader dbLoader;
-	private static SQLiteDatabase db;
-	private static ArrayList<Question> questions = new ArrayList<Question>();
+	protected static int loaded = 0;
+	protected static int queriedQuestions = 0;
+	protected static DatabaseLoader dbLoader;
+	protected static SQLiteDatabase db;
+	protected static ArrayList<Question> questions = new ArrayList<Question>();
 
 	public DatabaseHandler(Context context) {
 
@@ -116,6 +116,8 @@ public class DatabaseHandler {
 		return curUserID;
 	}
 
+	
+	
 	/*
 	 * Call this method then you can just just loop over the questions list
 	 * object created here and use get the title of each questions to put in the

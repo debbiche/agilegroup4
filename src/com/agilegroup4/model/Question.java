@@ -3,7 +3,10 @@ package com.agilegroup4.model;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Question{
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Question implements Parcelable {
 
 	private int id;
 	//private int postTypeId;
@@ -26,12 +29,26 @@ public class Question{
 	private int commentCount;
 	private int favoriteCount;
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
-	
+
 	public Question(int id, String title, String body, int comment_count){
 		this.title = title;
 		this.body = body;
 		this.commentCount = comment_count;
 		this.setId(id);
+	}
+	
+	private Question(Parcel in) {
+		this.title = in.readString();;
+		this.body = in.readString();
+		this.commentCount = in.readInt();
+		this.id = in.readInt();
+	}
+	
+	public void writeToParcel(Parcel out, int flags) {
+		out.writeString(title);
+		out.writeString(body);
+		out.writeInt(commentCount);
+		out.writeInt(id);
 	}
 	
 	public int getCommentCount(){
@@ -109,5 +126,19 @@ public class Question{
 		this.favoriteCount = favoriteCount;
 	}
 
+	public int describeContents() {
+		return this.hashCode();
+	}
 
+	public static final Parcelable.Creator<Question> CREATOR = 
+		new Parcelable.Creator<Question>() { 
+		public Question createFromParcel(Parcel in) { 
+			return new Question(in);        
+		}
+
+		@Override
+		public Question[] newArray(int size) {
+			return new Question[size];
+		}
+	};
 }

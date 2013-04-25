@@ -49,8 +49,9 @@ public class QuestionOverviewActivity extends Activity {
 	
 	public void getIntentData(){
 	    Intent i = getIntent();
-	    if(i != null && i.hasExtra("questionsData")){
-	    	questions = i.getParcelableExtra("questionsData");
+	    if(i != null && i.hasExtra("questionsData")){   
+	    	Bundle b = i.getExtras(); //Get the intent's extras
+	    	questions = b.getParcelable("questionsData"); //get our list
 	    }
 	}
 

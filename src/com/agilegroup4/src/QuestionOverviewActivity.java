@@ -127,16 +127,18 @@ public class QuestionOverviewActivity extends Activity {
 
 	}
 	
-	public void filterLatest(){
+	public void filterLatest(View view){
+		//questions.
 		
+		displayQuestions();
 	}
 	
-	public void filterImportant(){
-		
+	public void filterImportant(View view){
+		displayQuestions();
 	}
 	
-	public void filterAnswers(){
-		
+	public void filterAnswers(View view){
+		displayQuestions();
 	}
 	
 	public void onBackPressed(){

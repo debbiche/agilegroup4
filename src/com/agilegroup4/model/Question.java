@@ -22,24 +22,24 @@ public class Question{
 	//private Date closedDate;
 	private String title;
 	//private String tags;
-	private int answer_count;
-	private int comment_count;
-	private int favorite_count;
+	private int answerCount;
+	private int commentCount;
+	private int favoriteCount;
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
 	
 	public Question(int id, String title, String body, int comment_count){
 		this.title = title;
 		this.body = body;
-		this.comment_count = comment_count;
+		this.commentCount = comment_count;
 		this.setId(id);
 	}
 	
 	public int getCommentCount(){
-		return comment_count;
+		return commentCount;
 	}
 	
 	public void setCommentCount(int comment_count){
-		this.comment_count = comment_count;
+		this.commentCount = comment_count;
 	}
 	
 	public String getTitle() {
@@ -93,28 +93,21 @@ public class Question{
 		this.viewCount = viewCount;
 	}
 
-	public int getAnswer_count() {
-		return answer_count;
+	public int getAnswerCount() {
+		return answerCount;
 	}
 
-	public void setAnswer_count(int answer_count) {
-		this.answer_count = answer_count;
+	public void setAnswerCount(int answerCount) {
+		this.answerCount = answerCount;
 	}
 
-	public int getComment_count() {
-		return comment_count;
+	public int getFavoriteCount() {
+		return favoriteCount;
 	}
 
-	public void setComment_count(int comment_count) {
-		this.comment_count = comment_count;
+	public void setFavoriteCount(int favoriteCount) {
+		this.favoriteCount = favoriteCount;
 	}
 
-	public int getFavorite_count() {
-		return favorite_count;
-	}
-
-	public void setFavorite_count(int favorite_count) {
-		this.favorite_count = favorite_count;
-	}
 
 }

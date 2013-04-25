@@ -8,6 +8,20 @@ public class ImportantComparator implements Comparator<Question> {
 
 	@Override
 	public int compare(Question lhs, Question rhs) {
-		return rhs.getId() - lhs.getId();
+		int scoreLhs, scoreRhs;
+		
+		// add view count to score
+		scoreLhs = lhs.getViewCount();
+		scoreRhs = rhs.getViewCount();
+		
+		// add score to score (one score point equals 50 views)
+		scoreLhs = lhs.getScore();
+		scoreRhs = rhs.getScore();
+		
+		// add favorite count to score (one favorite point equals 100 views)
+		scoreLhs = lhs.getViewCount();
+		scoreRhs = rhs.getViewCount();
+		
+		return scoreRhs - scoreLhs;
 	}
 }

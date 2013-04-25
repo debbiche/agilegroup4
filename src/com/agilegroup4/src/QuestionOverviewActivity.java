@@ -86,7 +86,7 @@ public class QuestionOverviewActivity extends Activity {
 
 	public void displayQuestions() {
 	
-		DatabaseHandler.queryQuestions(160);
+		DatabaseHandler.queryQuestions(60);
 		//If questions has been instanced before dont do it again.
 		if(questions == null)
 			questions = DatabaseHandler.getQuestions();

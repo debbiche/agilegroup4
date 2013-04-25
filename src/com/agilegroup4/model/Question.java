@@ -7,12 +7,22 @@ public class Question {
 	private int id;
 	private String title;
 	private String body;
+	private int comment_count;
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
 	
-	public Question(int id, String title, String body){
+	public Question(int id, String title, String body, int comment_count){
 		this.title = title;
 		this.body = body;
+		this.comment_count = comment_count;
 		this.setId(id);
+	}
+	
+	public int getCommentCount(){
+		return comment_count;
+	}
+	
+	public void setCommentCount(int comment_count){
+		this.comment_count = comment_count;
 	}
 	
 	public String getTitle() {

@@ -126,7 +126,7 @@ public class DatabaseHandler {
 			
 			
 					Cursor questionsCursor = db.rawQuery(
-							"SELECT id,title,body FROM posts"
+							"SELECT id,title,body,comment_count FROM posts"
 									+ " WHERE post_type_id = 1 LIMIT ?", new String[] {Integer.toString(numberOfQuestions)});
 					
 					
@@ -141,9 +141,9 @@ public class DatabaseHandler {
 			while (questionsCursor.isAfterLast() == false) {
 				questions.add(new Question(questionsCursor.getInt(0),
 						questionsCursor.getString(1), questionsCursor
-								.getString(2)));
+								.getString(2), questionsCursor.getInt(3)));
 
-				Cursor answersCursor = db.rawQuery("SELECT id,body "
+				Cursor answersCursor = db.rawQuery("SELECT id,body,comment_count "
 						+ "FROM posts WHERE parent_id = ?",
 						new String[] { Integer.toString(questionsCursor
 								.getInt(0)) });
@@ -154,7 +154,7 @@ public class DatabaseHandler {
 					questions
 							.get(questionCounter)
 							.getAnswers()
-							.add(new Answer(answersCursor.getInt(0), answersCursor.getString(1)));
+							.add(new Answer(answersCursor.getInt(0), answersCursor.getString(1), answersCursor.getInt(2)));
 					//System.out.println("Added an answer!");
 				//	}
 					answersCursor.moveToNext();
@@ -170,5 +170,22 @@ public class DatabaseHandler {
 			questionsCursor.close();
 			queriedQuestions = 1;
 		}
+	}
+	
+	public static ArrayList<Comment> getComments(int id){
+		ArrayList<Comment> comments = new ArrayList<Comment>();
+		
+		Cursor commentsCursor = db.rawQuery(
+				"SELECT id,text FROM comments"
+						+ " WHERE post_id = " + id, null);
+		commentsCursor.moveToFirst();
+		while (commentsCursor.isAfterLast() == false) {
+			comments.add(new Comment(commentsCursor.getInt(0),
+					commentsCursor.getString(1)));
+			commentsCursor.moveToNext();
+		}
+		commentsCursor.close();
+		
+		return comments;
 	}
 }

@@ -73,8 +73,7 @@ public class QuestionActivity extends Activity {
 		
 		if (hasComment(question)) {
 			commentsButton.setVisibility(View.VISIBLE);
-			//int com = size of comments
-			int com = 3;
+			int com = question.getCommentCount();
 			String buttontext = " comments";
 			if (com == 1)
 				buttontext = " comment";
@@ -94,11 +93,11 @@ public class QuestionActivity extends Activity {
 	}
 	
 	public boolean hasComment(Question q){
-		return true;
+		return (q.getCommentCount() > 0);
 	}
 	
 	public boolean hasComment(Answer a){
-		return true;
+		return (a.getCommentCount() > 0);
 	}
 	
 	

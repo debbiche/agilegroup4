@@ -9,7 +9,7 @@ public class LatestComparator implements Comparator<Question> {
 
 	@Override
 	public int compare(Question lhs, Question rhs) {
-		return rhs.getAnswers().size() - lhs.getAnswers().size();
+		return lhs.getCreationDate().compareTo(rhs.getCreationDate());
 	}
 
 }

@@ -25,6 +25,10 @@ import com.agilegroup4.model.Question;
 
 public class QuestionOverviewActivity extends Activity {
 	
+	// HashMap for connecting question id with position in the list for the question
+	// Used for unit testing
+	public HashMap<Integer,Integer> idsTestMap;
+	
 	// Controls the number of questions that are displayed
 	public final static int NR_OF_POSTS = 10;
 
@@ -43,7 +47,16 @@ public class QuestionOverviewActivity extends Activity {
 				LoginActivity.PREFS_NAME, 0);
 		int userID = settings.getInt("userID", 0);
 
+		getIntentData();
 		displayQuestions();
+	}
+	
+	public void getIntentData(){
+	  //  Intent i = getIntent();
+	    //if(i != null && i.hasExtra("questionsData")){
+		SearchableActivity n = new SearchableActivity();
+	    	questions = n.getSearchResultQuestions();
+	    			//i.getParcelableExtra("questionsData");
 	}
 
 	@Override
@@ -62,6 +75,9 @@ public class QuestionOverviewActivity extends Activity {
 			intent = new Intent(this, MainMenuActivity.class);
 			startActivity(intent);
 			return true;
+		 case R.id.menuitem_search:
+	        	onSearchRequested();
+	            return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -70,10 +86,13 @@ public class QuestionOverviewActivity extends Activity {
 	public void displayQuestions() {
 	
 		DatabaseHandler.queryQuestions(60);
-		questions = DatabaseHandler.getQuestions();
+		//If questions has been instanced before dont do it again.
+		if(questions == null)
+			questions = DatabaseHandler.getQuestions();
 		
 		// HashMap for connecting question id with position in the list for the question
 		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();
+		idsTestMap = ids;
 		// HashMap needed for displaying the titles in the listview
 		final ArrayList<String> titles = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);

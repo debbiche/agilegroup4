@@ -21,6 +21,12 @@ public class TagsOverviewActivity extends Activity {
 		return true;
 	}
 	
+	@Override //invoked when Searchbutton pressed, just for testing
+	public boolean onSearchRequested() {
+	    System.out.println("search pressed");
+	    return super.onSearchRequested();
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;
@@ -29,6 +35,9 @@ public class TagsOverviewActivity extends Activity {
 	        case R.id.menuitem_mainmenu:
 				intent = new Intent(this, MainMenuActivity.class);
 				startActivity(intent);
+	            return true;
+	        case R.id.menuitem_search:
+	        	onSearchRequested();
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);

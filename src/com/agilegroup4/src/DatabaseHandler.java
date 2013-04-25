@@ -18,7 +18,7 @@ import com.agilegroup4.model.User;
  */
 public class DatabaseHandler {
 
-	private static int loaded = 0;
+	public static int loaded = 0;
 	private static int queriedQuestions = 0;
 	private static DatabaseLoader dbLoader;
 	private static SQLiteDatabase db;

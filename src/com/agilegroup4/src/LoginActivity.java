@@ -2,6 +2,7 @@ package com.agilegroup4.src;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,22 +22,17 @@ import android.widget.Toast;
 public class LoginActivity extends Activity {
 	public final static String EXTRA_USERNAME = "USERNAME";
 	public static final String PREFS_NAME = "SETTINGS";
+	ProgressDialog progress;
+
 	//public static DatabaseHandler dbHandler;
  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		progress = new ProgressDialog(this);
 		
-		long start = System.currentTimeMillis();    
-
-		//DatabaseHandler.initDB(getApplicationContext());
-		new initDB().doInBackground((Object )null);
-		long elapsedTime = System.currentTimeMillis() - start;
-		System.out.println("Time it took: " + elapsedTime);
-		
-		//if(!checkLoggedOut())
-			//dbHandler = new DatabaseHandler();
+		loadDB();
 		
 		// Get logged in state
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -137,7 +133,17 @@ public class LoginActivity extends Activity {
 			}});	
 			
 			alert.show();
-		}	
+		}		
+			
+		}
+	
+	private void loadDB(){
+		if (DatabaseHandler.loaded == 0) {
+			progress.setTitle("Please Wait");
+			progress.setMessage("Database is loading...");
+			progress.show();
+			new initDB().execute();
+		}
 	}
 	
 	// the return button at this screen shall always close the application
@@ -145,7 +151,7 @@ public class LoginActivity extends Activity {
 		System.exit(0);
 	}
 	
-	private class initDB extends AsyncTask {
+	private class initDB extends AsyncTask<Object, Object, Object>{
 
 		@Override
 		protected Object doInBackground(Object... params) {
@@ -153,12 +159,12 @@ public class LoginActivity extends Activity {
 			return null;
 		}
 	
-	   // @Override
-	     protected void onPostExecute() {
-	    	 Toast.makeText(getApplicationContext(), "Loaded Database!", Toast.LENGTH_LONG).show();
-	     }
-		
+		@Override
+	     protected void onPostExecute(Object params) {
+			progress.dismiss();
 
+	     }
+	
 
 	 }
 }

@@ -36,7 +36,7 @@ public class Question{
 		this.creationDate = creation_date;
 		this.score = score;
 		this.viewCount = viewCount;
-		this.favorite_count = favoriteCount;
+		this.favoriteCount = favoriteCount;
 		
 		
 	}

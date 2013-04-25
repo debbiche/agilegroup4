@@ -124,12 +124,17 @@ public class DatabaseHandler {
 	public static void queryQuestions(int numberOfQuestions) {
 		if (queriedQuestions == 0) {
 
+
 			long start = System.currentTimeMillis();
 
 			Cursor questionsCursor = db
 					.rawQuery(
-							"SELECT R.id AS id,  R.title AS title, R.body AS question, "
-									+ "D.body AS answer, R.answer_count, D.parent_id AS parentid"
+							"SELECT R.id AS id," +
+							"R.title AS title, " +
+							"R.body AS question,"
+						  + "D.body AS answer," +
+							"R.answer_count," +
+							"D.parent_id AS parentid, R.comment_count, D.id AS answer_id, D.comment_count"
 									+ " FROM posts R INNER JOIN posts D ON "
 									+ "D.parent_id = R.id ORDER BY id LIMIT ?",
 							new String[] { Integer.toString(numberOfQuestions) });
@@ -141,14 +146,15 @@ public class DatabaseHandler {
 
 				questions.add(new Question(questionsCursor.getInt(0),
 						questionsCursor.getString(1), questionsCursor
-								.getString(2)));
+								.getString(2), questionsCursor.getInt(6)));
+
 
 				for (int i = 0; i < questionsCursor.getInt(4) - 1; i++) {
 					questions
 							.get(questionCounter)
 							.getAnswers()
-							.add(new Answer(questionsCursor.getInt(5),
-									questionsCursor.getString(3)));
+							.add(new Answer(questionsCursor.getInt(7),
+									questionsCursor.getString(3), questionsCursor.getInt(8)) );
 					questionsCursor.moveToNext();
 
 				}
@@ -164,5 +170,22 @@ public class DatabaseHandler {
 			questionsCursor.close();
 			queriedQuestions = 1;
 		}
+	}
+	
+	public static ArrayList<Comment> getComments(int id){
+		ArrayList<Comment> comments = new ArrayList<Comment>();
+		
+		Cursor commentsCursor = db.rawQuery(
+				"SELECT id,text FROM comments"
+						+ " WHERE post_id = " + id, null);
+		commentsCursor.moveToFirst();
+		while (commentsCursor.isAfterLast() == false) {
+			comments.add(new Comment(commentsCursor.getInt(0),
+					commentsCursor.getString(1)));
+			commentsCursor.moveToNext();
+		}
+		commentsCursor.close();
+		
+		return comments;
 	}
 }

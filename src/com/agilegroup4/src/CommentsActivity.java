@@ -29,8 +29,8 @@ public class CommentsActivity extends Activity {
 		
 		int id = getIntent().getIntExtra("id", 0);
 	
-		//comments = get comments from the id
-		comments = createTestComments();
+		comments = DatabaseHandler.getComments(id);
+		//comments = createTestComments();
 		displayComments();
 	}
 

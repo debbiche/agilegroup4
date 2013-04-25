@@ -3,6 +3,9 @@ package com.agilegroup4.helpers;
 import java.util.Comparator;
 import com.agilegroup4.model.Question;
 
+/*
+ * 
+ */
 public class AnsweredComparator implements Comparator<Question> {
 
 	@Override

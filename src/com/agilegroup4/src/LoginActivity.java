@@ -2,6 +2,7 @@ package com.agilegroup4.src;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /* The login Activity is responsible for handling the login
  * and as it is always the first Activity to be called
@@ -20,24 +22,19 @@ import android.widget.EditText;
 public class LoginActivity extends Activity {
 	public final static String EXTRA_USERNAME = "USERNAME";
 	public static final String PREFS_NAME = "SETTINGS";
+	ProgressDialog progress;
+
 	//public static DatabaseHandler dbHandler;
  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		progress = new ProgressDialog(this);
 		
-		long start = System.currentTimeMillis();    
-
-		//DatabaseHandler.initDB(getApplicationContext());
-		new initDB().doInBackground((Object )null);
-		long elapsedTime = System.currentTimeMillis() - start;
-		System.out.println("Time it took: " + elapsedTime);
+		loadDB();
 		
-		//if(!checkLoggedOut())
-			//dbHandler = new DatabaseHandler();
-		
-		// Get loggedin state
+		// Get logged in state
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		int userId = settings.getInt("userID", 0);
 		
@@ -136,7 +133,17 @@ public class LoginActivity extends Activity {
 			}});	
 			
 			alert.show();
-		}	
+		}		
+			
+		}
+	
+	private void loadDB(){
+		if (DatabaseHandler.loaded == 0) {
+			progress.setTitle("Please Wait");
+			progress.setMessage("Database is loading...");
+			progress.show();
+			new initDB().execute();
+		}
 	}
 	
 	// the return button at this screen shall always close the application
@@ -144,21 +151,20 @@ public class LoginActivity extends Activity {
 		System.exit(0);
 	}
 	
-	private class initDB extends AsyncTask {
+	private class initDB extends AsyncTask<Object, Object, Object>{
 
 		@Override
 		protected Object doInBackground(Object... params) {
 			DatabaseHandler.initDB(getApplicationContext());
-			System.out.println("Finished loading this shit!");
 			return null;
 		}
 	
+		@Override
+	     protected void onPostExecute(Object params) {
+			progress.dismiss();
 
-//	     protected void onPostExecute(Bitmap result) {
-//	         mImageView.setImageBitmap(result);
-//	     }
-		
-
+	     }
+	
 
 	 }
 }

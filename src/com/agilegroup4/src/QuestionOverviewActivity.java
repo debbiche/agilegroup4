@@ -25,6 +25,10 @@ import com.agilegroup4.model.Question;
 
 public class QuestionOverviewActivity extends Activity {
 	
+	// HashMap for connecting question id with position in the list for the question
+	// Used for unit testing
+	public HashMap<Integer,Integer> idsTestMap;
+	
 	// Controls the number of questions that are displayed
 	public final static int NR_OF_POSTS = 10;
 
@@ -88,6 +92,7 @@ public class QuestionOverviewActivity extends Activity {
 		
 		// HashMap for connecting question id with position in the list for the question
 		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();
+		idsTestMap = ids;
 		// HashMap needed for displaying the titles in the listview
 		final ArrayList<String> titles = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
@@ -149,7 +154,20 @@ public class QuestionOverviewActivity extends Activity {
 	
 	public void filterLatest(View view){
 		
+		//System.out.println("before:");
+		//questions.get(3).setCreationDate(Helper.stringToDate("2013-04-26"));
+		//questions.get(5).setCreationDate(Helper.stringToDate("2013-04-26"));
+		//questions.get(7).setCreationDate(Helper.stringToDate("2013-04-26"));
+//		for(int i=0; i < questions.size(); i++){
+//			System.out.println(questions.get(i).getCreationDate().toString());
+//		}
+		
 		Collections.sort(questions, new LatestComparator());
+		
+//		System.out.println("after:");
+//		for(int i=0; i < questions.size(); i++){
+//			System.out.println(questions.get(i).getCreationDate().toString());
+//		}
 		
 		displayQuestions();
 	}

@@ -29,12 +29,17 @@ public class Question implements Parcelable {
 	private int commentCount;
 	private int favoriteCount;
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
-
-	public Question(int id, String title, String body, int comment_count){
+	
+	public Question(int id, String title, String body, int comment_count,
+					Date creation_date, int score, int viewCount, int favoriteCount){
 		this.title = title;
 		this.body = body;
 		this.commentCount = comment_count;
 		this.setId(id);
+		this.creationDate = creation_date;
+		this.score = score;
+		this.viewCount = viewCount;
+		this.favoriteCount = favoriteCount;
 	}
 	
 	private Question(Parcel in) {
@@ -42,6 +47,10 @@ public class Question implements Parcelable {
 		this.body = in.readString();
 		this.commentCount = in.readInt();
 		this.id = in.readInt();
+		//this.creationDate = in.readSerializable();
+		this.score = in.readInt();
+		this.viewCount = in.readInt();
+		this.favoriteCount = in.readInt();
 	}
 	
 	public void writeToParcel(Parcel out, int flags) {
@@ -49,6 +58,10 @@ public class Question implements Parcelable {
 		out.writeString(body);
 		out.writeInt(commentCount);
 		out.writeInt(id);
+		//out.writeInt(creationDate);
+		out.writeInt(score);
+		out.writeInt(viewCount);
+		out.writeInt(favoriteCount);
 	}
 	
 	public int getCommentCount(){

@@ -123,52 +123,69 @@ public class DatabaseHandler {
 	 */
 	public static void queryQuestions(int numberOfQuestions) {
 		if (queriedQuestions == 0) {
-			
-			
-					Cursor questionsCursor = db.rawQuery(
-							"SELECT id,title,body FROM posts"
-									+ " WHERE post_type_id = 1 LIMIT ?", new String[] {Integer.toString(numberOfQuestions)});
-					
-					
-//					Cursor answersCursor = db.rawQuery(
-//							"SELECT id, parent_id, body FROM posts"
-//									+ " WHERE post_type_id = ?", new String[] {Integer.toString(2)});
-//					
-					
-					
+
+
+			long start = System.currentTimeMillis();
+
+			Cursor questionsCursor = db
+					.rawQuery(
+							"SELECT R.id AS id," +
+							"R.title AS title, " +
+							"R.body AS question,"
+						  + "D.body AS answer," +
+							"R.answer_count," +
+							"D.parent_id AS parentid, R.comment_count, D.id AS answer_id, D.comment_count"
+									+ " FROM posts R INNER JOIN posts D ON "
+									+ "D.parent_id = R.id ORDER BY id LIMIT ?",
+							new String[] { Integer.toString(numberOfQuestions) });
+
 			questionsCursor.moveToFirst();
 			int questionCounter = 0;
+
 			while (questionsCursor.isAfterLast() == false) {
+
 				questions.add(new Question(questionsCursor.getInt(0),
 						questionsCursor.getString(1), questionsCursor
-								.getString(2)));
+								.getString(2), questionsCursor.getInt(6)));
 
-				Cursor answersCursor = db.rawQuery("SELECT id,body "
-						+ "FROM posts WHERE parent_id = ?",
-						new String[] { Integer.toString(questionsCursor
-								.getInt(0)) });
 
-				answersCursor.moveToFirst();
-				while (answersCursor.isAfterLast() == false) {
-				//	if (answersCursor.getInt(1) == (questions.get(questionCounter).getId())){
+				for (int i = 0; i < questionsCursor.getInt(4) - 1; i++) {
 					questions
 							.get(questionCounter)
 							.getAnswers()
-							.add(new Answer(answersCursor.getInt(0), answersCursor.getString(1)));
-					//System.out.println("Added an answer!");
-				//	}
-					answersCursor.moveToNext();
-					
+							.add(new Answer(questionsCursor.getInt(7),
+									questionsCursor.getString(3), questionsCursor.getInt(8)) );
+					questionsCursor.moveToNext();
+
 				}
-			
-				answersCursor.close();
+
 				questionsCursor.moveToNext();
 				questionCounter++;
 
 			}
+			long elapsedTime = System.currentTimeMillis() - start;
+			System.out.println("Time it took to load questions and answers: "
+					+ elapsedTime);
 			System.out.println("Done added questions and their answers!");
 			questionsCursor.close();
 			queriedQuestions = 1;
 		}
+	}
+	
+	public static ArrayList<Comment> getComments(int id){
+		ArrayList<Comment> comments = new ArrayList<Comment>();
+		
+		Cursor commentsCursor = db.rawQuery(
+				"SELECT id,text FROM comments"
+						+ " WHERE post_id = " + id, null);
+		commentsCursor.moveToFirst();
+		while (commentsCursor.isAfterLast() == false) {
+			comments.add(new Comment(commentsCursor.getInt(0),
+					commentsCursor.getString(1)));
+			commentsCursor.moveToNext();
+		}
+		commentsCursor.close();
+		
+		return comments;
 	}
 }

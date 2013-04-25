@@ -2,9 +2,11 @@ package com.agilegroup4.src;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +27,12 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		DatabaseHandler.initDB(getApplicationContext());
+		long start = System.currentTimeMillis();    
+
+		//DatabaseHandler.initDB(getApplicationContext());
+		new initDB().doInBackground((Object )null);
+		long elapsedTime = System.currentTimeMillis() - start;
+		System.out.println("Time it took: " + elapsedTime);
 		
 		//if(!checkLoggedOut())
 			//dbHandler = new DatabaseHandler();
@@ -136,4 +143,22 @@ public class LoginActivity extends Activity {
 	public void onBackPressed(){
 		System.exit(0);
 	}
+	
+	private class initDB extends AsyncTask {
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			DatabaseHandler.initDB(getApplicationContext());
+			System.out.println("Finished loading this shit!");
+			return null;
+		}
+	
+
+//	     protected void onPostExecute(Bitmap result) {
+//	         mImageView.setImageBitmap(result);
+//	     }
+		
+
+
+	 }
 }

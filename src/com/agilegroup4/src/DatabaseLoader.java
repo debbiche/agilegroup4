@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -41,11 +42,12 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 			this.db = SQLiteDatabase.openDatabase(dbPath + dbName, null,
 					SQLiteDatabase.OPEN_READONLY
 							| SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+			addIndexes();
 			return;
 		} else {
 			System.out.println("Database not loaded, loading it now...");
 			this.getWritableDatabase(); // open empty DB
-			inputDB = context.getAssets().open("so.sqlite"); // load db file
+			inputDB = context.getAssets().open("so.jpg"); // load db file
 			outputDB = new FileOutputStream(dbPath + dbName);
 			byte[] buffer = new byte[1024];
 			int length = inputDB.read(buffer);
@@ -60,6 +62,7 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 			db = SQLiteDatabase.openDatabase(dbPath + dbName, null,
 					SQLiteDatabase.OPEN_READONLY
 							| SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+			addIndexes();
 			// db.close();
 		}
 
@@ -100,6 +103,12 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	private void addIndexes(){
+		Cursor indexes = db.rawQuery("CREATE INDEX PIndex ON posts " +
+				"(parent_id, post_type_id,title,body)", null);
+		indexes.close();
 	}
 
 }

@@ -2,10 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".QuestionOverviewActivity" >
 
     <LinearLayout android:id="@+id/footer" android:layout_width="fill_parent"
@@ -14,15 +10,18 @@
 
     <Button android:id="@+id/latestButton" android:layout_width="0dp"
         android:layout_height="wrap_content" android:layout_weight="1"
-        android:text="@string/button_filter1" />
+        android:text="@string/button_filter1" 
+		android:onClick="filterLatest"	/>
 
     <Button android:id="@+id/importantButton" android:layout_width="0dp"
         android:layout_height="wrap_content" android:layout_weight="1"
-        android:text="@string/button_filter2" />
+        android:text="@string/button_filter2"
+        android:onClick="filterImportant" />
     
     <Button android:id="@+id/answeredButton" android:layout_width="0dp"
         android:layout_height="wrap_content" android:layout_weight="1"
-        android:text="@string/button_filter3" />
+        android:text="@string/button_filter3"
+        android:onClick="filterAnswers" />
 	</LinearLayout>
     
     <ListView

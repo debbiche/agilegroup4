@@ -25,6 +25,10 @@ import com.agilegroup4.model.Question;
 
 public class QuestionOverviewActivity extends Activity {
 	
+	// HashMap for connecting question id with position in the list for the question
+	// Used for unit testing
+	public HashMap<Integer,Integer> idsTestMap;
+	
 	// Controls the number of questions that are displayed
 	public final static int NR_OF_POSTS = 10;
 
@@ -87,6 +91,7 @@ public class QuestionOverviewActivity extends Activity {
 		
 		// HashMap for connecting question id with position in the list for the question
 		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();
+		idsTestMap = ids;
 		// HashMap needed for displaying the titles in the listview
 		final ArrayList<String> titles = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);

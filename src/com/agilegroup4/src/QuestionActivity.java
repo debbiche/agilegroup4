@@ -36,7 +36,7 @@ public class QuestionActivity extends Activity {
 	private ArrayList<Question> questions;
 	
 	// The max lines of the questionbody
-	public final static int MAX_LINES_WITH_COMMENTS = 15;
+	public final static int MAX_LINES_WITH_COMMENTS = 10;
 	public final static int MAX_LINES_WITHOUT_COMMENTS = 20;
 	
 	@Override

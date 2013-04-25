@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /* The login Activity is responsible for handling the login
  * and as it is always the first Activity to be called
@@ -37,7 +38,7 @@ public class LoginActivity extends Activity {
 		//if(!checkLoggedOut())
 			//dbHandler = new DatabaseHandler();
 		
-		// Get loggedin state
+		// Get logged in state
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		int userId = settings.getInt("userID", 0);
 		
@@ -149,14 +150,13 @@ public class LoginActivity extends Activity {
 		@Override
 		protected Object doInBackground(Object... params) {
 			DatabaseHandler.initDB(getApplicationContext());
-			System.out.println("Finished loading this shit!");
 			return null;
 		}
 	
-
-//	     protected void onPostExecute(Bitmap result) {
-//	         mImageView.setImageBitmap(result);
-//	     }
+	   // @Override
+	     protected void onPostExecute() {
+	    	 Toast.makeText(getApplicationContext(), "Loaded Database!", Toast.LENGTH_LONG).show();
+	     }
 		
 
 

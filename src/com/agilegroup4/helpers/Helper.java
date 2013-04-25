@@ -31,7 +31,7 @@ public class Helper {
 
 	public static Date stringToDate(String date) {
 
-		DateFormat newDate = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			return newDate.parse(date);
 		} catch (ParseException e) {

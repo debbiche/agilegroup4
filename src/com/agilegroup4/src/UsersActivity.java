@@ -23,7 +23,7 @@ public class UsersActivity extends Activity {
 	
 	@Override //invoked when Searchbutton pressed, just for testing
 	public boolean onSearchRequested() {
-	    System.out.println("search pressed");
+		//getIntent().putExtra("action", "users");
 	    return super.onSearchRequested();
 	}
 	

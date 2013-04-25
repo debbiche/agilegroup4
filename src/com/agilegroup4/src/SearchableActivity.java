@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+
 import com.agilegroup4.model.Question;
-import com.agilegroup4.src.DatabaseHandler;
 
 public class SearchableActivity extends ListActivity {
 
@@ -35,27 +35,31 @@ public class SearchableActivity extends ListActivity {
 
 	// Get the intent, verify the action and get the query
 	private void handleIntent(Intent intent) {
+		//if(intent == null || intent.getExtras() == null){
+			//return;
+		//}
+		//System.out.println(intent.getStringExtra("action"));
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			doSearch(query);
 		}
 	}
+	//Searches questions titles and body for input search query and returns ArrayList of questions
+	//to QuestionsOverview for presentation
 	private void doSearch(String query) { 
+		searchResultQuestions = new ArrayList<Question>();
 		questions =  DatabaseHandler.getQuestions();
-		for(int i = 0; i < 3; i++){ //i < questions.size()
-			if(questions.get(i).getTitle().contains(query))
+		for(int i = 0; i < questions.size(); i++){
+			if(questions.get(i).getTitle().contains(query) || questions.get(i).getBody().contains(query) )
 			{
 				System.out.println("Found question with title: " + questions.get(i).getTitle());
 				searchResultQuestions.add(questions.get(i));
 			}
 		}
-	}
-	/* possible solution, send extra content to questionsOverview
-
-		Intent intent = new Intent(getThis(), QuestionsOverview.class);
-		intent.putExtra("action", "SearchHits");
+		Intent intent = new Intent(this, QuestionOverviewActivity.class);
+		intent.putExtra("questionsData", searchResultQuestions);
 		startActivity(intent);
-
-	 */
+	}
+		
 
 }

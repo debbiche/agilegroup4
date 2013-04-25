@@ -18,6 +18,10 @@ public class SearchableActivity extends ListActivity {
 	private ArrayList<Question> questions;
 	private ArrayList<Question> searchResultQuestions;
 
+	public ArrayList<Question> getSearchResultQuestions() {
+		return searchResultQuestions;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,6 +46,10 @@ public class SearchableActivity extends ListActivity {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			doSearch(query);
+			/*Intent intent2 = new Intent(this, QuestionOverviewActivity.class);
+			intent.putExtra("questionsData", searchResultQuestions);
+			startActivity(intent2);
+			 */
 		}
 	}
 	//Searches questions titles and body for input search query and returns ArrayList of questions
@@ -50,15 +58,16 @@ public class SearchableActivity extends ListActivity {
 		searchResultQuestions = new ArrayList<Question>();
 		questions =  DatabaseHandler.getQuestions();
 		for(int i = 0; i < questions.size(); i++){
-			if(questions.get(i).getTitle().contains(query) || questions.get(i).getBody().contains(query) )
+			if(questions.get(i).getTitle().toLowerCase().contains(query.toLowerCase()) 
+			|| questions.get(i).getBody().toLowerCase().contains(query.toLowerCase()))
 			{
-				System.out.println("Found question with title: " + questions.get(i).getTitle());
+				//System.out.println("Found question with title: " + questions.get(i).getTitle());
+				System.out.println("test");
 				searchResultQuestions.add(questions.get(i));
+				System.out.println("Found question with title: " + searchResultQuestions.get(0).getTitle());
 			}
 		}
-		Intent intent = new Intent(this, QuestionOverviewActivity.class);
-		intent.putExtra("questionsData", searchResultQuestions);
-		startActivity(intent);
+	
 	}
 		
 

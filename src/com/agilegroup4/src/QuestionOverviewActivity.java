@@ -52,10 +52,11 @@ public class QuestionOverviewActivity extends Activity {
 	}
 	
 	public void getIntentData(){
-	    Intent i = getIntent();
-	    if(i != null && i.hasExtra("questionsData")){
-	    	questions = i.getParcelableExtra("questionsData");
-	    }
+	  //  Intent i = getIntent();
+	    //if(i != null && i.hasExtra("questionsData")){
+		SearchableActivity n = new SearchableActivity();
+	    	questions = n.getSearchResultQuestions();
+	    			//i.getParcelableExtra("questionsData");
 	}
 
 	@Override

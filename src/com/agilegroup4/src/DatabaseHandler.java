@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.agilegroup4.helpers.Helper;
 import com.agilegroup4.model.Answer;
 import com.agilegroup4.model.Comment;
 import com.agilegroup4.model.Question;
@@ -123,20 +124,25 @@ public class DatabaseHandler {
 	 */
 	public static void queryQuestions(int numberOfQuestions) {
 		if (queriedQuestions == 0) {
-
-
 			long start = System.currentTimeMillis();
 
 			Cursor questionsCursor = db
 					.rawQuery(
 							"SELECT R.id AS id," +
-							"R.title AS title, " +
-							"R.body AS question,"
-						  + "D.body AS answer," +
+							"R.title AS title," +
+							"R.body AS question,"  +
+						    "D.body AS answer," +
 							"R.answer_count," +
-							"D.parent_id AS parentid, R.comment_count, D.id AS answer_id, D.comment_count"
-									+ " FROM posts R INNER JOIN posts D ON "
-									+ "D.parent_id = R.id ORDER BY id LIMIT ?",
+							"D.parent_id AS parentid," +
+							"R.comment_count," +
+							"D.id AS answer_id," +
+							"D.comment_count," +
+							"R.creation_date," + 
+							"R.score," +
+							"R.view_count," +
+							"R.favorite_count" +
+						    " FROM posts R INNER JOIN posts D ON " +
+							"D.parent_id = R.id ORDER BY id LIMIT ?",
 							new String[] { Integer.toString(numberOfQuestions) });
 
 			questionsCursor.moveToFirst();
@@ -145,16 +151,21 @@ public class DatabaseHandler {
 			while (questionsCursor.isAfterLast() == false) {
 
 				questions.add(new Question(questionsCursor.getInt(0),
-						questionsCursor.getString(1), questionsCursor
-								.getString(2), questionsCursor.getInt(6)));
+										   questionsCursor.getString(1), 
+										   questionsCursor.getString(2),
+										   questionsCursor.getInt(6),
+										   Helper.stringToDate(questionsCursor.getString(9)), // convert to date
+										   questionsCursor.getInt(10), // score
+										   questionsCursor.getInt(11), // view count
+										   questionsCursor.getInt(12)));
 
-
+				questions.get(questionCounter);
 				for (int i = 0; i < questionsCursor.getInt(4) - 1; i++) {
 					questions
 							.get(questionCounter)
 							.getAnswers()
 							.add(new Answer(questionsCursor.getInt(7),
-									questionsCursor.getString(3), questionsCursor.getInt(8)) );
+									questionsCursor.getString(3), questionsCursor.getInt(8)));
 					questionsCursor.moveToNext();
 
 				}

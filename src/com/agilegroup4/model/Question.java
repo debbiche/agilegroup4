@@ -27,11 +27,18 @@ public class Question{
 	private int favorite_count;
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
 	
-	public Question(int id, String title, String body, int comment_count){
+	public Question(int id, String title, String body, int comment_count,
+					Date creation_date, int score, int viewCount, int favoriteCount){
 		this.title = title;
 		this.body = body;
 		this.comment_count = comment_count;
 		this.setId(id);
+		this.creationDate = creation_date;
+		this.score = score;
+		this.viewCount = viewCount;
+		this.favorite_count = favoriteCount;
+		
+		
 	}
 	
 	public int getCommentCount(){

@@ -21,6 +21,7 @@ import android.widget.ListView;
 import com.agilegroup4.helpers.AnsweredComparator;
 import com.agilegroup4.helpers.ImportantComparator;
 import com.agilegroup4.helpers.LatestComparator;
+import com.agilegroup4.helpers.Helper;
 import com.agilegroup4.model.Question;
 
 public class QuestionOverviewActivity extends Activity {
@@ -85,7 +86,7 @@ public class QuestionOverviewActivity extends Activity {
 
 	public void displayQuestions() {
 	
-		DatabaseHandler.queryQuestions(60);
+		DatabaseHandler.queryQuestions(160);
 		//If questions has been instanced before dont do it again.
 		if(questions == null)
 			questions = DatabaseHandler.getQuestions();
@@ -154,7 +155,20 @@ public class QuestionOverviewActivity extends Activity {
 	
 	public void filterLatest(View view){
 		
+		//System.out.println("before:");
+		//questions.get(3).setCreationDate(Helper.stringToDate("2013-04-26"));
+		//questions.get(5).setCreationDate(Helper.stringToDate("2013-04-26"));
+		//questions.get(7).setCreationDate(Helper.stringToDate("2013-04-26"));
+//		for(int i=0; i < questions.size(); i++){
+//			System.out.println(questions.get(i).getCreationDate().toString());
+//		}
+		
 		Collections.sort(questions, new LatestComparator());
+		
+//		System.out.println("after:");
+//		for(int i=0; i < questions.size(); i++){
+//			System.out.println(questions.get(i).getCreationDate().toString());
+//		}
 		
 		displayQuestions();
 	}

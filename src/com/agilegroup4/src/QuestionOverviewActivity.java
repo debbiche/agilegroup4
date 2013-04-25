@@ -56,6 +56,9 @@ public class QuestionOverviewActivity extends Activity {
 			intent = new Intent(this, MainMenuActivity.class);
 			startActivity(intent);
 			return true;
+		 case R.id.menuitem_search:
+	        	onSearchRequested();
+	            return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

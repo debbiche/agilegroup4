@@ -22,6 +22,12 @@ public class MainMenuActivity extends Activity {
 		// The menu option is not available in this activity
 		return true;
 	}
+	
+	@Override //invoked when Searchbutton pressed
+	public boolean onSearchRequested() {
+	    System.out.println("search pressed");
+	    return super.onSearchRequested();
+	}
 
 	public void handleMenuItemOnClick(View view) {
 		Intent intent;
@@ -41,6 +47,9 @@ public class MainMenuActivity extends Activity {
 		case R.id.button_tags:
 			intent = new Intent(this, TagsOverviewActivity.class);
 			startActivity(intent);
+			break;
+		case R.id.button_search:
+			onSearchRequested();
 			break;
 		case R.id.button_settings:
 			intent = new Intent(this, SettingsActivity.class);

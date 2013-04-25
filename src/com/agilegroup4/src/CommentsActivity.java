@@ -50,9 +50,18 @@ public class CommentsActivity extends Activity {
 				intent = new Intent(this, MainMenuActivity.class);
 				startActivity(intent);
 	            return true;
+	        case R.id.menuitem_search:
+	        	onSearchRequested();
+	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
+	}
+	
+	@Override //invoked when Searchbutton pressed
+	public boolean onSearchRequested() {
+	    System.out.println("search pressed");
+	    return super.onSearchRequested();
 	}
 	
 	public void displayComments(){

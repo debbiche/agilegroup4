@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.agilegroup4.helpers.AnsweredComparator;
 import com.agilegroup4.helpers.ImportantComparator;
 import com.agilegroup4.helpers.LatestComparator;
 import com.agilegroup4.model.Question;
@@ -147,6 +148,9 @@ public class QuestionOverviewActivity extends Activity {
 	}
 	
 	public void filterAnswers(View view){
+		
+		Collections.sort(questions, new AnsweredComparator());
+		
 		displayQuestions();
 	}
 	

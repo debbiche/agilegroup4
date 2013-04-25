@@ -1,15 +1,31 @@
 package com.agilegroup4.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Question{
 
 	private int id;
-	private String title;
+	//private int postTypeId;
+	//private int parentId;
+	//private int acceptedAnswerId;
+	private Date creationDate;
+	private int score;
+	private int viewCount;
 	private String body;
+	//private int ownerUserId;
+	//private int lastEditorUserId;
+	//private String lastEditorDisplayName;
+	//private Date lastEditDate;
+	//private Date lastActivityDate;
+	//private Date communityOwnedDate;
+	//private Date closedDate;
+	private String title;
+	//private String tags;
+	private int answer_count;
 	private int comment_count;
+	private int favorite_count;
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
-	private String creationDate;
 	
 	public Question(int id, String title, String body, int comment_count){
 		this.title = title;
@@ -53,11 +69,52 @@ public class Question{
 		this.id = id;
 	}
 
-	public String getCreationDate() {
+	public Date getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(String creationDate) {
+	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
-	}	
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public int getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
+
+	public int getAnswer_count() {
+		return answer_count;
+	}
+
+	public void setAnswer_count(int answer_count) {
+		this.answer_count = answer_count;
+	}
+
+	public int getComment_count() {
+		return comment_count;
+	}
+
+	public void setComment_count(int comment_count) {
+		this.comment_count = comment_count;
+	}
+
+	public int getFavorite_count() {
+		return favorite_count;
+	}
+
+	public void setFavorite_count(int favorite_count) {
+		this.favorite_count = favorite_count;
+	}
+
 }

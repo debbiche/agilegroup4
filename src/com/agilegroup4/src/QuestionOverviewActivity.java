@@ -43,7 +43,15 @@ public class QuestionOverviewActivity extends Activity {
 				LoginActivity.PREFS_NAME, 0);
 		int userID = settings.getInt("userID", 0);
 
+		getIntentData();
 		displayQuestions();
+	}
+	
+	public void getIntentData(){
+	    Intent i = getIntent();
+	    if(i != null && i.hasExtra("questionsData")){
+	    	questions = i.getParcelableExtra("questionsData");
+	    }
 	}
 
 	@Override
@@ -73,7 +81,8 @@ public class QuestionOverviewActivity extends Activity {
 	public void displayQuestions() {
 	
 		DatabaseHandler.queryQuestions(60);
-		questions = DatabaseHandler.getQuestions();
+		if(questions == null)
+			questions = DatabaseHandler.getQuestions();
 		
 		// HashMap for connecting question id with position in the list for the question
 		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();

@@ -10,6 +10,7 @@ import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Answer;
 import com.agilegroup4.model.Comment;
 import com.agilegroup4.model.Question;
+import com.agilegroup4.model.QuestionList;
 import com.agilegroup4.model.User;
 
 /* DatabaseHandler handles database queries, inserts, deletes, ...
@@ -169,7 +170,6 @@ public class DatabaseHandler {
 							.add(new Answer(questionsCursor.getInt(7),
 									questionsCursor.getString(3), questionsCursor.getInt(8)));
 					questionsCursor.moveToNext();
-
 				}
 
 				questionsCursor.moveToNext();
@@ -201,4 +201,5 @@ public class DatabaseHandler {
 		
 		return comments;
 	}
+
 }

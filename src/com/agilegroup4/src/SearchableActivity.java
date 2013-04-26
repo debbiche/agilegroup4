@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ListView;
 
 
+import com.agilegroup4.infrastructure.QuestionHandler;
 import com.agilegroup4.model.Question;
 import com.agilegroup4.model.QuestionList;
 
@@ -56,9 +57,9 @@ public class SearchableActivity extends ListActivity {
 	//Searches questions titles and body for input search query and returns ArrayList of questions
 	//to QuestionsOverview for presentation
 	private void doSearch(String query) { 
-		searchResultQuestions = new QuestionList();
-		questions =  DatabaseHandler.getQuestions();
-		for(int i = 0; i < questions.size(); i++){
+		//searchResultQuestions = new QuestionList();
+		searchResultQuestions = QuestionHandler.searchForQuestions(query, 60);
+		/*for(int i = 0; i < questions.size(); i++){
 			if(questions.get(i).getTitle().toLowerCase().contains(query) || questions.get(i).getBody().toLowerCase().contains(query) )
 			{
 				//System.out.println("Found question with title: " + questions.get(i).getTitle());
@@ -66,7 +67,7 @@ public class SearchableActivity extends ListActivity {
 				searchResultQuestions.add(questions.get(i));
 				System.out.println("Found question with title: " + searchResultQuestions.get(0).getTitle());
 			}
-		}
+		}*/
 		Bundle b = new Bundle();
         b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object
 		Intent intent = new Intent(this, QuestionOverviewActivity.class);

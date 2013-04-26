@@ -30,7 +30,7 @@ public class QuestionIdTest extends ActivityInstrumentationTestCase2<LoginActivi
 	/**
 	 * Test ???.
 	 */
-	public void testLoginActivity() {
+	public void testRelatedAnswersActivity() {
 
 		// Start monitor on intended activity.
 		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(MainMenuActivity.class.getName(), null, false);

@@ -28,7 +28,7 @@ public class Question implements Parcelable {
 	private int answerCount;
 	private int commentCount;
 	private int favoriteCount;
-	private ArrayList<Answer> answers = new ArrayList<Answer>();
+	private AnswerList answers = new AnswerList();
 	
 	public Question(int id, String title, String body, int comment_count,
 					Date creation_date, int score, int viewCount, int favoriteCount){
@@ -38,7 +38,6 @@ public class Question implements Parcelable {
 		this.setId(id);
 		this.creationDate = creation_date;
 		this.score = score;
-		this.viewCount = viewCount;
 		this.favoriteCount = favoriteCount;
 	}
 	
@@ -46,7 +45,7 @@ public class Question implements Parcelable {
 	 * Creates a new question based on a Parcel.
 	 */
 	private Question(Parcel in) {
-		this.title = in.readString();;
+		this.title = in.readString();
 		this.body = in.readString();
 		this.commentCount = in.readInt();
 		this.id = in.readInt();
@@ -54,6 +53,7 @@ public class Question implements Parcelable {
 		this.score = in.readInt();
 		this.viewCount = in.readInt();
 		this.favoriteCount = in.readInt();
+		this.answers = in.readParcelable(Answer.class.getClassLoader());
 	}
 	
 	/*
@@ -68,6 +68,7 @@ public class Question implements Parcelable {
 		out.writeInt(score);
 		out.writeInt(viewCount);
 		out.writeInt(favoriteCount);
+		out.writeParcelable(answers, flags);
 	}
 	
 	public int getCommentCount(){
@@ -93,7 +94,7 @@ public class Question implements Parcelable {
 	public ArrayList<Answer> getAnswers() {
 		return answers;
 	}
-	public void setAnswers(ArrayList<Answer> answers) {
+	public void setAnswers(AnswerList answers) {
 		this.answers = answers;
 	}
 

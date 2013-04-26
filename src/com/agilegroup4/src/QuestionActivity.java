@@ -44,13 +44,23 @@ public class QuestionActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question);
 		
-		int questionId = getIntent().getIntExtra("questionId", 0);
+		//int questionId = getIntent().getIntExtra("questionId", 0);
 		
-		questions = DatabaseHandler.getQuestions();
-		question = findQuestion(questionId);
+		
+		//questions = DatabaseHandler.getQuestions();
+		//question = findQuestion(questionId);
+		getIntentData();
 		answers = question.getAnswers();
 		displayQuestion();
 		displayAnswers();
+	}
+	
+	public void getIntentData(){
+	    Intent i = getIntent();
+	    if(i != null && i.hasExtra("question")){   
+	    	Bundle b = i.getExtras(); 
+	    	question = b.getParcelable("question"); 
+	    }
 	}
 	
 	/**

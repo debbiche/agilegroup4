@@ -91,14 +91,14 @@ public class QuestionOverviewActivity extends Activity {
 			questions = DatabaseHandler.getQuestions();
 		
 		// HashMap for connecting question id with position in the list for the question
-		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();
-		idsTestMap = ids;
+		final HashMap<Integer,Question> ids = new HashMap<Integer,Question>();
+		//idsTestMap = ids;
 		// HashMap needed for displaying the titles in the listview
 		final ArrayList<String> titles = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		for (int i = 0; i < NR_OF_POSTS; i++) {
 			titles.add(questions.get(i).getTitle());
-			ids.put(i,questions.get(i).getId());
+			ids.put(i,questions.get(i));
 		}
 
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
@@ -111,9 +111,16 @@ public class QuestionOverviewActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
 				final String item = (String) parent.getItemAtPosition(position);
-				Intent intent = new Intent(getThis(), QuestionActivity.class);
+				//Intent intent = new Intent(getThis(), QuestionActivity.class);
 				// Send along question id to QuestionActivity
-				intent.putExtra("questionId", ids.get((int) id));
+				//intent.putExtra("questionId", ids.get((int) id));
+				//startActivity(intent);
+				//Creates a bundle and parce the the search result QuestionList
+				Bundle b = new Bundle();
+		        b.putParcelable("question", ids.get((int) id)); //Insert list in a Bundle object
+				Intent intent = new Intent(getThis(), QuestionOverviewActivity.class);
+				//Includes the bundle and parced search result into the intent for search activity.
+				intent.putExtras(b);
 				startActivity(intent);
 			}
 

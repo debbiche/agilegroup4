@@ -27,7 +27,7 @@ public class QuestionOverviewActivity extends Activity {
 	
 	// HashMap for connecting question id with position in the list for the question
 	// Used for unit testing
-	public HashMap<Integer,Integer> idsTestMap;
+	public HashMap<Integer,Question> idsTestMap;
 	
 	// Controls the number of questions that are displayed
 	public final static int NR_OF_POSTS = 10;
@@ -92,7 +92,6 @@ public class QuestionOverviewActivity extends Activity {
 		
 		// HashMap for connecting question id with position in the list for the question
 		final HashMap<Integer,Question> ids = new HashMap<Integer,Question>();
-		//idsTestMap = ids;
 		// HashMap needed for displaying the titles in the listview
 		final ArrayList<String> titles = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
@@ -100,7 +99,7 @@ public class QuestionOverviewActivity extends Activity {
 			titles.add(questions.get(i).getTitle());
 			ids.put(i,questions.get(i));
 		}
-
+		idsTestMap = ids;
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
 				android.R.layout.simple_list_item_1, titles);
 		listview.setAdapter(adapter);
@@ -118,7 +117,7 @@ public class QuestionOverviewActivity extends Activity {
 				//Creates a bundle and parce the the search result QuestionList
 				Bundle b = new Bundle();
 		        b.putParcelable("question", ids.get((int) id)); //Insert list in a Bundle object
-				Intent intent = new Intent(getThis(), QuestionOverviewActivity.class);
+				Intent intent = new Intent(getThis(), QuestionActivity.class);
 				//Includes the bundle and parced search result into the intent for search activity.
 				intent.putExtras(b);
 				startActivity(intent);

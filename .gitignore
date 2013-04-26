@@ -22,3 +22,7 @@ local.properties
 #db
 *.sqlite
 so.jpg
+
+
+
+.externalToolBuilders/

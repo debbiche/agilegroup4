@@ -30,6 +30,9 @@
         <activity
             android:name="com.agilegroup4.src.MainMenuActivity"
             android:label="@string/title_activity_main_menu" >
+        <!-- enable the search dialog to send searches to SearchableActivity -->
+        <meta-data android:name="android.app.default_searchable"
+                   android:value=".SearchableActivity" />
         </activity>
         <activity
             android:name="com.agilegroup4.src.UserProfileActivity"

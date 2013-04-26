@@ -1,0 +1,207 @@
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200   1) package com.agilegroup4.src;
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200   2) 
+04f3d7be (JGrunden          2013-04-19 11:10:18 +0200   3) import java.util.ArrayList;
+c1c179e0 (schroeja          2013-04-25 09:32:01 +0200   4) import java.util.Collections;
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200   5) import java.util.HashMap;
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200   6) import java.util.List;
+c1c179e0 (schroeja          2013-04-25 09:32:01 +0200   7) 
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200   8) import android.app.Activity;
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200   9) import android.content.Context;
+003f8b7e (schroeja          2013-04-16 15:24:38 +0200  10) import android.content.Intent;
+534ad9a9 (JGrunden          2013-04-18 16:29:32 +0200  11) import android.content.SharedPreferences;
+534ad9a9 (JGrunden          2013-04-18 16:29:32 +0200  12) import android.os.Bundle;
+04f3d7be (JGrunden          2013-04-19 11:10:18 +0200  13) import android.support.v4.widget.SimpleCursorAdapter;
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  14) import android.view.Menu;
+b12d53d7 (JGrunden          2013-04-16 15:43:48 +0200  15) import android.view.MenuItem;
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  16) import android.view.View;
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  17) import android.widget.AdapterView;
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  18) import android.widget.ArrayAdapter;
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  19) import android.widget.ListView;
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  20) 
+03406bc4 (schroeja          2013-04-25 10:22:00 +0200  21) import com.agilegroup4.helpers.AnsweredComparator;
+a047b4a0 (schroeja          2013-04-25 09:57:16 +0200  22) import com.agilegroup4.helpers.ImportantComparator;
+a047b4a0 (schroeja          2013-04-25 09:57:16 +0200  23) import com.agilegroup4.helpers.LatestComparator;
+c1c179e0 (schroeja          2013-04-25 09:32:01 +0200  24) import com.agilegroup4.model.Question;
+c1c179e0 (schroeja          2013-04-25 09:32:01 +0200  25) 
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  26) public class QuestionOverviewActivity extends Activity {
+ec0d2934 (JGrunden          2013-04-19 12:17:23 +0200  27) 	
+1b5a2b72 (JGrunden          2013-04-25 11:41:39 +0200  28) 	// HashMap for connecting question id with position in the list for the question
+1b5a2b72 (JGrunden          2013-04-25 11:41:39 +0200  29) 	// Used for unit testing
+b39c3484 (JGrunden          2013-04-26 14:11:44 +0200  30) 	public HashMap<Integer,Question> idsTestMap;
+1b5a2b72 (JGrunden          2013-04-25 11:41:39 +0200  31) 	
+156dd53b (JGrunden          2013-04-19 15:41:15 +0200  32) 	// Controls the number of questions that are displayed
+ec0d2934 (JGrunden          2013-04-19 12:17:23 +0200  33) 	public final static int NR_OF_POSTS = 10;
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  34) 
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  35) 	// This is the Adapter being used to display the list's data
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  36) 	SimpleCursorAdapter mAdapter;
+c1506c14 (JGrunden          2013-04-23 13:54:18 +0200  37) 	
+c1506c14 (JGrunden          2013-04-23 13:54:18 +0200  38) 	// Containing the questions in the question overview
+c1506c14 (JGrunden          2013-04-23 13:54:18 +0200  39) 	ArrayList<Question> questions;
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  40) 
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  41) 	@Override
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  42) 	protected void onCreate(Bundle savedInstanceState) {
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  43) 		super.onCreate(savedInstanceState);
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  44) 		setContentView(R.layout.activity_question_overview);
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  45) 
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  46) 		SharedPreferences settings = getSharedPreferences(
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  47) 				LoginActivity.PREFS_NAME, 0);
+534ad9a9 (JGrunden          2013-04-18 16:29:32 +0200  48) 		int userID = settings.getInt("userID", 0);
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  49) 
+709dd29b (unknown           2013-04-25 11:23:48 +0200  50) 		getIntentData();
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  51) 		displayQuestions();
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  52) 	}
+709dd29b (unknown           2013-04-25 11:23:48 +0200  53) 	
+709dd29b (unknown           2013-04-25 11:23:48 +0200  54) 	public void getIntentData(){
+709dd29b (unknown           2013-04-25 11:23:48 +0200  55) 	    Intent i = getIntent();
+76ceb071 (unknown           2013-04-25 17:02:16 +0200  56) 	    if(i != null && i.hasExtra("questionsData")){   
+76ceb071 (unknown           2013-04-25 17:02:16 +0200  57) 	    	Bundle b = i.getExtras(); //Get the intent's extras
+76ceb071 (unknown           2013-04-25 17:02:16 +0200  58) 	    	questions = b.getParcelable("questionsData"); //get our list
+709dd29b (unknown           2013-04-25 11:23:48 +0200  59) 	    }
+709dd29b (unknown           2013-04-25 11:23:48 +0200  60) 	}
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  61) 
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  62) 	@Override
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  63) 	public boolean onCreateOptionsMenu(Menu menu) {
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  64) 		// Inflate the menu; this adds items to the action bar if it is present.
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  65) 		getMenuInflater().inflate(R.menu.question_overview, menu);
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  66) 		return true;
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200  67) 	}
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  68) 
+b12d53d7 (JGrunden          2013-04-16 15:43:48 +0200  69) 	@Override
+b12d53d7 (JGrunden          2013-04-16 15:43:48 +0200  70) 	public boolean onOptionsItemSelected(MenuItem item) {
+b12d53d7 (JGrunden          2013-04-16 15:43:48 +0200  71) 		Intent intent;
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  72) 		// Handle item selection
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  73) 		switch (item.getItemId()) {
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  74) 		case R.id.menuitem_mainmenu:
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  75) 			intent = new Intent(this, MainMenuActivity.class);
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  76) 			startActivity(intent);
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  77) 			return true;
+ba72dba8 (unknown           2013-04-25 10:24:27 +0200  78) 		 case R.id.menuitem_search:
+ba72dba8 (unknown           2013-04-25 10:24:27 +0200  79) 	        	onSearchRequested();
+ba72dba8 (unknown           2013-04-25 10:24:27 +0200  80) 	            return true;
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  81) 		default:
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  82) 			return super.onOptionsItemSelected(item);
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  83) 		}
+b12d53d7 (JGrunden          2013-04-16 15:43:48 +0200  84) 	}
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  85) 
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  86) 	public void displayQuestions() {
+663216c4 (Adam              2013-04-23 14:46:25 +0200  87) 	
+c04ca7c6 (Adam              2013-04-25 09:18:51 +0200  88) 		DatabaseHandler.queryQuestions(60);
+98c55238 (unknown           2013-04-25 11:30:01 +0200  89) 		//If questions has been instanced before dont do it again.
+709dd29b (unknown           2013-04-25 11:23:48 +0200  90) 		if(questions == null)
+709dd29b (unknown           2013-04-25 11:23:48 +0200  91) 			questions = DatabaseHandler.getQuestions();
+156dd53b (JGrunden          2013-04-19 15:41:15 +0200  92) 		
+c1506c14 (JGrunden          2013-04-23 13:54:18 +0200  93) 		// HashMap for connecting question id with position in the list for the question
+c2a7536b (JGrunden          2013-04-26 13:39:12 +0200  94) 		final HashMap<Integer,Question> ids = new HashMap<Integer,Question>();
+c1506c14 (JGrunden          2013-04-23 13:54:18 +0200  95) 		// HashMap needed for displaying the titles in the listview
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  96) 		final ArrayList<String> titles = new ArrayList<String>();
+c1506c14 (JGrunden          2013-04-23 13:54:18 +0200  97) 		final ListView listview = (ListView) findViewById(R.id.listview);
+ec0d2934 (JGrunden          2013-04-19 12:17:23 +0200  98) 		for (int i = 0; i < NR_OF_POSTS; i++) {
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200  99) 			titles.add(questions.get(i).getTitle());
+c2a7536b (JGrunden          2013-04-26 13:39:12 +0200 100) 			ids.put(i,questions.get(i));
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 101) 		}
+b39c3484 (JGrunden          2013-04-26 14:11:44 +0200 102) 		idsTestMap = ids;
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 103) 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 104) 				android.R.layout.simple_list_item_1, titles);
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 105) 		listview.setAdapter(adapter);
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 106) 
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 107) 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+934022e1 (JGrunden          2013-04-23 15:24:55 +0200 108) 			
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 109) 			@Override
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 110) 			public void onItemClick(AdapterView<?> parent, final View view,
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 111) 					int position, long id) {
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 112) 				final String item = (String) parent.getItemAtPosition(position);
+c2a7536b (JGrunden          2013-04-26 13:39:12 +0200 113) 				//Intent intent = new Intent(getThis(), QuestionActivity.class);
+c1506c14 (JGrunden          2013-04-23 13:54:18 +0200 114) 				// Send along question id to QuestionActivity
+c2a7536b (JGrunden          2013-04-26 13:39:12 +0200 115) 				//intent.putExtra("questionId", ids.get((int) id));
+c2a7536b (JGrunden          2013-04-26 13:39:12 +0200 116) 				//startActivity(intent);
+c2a7536b (JGrunden          2013-04-26 13:39:12 +0200 117) 				//Creates a bundle and parce the the search result QuestionList
+c2a7536b (JGrunden          2013-04-26 13:39:12 +0200 118) 				Bundle b = new Bundle();
+c2a7536b (JGrunden          2013-04-26 13:39:12 +0200 119) 		        b.putParcelable("question", ids.get((int) id)); //Insert list in a Bundle object
+b39c3484 (JGrunden          2013-04-26 14:11:44 +0200 120) 				Intent intent = new Intent(getThis(), QuestionActivity.class);
+c2a7536b (JGrunden          2013-04-26 13:39:12 +0200 121) 				//Includes the bundle and parced search result into the intent for search activity.
+c2a7536b (JGrunden          2013-04-26 13:39:12 +0200 122) 				intent.putExtras(b);
+c8c8189b (Markus Pettersson 2013-04-23 15:38:26 +0200 123) 				startActivity(intent);
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 124) 			}
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 125) 
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 126) 		});
+04f3d7be (JGrunden          2013-04-19 11:10:18 +0200 127) 	}
+156dd53b (JGrunden          2013-04-19 15:41:15 +0200 128) 	
+34a2907b (JGrunden          2013-04-19 16:18:16 +0200 129) 	private QuestionOverviewActivity getThis(){
+34a2907b (JGrunden          2013-04-19 16:18:16 +0200 130) 		return this;
+34a2907b (JGrunden          2013-04-19 16:18:16 +0200 131) 	}
+34a2907b (JGrunden          2013-04-19 16:18:16 +0200 132) 	
+156dd53b (JGrunden          2013-04-19 15:41:15 +0200 133) 	/*
+156dd53b (JGrunden          2013-04-19 15:41:15 +0200 134) 	 * Puts the elements in the listview.
+156dd53b (JGrunden          2013-04-19 15:41:15 +0200 135) 	 */
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 136) 	private class StableArrayAdapter extends ArrayAdapter<String> {
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 137) 
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 138) 		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 139) 
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 140) 		public StableArrayAdapter(Context context, int textViewResourceId,
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 141) 				List<String> objects) {
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 142) 			super(context, textViewResourceId, objects);
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 143) 			for (int i = 0; i < objects.size(); ++i) {
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 144) 				mIdMap.put(objects.get(i), i);
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 145) 			}
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 146) 		}
+04f3d7be (JGrunden          2013-04-19 11:10:18 +0200 147) 
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 148) 		@Override
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 149) 		public long getItemId(int position) {
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 150) 			String item = getItem(position);
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 151) 			return mIdMap.get(item);
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 152) 		}
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 153) 
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 154) 		@Override
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 155) 		public boolean hasStableIds() {
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 156) 			return true;
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 157) 		}
+40d88686 (JGrunden          2013-04-19 11:32:29 +0200 158) 
+b12d53d7 (JGrunden          2013-04-16 15:43:48 +0200 159) 	}
+42aed382 (schroeja          2013-04-19 15:17:07 +0200 160) 	
+0660bac7 (schroeja          2013-04-25 08:53:48 +0200 161) 	public void filterLatest(View view){
+c1c179e0 (schroeja          2013-04-25 09:32:01 +0200 162) 		
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 163) 		//System.out.println("before:");
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 164) 		//questions.get(3).setCreationDate(Helper.stringToDate("2013-04-26"));
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 165) 		//questions.get(5).setCreationDate(Helper.stringToDate("2013-04-26"));
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 166) 		//questions.get(7).setCreationDate(Helper.stringToDate("2013-04-26"));
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 167) //		for(int i=0; i < questions.size(); i++){
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 168) //			System.out.println(questions.get(i).getCreationDate().toString());
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 169) //		}
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 170) 		
+a047b4a0 (schroeja          2013-04-25 09:57:16 +0200 171) 		Collections.sort(questions, new LatestComparator());
+6c6d2611 (schroeja          2013-04-23 17:31:13 +0200 172) 		
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 173) //		System.out.println("after:");
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 174) //		for(int i=0; i < questions.size(); i++){
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 175) //			System.out.println(questions.get(i).getCreationDate().toString());
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 176) //		}
+8981d24a (schroeja          2013-04-25 16:37:57 +0200 177) 		
+0660bac7 (schroeja          2013-04-25 08:53:48 +0200 178) 		displayQuestions();
+6c6d2611 (schroeja          2013-04-23 17:31:13 +0200 179) 	}
+6c6d2611 (schroeja          2013-04-23 17:31:13 +0200 180) 	
+0660bac7 (schroeja          2013-04-25 08:53:48 +0200 181) 	public void filterImportant(View view){
+a047b4a0 (schroeja          2013-04-25 09:57:16 +0200 182) 		
+a047b4a0 (schroeja          2013-04-25 09:57:16 +0200 183) 		Collections.sort(questions, new ImportantComparator());
+6c6d2611 (schroeja          2013-04-23 17:31:13 +0200 184) 		
+0660bac7 (schroeja          2013-04-25 08:53:48 +0200 185) 		displayQuestions();
+6c6d2611 (schroeja          2013-04-23 17:31:13 +0200 186) 	}
+6c6d2611 (schroeja          2013-04-23 17:31:13 +0200 187) 	
+0660bac7 (schroeja          2013-04-25 08:53:48 +0200 188) 	public void filterAnswers(View view){
+6c6d2611 (schroeja          2013-04-23 17:31:13 +0200 189) 		
+03406bc4 (schroeja          2013-04-25 10:22:00 +0200 190) 		Collections.sort(questions, new AnsweredComparator());
+03406bc4 (schroeja          2013-04-25 10:22:00 +0200 191) 		
+0660bac7 (schroeja          2013-04-25 08:53:48 +0200 192) 		displayQuestions();
+6c6d2611 (schroeja          2013-04-23 17:31:13 +0200 193) 	}
+6c6d2611 (schroeja          2013-04-23 17:31:13 +0200 194) 	
+42aed382 (schroeja          2013-04-19 15:17:07 +0200 195) 	public void onBackPressed(){
+42aed382 (schroeja          2013-04-19 15:17:07 +0200 196) 		// call next activity
+42aed382 (schroeja          2013-04-19 15:17:07 +0200 197) 		Intent intent = new Intent(this, MainMenuActivity.class);
+42aed382 (schroeja          2013-04-19 15:17:07 +0200 198) 		startActivity(intent);
+42aed382 (schroeja          2013-04-19 15:17:07 +0200 199) 	}
+88ea70bf (Anmar Khazal      2013-04-24 21:36:24 +0200 200) 	
+88ea70bf (Anmar Khazal      2013-04-24 21:36:24 +0200 201) 	@Override //invoked when Searchbutton pressed, just for testing
+88ea70bf (Anmar Khazal      2013-04-24 21:36:24 +0200 202) 	public boolean onSearchRequested() {
+88ea70bf (Anmar Khazal      2013-04-24 21:36:24 +0200 203) 	    System.out.println("search pressed");
+88ea70bf (Anmar Khazal      2013-04-24 21:36:24 +0200 204) 	    return super.onSearchRequested();
+88ea70bf (Anmar Khazal      2013-04-24 21:36:24 +0200 205) 	}
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200 206) 
+8791ad76 (schroeja          2013-04-15 16:54:07 +0200 207) }

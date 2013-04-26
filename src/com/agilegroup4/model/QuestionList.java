@@ -4,16 +4,34 @@ import java.util.ArrayList;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/*
+ * An ArrayList extensions for ArrayLists of questions.
+ */
 public class QuestionList extends ArrayList<Question> implements Parcelable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/*
+	 * Creates a new question list.
+	 */
 	public QuestionList(){
 
 	}
 
+	/*
+	 * Creates a new question list based on a Parcel.
+	 */
 	public QuestionList(Parcel in){
 		readFromParcel(in);
 	}
 
+	/*
+	 * Creates a new question list based on a Parcel.
+	 */
+	@SuppressWarnings("rawtypes")
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
 		public QuestionList createFromParcel(Parcel in) {
 			return new QuestionList(in);
@@ -24,30 +42,38 @@ public class QuestionList extends ArrayList<Question> implements Parcelable{
 		}
 	};
 
+	/*
+	 * Reads a parce and creates the list of questions.
+	 */
 	private void readFromParcel(Parcel in) {
 		this.clear();
 
-		//First we have to read the list size
+		//We read the first int that contains the list size.
 		int size = in.readInt();
 
-		//Reading remember that we wrote first the Name and later the Phone Number.
-		//Order is fundamental
+		//We read each question, Question is parceable and is handled in question class.
 		for (int i = 0; i < size; i++) {
 			this.add((Question)in.readParcelable(Question.class.getClassLoader()));
 		}
 	}
 
+	/*
+	 * Describes the contents of this list, returning its hash code. 
+	 */
 	public int describeContents() {
-		return 0;
+		return hashCode();
 	}
 
+	/*
+	 * Reads this question list and parce it into a Parcel..
+	 */
 	public void writeToParcel(Parcel dest, int flags) {
 		int size = this.size();
 
-		//We have to write the list size, we need him recreating the list
+		//Write the list size, this is used to create a new list later.
 		dest.writeInt(size);
 
-		//We decided arbitrarily to write first the Name and later the Phone Number.
+		//We parse each question in the list. Question in also parceable.
 		for (int i = 0; i < size; i++) {
 			dest.writeParcelable(this.get(i), flags);
 		}

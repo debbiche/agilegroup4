@@ -16,8 +16,7 @@ import com.agilegroup4.model.QuestionList;
 
 public class SearchableActivity extends ListActivity {
 
-	// List of questions from QuestionOverview
-	private ArrayList<Question> questions;
+	//The search result of questions.
 	private QuestionList searchResultQuestions;
 
 	public ArrayList<Question> getSearchResultQuestions() {
@@ -54,23 +53,16 @@ public class SearchableActivity extends ListActivity {
 			 */
 		}
 	}
-	//Searches questions titles and body for input search query and returns ArrayList of questions
+	
+	//Searches questions and sends QuestionList of questions
 	//to QuestionsOverview for presentation
 	private void doSearch(String query) { 
-		//searchResultQuestions = new QuestionList();
 		searchResultQuestions = QuestionHandler.searchForQuestions(query, 60);
-		/*for(int i = 0; i < questions.size(); i++){
-			if(questions.get(i).getTitle().toLowerCase().contains(query) || questions.get(i).getBody().toLowerCase().contains(query) )
-			{
-				//System.out.println("Found question with title: " + questions.get(i).getTitle());
-				System.out.println("test");
-				searchResultQuestions.add(questions.get(i));
-				System.out.println("Found question with title: " + searchResultQuestions.get(0).getTitle());
-			}
-		}*/
+		//Creates a bundle and parce the the search result QuestionList
 		Bundle b = new Bundle();
         b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object
 		Intent intent = new Intent(this, QuestionOverviewActivity.class);
+		//Includes the bundle and parced search result into the intent for search activity.
 		intent.putExtras(b);
 		startActivity(intent);
 	}

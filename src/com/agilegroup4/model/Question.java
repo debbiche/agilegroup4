@@ -42,6 +42,9 @@ public class Question implements Parcelable {
 		this.favoriteCount = favoriteCount;
 	}
 	
+	/*
+	 * Creates a new question based on a Parcel.
+	 */
 	private Question(Parcel in) {
 		this.title = in.readString();;
 		this.body = in.readString();
@@ -53,6 +56,9 @@ public class Question implements Parcelable {
 		this.favoriteCount = in.readInt();
 	}
 	
+	/*
+	 * Reads this question and parce it into a Parcel.
+	 */
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeString(title);
 		out.writeString(body);
@@ -139,10 +145,16 @@ public class Question implements Parcelable {
 		this.favoriteCount = favoriteCount;
 	}
 
+	/*
+	 * Describes the contents of this question, returning its hash code. 
+	 */
 	public int describeContents() {
 		return this.hashCode();
 	}
 
+	/*
+	 * Creates a new question based on a Parcel.
+	 */
 	public static final Parcelable.Creator<Question> CREATOR = 
 		new Parcelable.Creator<Question>() { 
 		public Question createFromParcel(Parcel in) { 

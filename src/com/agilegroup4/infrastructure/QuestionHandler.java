@@ -10,8 +10,12 @@ import com.agilegroup4.model.QuestionList;
 import com.agilegroup4.model.User;
 import com.agilegroup4.src.DatabaseHandler;
 
+/*
+ * Question handler that is used to query questions in the database.
+ */
 public class QuestionHandler extends DatabaseHandler {
 
+	//Holds the base query for relating questions and anwers.
 	protected static String baseQuestionRawQuery = "SELECT R.id AS id, " +
 			"R.title AS title, " +
 			"R.body AS question, "  +
@@ -28,6 +32,9 @@ public class QuestionHandler extends DatabaseHandler {
 			"FROM posts R INNER JOIN posts D ON " +
 			"D.parent_id = R.id";
 	
+	/*
+	 * Creates a new question handler that is used to query questions in the database.
+	 */
 	public QuestionHandler(Context context) {
 		super(context);
 	}
@@ -51,6 +58,9 @@ public class QuestionHandler extends DatabaseHandler {
 		return parseQuestions(cursorQuestions);
 	}
 
+	/*
+	 * Parses a query result to questions and answers.
+	 */
 	protected static QuestionList parseQuestions(Cursor cursor) {
 		QuestionList questions = new QuestionList();
 		cursor.moveToFirst();

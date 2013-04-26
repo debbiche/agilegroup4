@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
@@ -26,6 +28,8 @@ import com.agilegroup4.model.Question;
 
 public class QuestionActivity extends Activity {
 
+	ProgressDialog progress;
+	
 	// Current question
 	private Question question;
 	
@@ -43,16 +47,15 @@ public class QuestionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question);
-		
+		progress = new ProgressDialog(this);
 		//int questionId = getIntent().getIntExtra("questionId", 0);
 		
 		
 		//questions = DatabaseHandler.getQuestions();
 		//question = findQuestion(questionId);
 		getIntentData();
-		answers = question.getAnswers();
-		displayQuestion();
-		displayAnswers();
+		loadAnswers();
+		
 	}
 	
 	public void getIntentData(){
@@ -61,6 +64,14 @@ public class QuestionActivity extends Activity {
 	    	Bundle b = i.getExtras(); 
 	    	question = b.getParcelable("question"); 
 	    }
+	}
+	
+	private void loadAnswers(){
+		progress.setTitle("Please Wait");
+		progress.setMessage("Loading questions...");
+		progress.show();
+		new loadAnswers().execute();
+		
 	}
 	
 	/**
@@ -221,5 +232,21 @@ public class QuestionActivity extends Activity {
 		}
 
 	}
+	private class loadAnswers extends AsyncTask<Object, Object, Object>{
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			answers = DatabaseHandler.getAnswers(question);
+			System.out.println("answers: " + answers.size());
+			return null;
+		}
+	
+		@Override
+	     protected void onPostExecute(Object params) {
+			progress.dismiss();
+			displayQuestion();
+			displayAnswers();
+	     }
+	 }
 
 }

@@ -130,60 +130,42 @@ public class DatabaseHandler {
 			long start = System.currentTimeMillis();
 
 			Cursor questionsCursor = db
-					.rawQuery(
-							"SELECT R.id AS id," +
-							"R.title AS title," +
-							"R.body AS question,"  +
-						    "D.body AS answer," +
-							"R.answer_count," +
-							"D.parent_id AS parentid," +
-							"R.comment_count," +
-							"D.id AS answer_id," +
-							"D.comment_count," +
-							"R.creation_date," + 
-							"R.score," +
-							"R.view_count," +
-							"R.favorite_count" +
-						    " FROM posts R INNER JOIN posts D ON " +
-							"D.parent_id = R.id ORDER BY id LIMIT ?",
+					.rawQuery("SELECT id,title,body,comment_count,creation_date, " +
+									 "score, view_count, favorite_count FROM posts " +
+									 "WHERE post_type_id = 1 LIMIT ?",
 							new String[] { Integer.toString(numberOfQuestions) });
 
 			questionsCursor.moveToFirst();
-			int questionCounter = 0;
 
 			while (questionsCursor.isAfterLast() == false) {
-
 				questions.add(new Question(questionsCursor.getInt(0),
 										   questionsCursor.getString(1), 
 										   questionsCursor.getString(2),
-										   questionsCursor.getInt(6),
-										   StringUtility.stringToDate(questionsCursor.getString(9)), // convert to date
-										   questionsCursor.getInt(10), // score
-										   questionsCursor.getInt(11), // view count
-										   questionsCursor.getInt(12)));
-
-				questions.get(questionCounter);
-				for (int i = 0; i < questionsCursor.getInt(4) - 1; i++) {
-					questions
-							.get(questionCounter)
-							.getAnswers()
-							.add(new Answer(questionsCursor.getInt(7),
-									questionsCursor.getString(3), questionsCursor.getInt(8)));
-					questionsCursor.moveToNext();
-				}
-
+										   questionsCursor.getInt(3),
+										   StringUtility.stringToDate(questionsCursor.getString(4)), // convert to date
+										   questionsCursor.getInt(5), // score
+										   questionsCursor.getInt(6), // view count
+										   questionsCursor.getInt(7)));
 				questionsCursor.moveToNext();
-				questionCounter++;
-
-			}
-			long elapsedTime = System.currentTimeMillis() - start;
-			System.out.println("Time it took to load questions and answers: "
-					+ elapsedTime);
-			System.out.println("Done added questions and their answers!");
+			}	
 			questionsCursor.close();
 			queriedQuestions = 1;
 		}
 	}
+	
+	public static ArrayList<Answer> getAnswers(Question question){
+		Cursor answersCursor = db
+				.rawQuery("SELECT id,body,comment_count FROM posts WHERE post_type_id = 2 AND parent_id = ?",
+						new String[] { Integer.toString(question.getId()) });
+		answersCursor.moveToFirst();
+		while (answersCursor.isAfterLast() == false) {
+			question.getAnswers().add(new Answer(answersCursor.getInt(0), answersCursor.getString(1), answersCursor.getInt(1)));
+			answersCursor.moveToNext();
+		}
+		answersCursor.close();
+		return question.getAnswers();
+	}
+	
 	
 	public static ArrayList<Comment> getComments(int id){
 		ArrayList<Comment> comments = new ArrayList<Comment>();

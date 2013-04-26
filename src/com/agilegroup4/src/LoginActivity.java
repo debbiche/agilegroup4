@@ -164,7 +164,5 @@ public class LoginActivity extends Activity {
 			progress.dismiss();
 
 	     }
-	
-
 	 }
 }

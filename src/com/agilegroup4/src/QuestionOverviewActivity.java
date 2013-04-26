@@ -53,8 +53,9 @@ public class QuestionOverviewActivity extends Activity {
 	
 	public void getIntentData(){
 	    Intent i = getIntent();
-	    if(i != null && i.hasExtra("questionsData")){
-	    	questions = i.getParcelableExtra("questionsData");
+	    if(i != null && i.hasExtra("questionsData")){   
+	    	Bundle b = i.getExtras(); //Get the intent's extras
+	    	questions = b.getParcelable("questionsData"); //get our list
 	    }
 	}
 
@@ -153,7 +154,20 @@ public class QuestionOverviewActivity extends Activity {
 	
 	public void filterLatest(View view){
 		
+		//System.out.println("before:");
+		//questions.get(3).setCreationDate(Helper.stringToDate("2013-04-26"));
+		//questions.get(5).setCreationDate(Helper.stringToDate("2013-04-26"));
+		//questions.get(7).setCreationDate(Helper.stringToDate("2013-04-26"));
+//		for(int i=0; i < questions.size(); i++){
+//			System.out.println(questions.get(i).getCreationDate().toString());
+//		}
+		
 		Collections.sort(questions, new LatestComparator());
+		
+//		System.out.println("after:");
+//		for(int i=0; i < questions.size(); i++){
+//			System.out.println(questions.get(i).getCreationDate().toString());
+//		}
 		
 		displayQuestions();
 	}

@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.agilegroup4.helpers.Helper;
+import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Comment;
 
 public class CommentsActivity extends Activity {
@@ -69,7 +69,7 @@ public class CommentsActivity extends Activity {
 		// HashMap needed for displaying the comments in the listview
 		final ArrayList<String> commentbodies = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
-		Helper help = new Helper();
+		StringUtility help = new StringUtility();
 		for (int i = 0; i < comments.size(); i++){
 			commentbodies.add(help.convertHTMLtoString(comments.get(i).getText()));
 		}

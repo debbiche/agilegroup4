@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.agilegroup4.helpers.Helper;
+import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Answer;
 import com.agilegroup4.model.Question;
 
@@ -61,7 +61,7 @@ public class QuestionActivity extends Activity {
 		TextView body = (TextView) findViewById(R.id.question_body);
 		Button commentsButton = (Button) findViewById(R.id.comments_button);
 		title.setText(question.getTitle());
-		Helper h = new Helper();
+		StringUtility h = new StringUtility();
 		body.setText(h.convertHTMLtoString(question.getBody()));
 		title.setTypeface(null,Typeface.BOLD);
 		body.setMovementMethod(new ScrollingMovementMethod());
@@ -118,7 +118,7 @@ public class QuestionActivity extends Activity {
 		// HashMap needed for displaying the bodies of the answers in the listview
 		final ArrayList<String> bodies = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
-		Helper help = new Helper();
+		StringUtility help = new StringUtility();
 		for (int i = 0; i < answers.size(); i++) {
 			bodies.add(help.convertHTMLtoString(answers.get(i).getBody()));
 			ids.put(i, answers.get(i).getId());

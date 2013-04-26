@@ -1,31 +1,29 @@
 package com.agilegroup4.src.test;
 
-import junit.framework.Assert;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import com.agilegroup4.src.LoginActivity;
-import com.agilegroup4.src.QuestionOverviewActivity;
+import com.agilegroup4.src.*;
 
-public class LoginTest extends ActivityInstrumentationTestCase2<LoginActivity> {
+public class FilterTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 
-	public LoginTest() {
+	public FilterTest() {
 		super("com.agilegroup4.src", LoginActivity.class);
 	}
 
 	protected void setUp() throws Exception {
 		super.setUp(); 
 	}
-
+	
 	/**
-	 * Test ???.
+	 * Test user profile button navigation.
 	 */
-	public void testLoginActivity() {
-
+	public void testFilterFeature() {
 		// Start monitor on intended activity.
-		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(QuestionOverviewActivity.class.getName(), null, false);
+		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(MainMenuActivity.class.getName(), null, false);
 
 		// Open login activity
 		LoginActivity loginActivity = getActivity();
@@ -33,7 +31,6 @@ public class LoginTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 		// Get the navigation option for user profile activity
 		final Button button = (Button) loginActivity.findViewById(com.agilegroup4.src.R.id.button_login);
 		final EditText inputText = (EditText) loginActivity.findViewById(com.agilegroup4.src.R.id.text_login_username);
-		
 		loginActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -46,20 +43,20 @@ public class LoginTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 			}
 		});
 
-		QuestionOverviewActivity questionOverviewActivity;
+		MainMenuActivity mma;
 
 		// Next activity is opened and casted to intended activity type.
 		try{
-			questionOverviewActivity = (QuestionOverviewActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 50000);
+			mma = (MainMenuActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 50000);
 		}catch(java.lang.ClassCastException e){
-			questionOverviewActivity = null;
+			mma = null;
 		}
 
 		// We assert that the cast and fetch has gone right.
-		assertNotNull("Failed to go to question overview activity after navigation test.", questionOverviewActivity);
+		assertNotNull("Failed to go to question overview activity after navigation test.", mma);
 		
 		//assertTrue(questionOverviewActivity.findViewById(com.agilegroup4.src.R.id.pop_text).toString().contains("Chris Jester-Young"));
-		questionOverviewActivity.finish();
+		mma.finish();
 		loginActivity.finish();
 	}
 

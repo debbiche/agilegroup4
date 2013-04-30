@@ -74,7 +74,9 @@ public class TagsOverviewActivity extends Activity {
 		
 		switch (view.getId()) {
 		case R.id.button1:
-			buttonOne.startAnimation(animTranslate);
+			Animation animation = new TranslateAnimation(0, 375,0,375);
+			animation.setDuration(DURATION);
+			buttonOne.startAnimation(animation);
 			center = topLeft;
 			break;
 		case R.id.button2:

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.agilegroup4.model.Tag;
 
@@ -24,6 +25,14 @@ public class TagsOverviewActivity extends Activity {
 	private Tag bottomLeft;
 	private Tag bottomRight;
 	
+	// The current buttons
+	private Button buttonOne;
+	private Button buttonTwo;
+	private Button buttonThree;
+	private Button buttonFour;
+	private Button buttonFive;
+	private Button buttonSix;
+	private Button buttonSeven;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +52,26 @@ public class TagsOverviewActivity extends Activity {
 	}
 	
 	private void addRelatedTags(){
+		int relatedSize = center.getRelatedTags().size();
+		
+	    switch (relatedSize) {
+        case 0:
+            break;
+        case 1:
+
+            break;
+        case 2:
+
+            break;
+        case 3:
+
+            break;
+        default:
+            break;
+	    }
+	    if (relatedSize > 3) {
+	    	
+	    }
 		
 	}
 	

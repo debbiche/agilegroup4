@@ -26,7 +26,7 @@ public class TagsOverviewActivity extends Activity {
 	private Tag bottomLeft;
 	private Tag bottomRight;
 	
-	// The current buttons hej
+	// The current buttons
 	private Button buttonOne;
 	private Button buttonTwo;
 	private Button buttonThree;

@@ -1,9 +1,9 @@
 package com.agilegroup4.src;
 
-import android.app.Activity;
+import com.agilegroup4.view.CustomTitleBarActivity;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,13 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 /* The login Activity is responsible for handling the login
  * and as it is always the first Activity to be called
  * it handles all necessary initializations (DB init, SharedPreferences) in the onCreate function
  * */
-public class LoginActivity extends Activity {
+public class LoginActivity extends CustomTitleBarActivity {
 	public final static String EXTRA_USERNAME = "USERNAME";
 	public static final String PREFS_NAME = "SETTINGS";
 	ProgressDialog progress;
@@ -28,8 +27,9 @@ public class LoginActivity extends Activity {
  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		super.setHeader(R.string.text_login_username);
+		super.setContentResourceID(R.layout.activity_login);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
 		progress = new ProgressDialog(this);
 		
 		loadDB();

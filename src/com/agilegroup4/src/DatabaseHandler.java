@@ -129,8 +129,6 @@ public class DatabaseHandler {
 	 */
 	public static void queryQuestions(int numberOfQuestions) {
 		if (queriedQuestions == 0) {
-			long start = System.currentTimeMillis();
-
 			Cursor questionsCursor = db
 					.rawQuery("SELECT id,title,body,comment_count,creation_date, " +
 									 "score, view_count, favorite_count FROM posts " +

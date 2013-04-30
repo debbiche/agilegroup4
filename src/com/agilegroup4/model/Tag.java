@@ -12,6 +12,7 @@ public class Tag {
 		super();
 		this.tagId = tagId;
 		this.tagName = tagName;
+		relatedTags = new ArrayList<Tag>();
 	}
 
 	public int getTagId() {

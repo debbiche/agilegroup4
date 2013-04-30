@@ -75,7 +75,8 @@ public class TagsOverviewActivity extends Activity implements OnTouchListener{
 		@Override
 	    public boolean onTouch(View view, MotionEvent me) {
 	   if (me.getAction() == MotionEvent.ACTION_DOWN) {
-	       status = START_DRAGGING;
+		   if (view instanceof Button)
+			   status = START_DRAGGING;
 	
 	
 	   }
@@ -83,7 +84,9 @@ public class TagsOverviewActivity extends Activity implements OnTouchListener{
 	       status = STOP_DRAGGING;
 	   } else if (me.getAction() == MotionEvent.ACTION_MOVE) {
 	       if (status == START_DRAGGING) {
-	
+	    	   Tag tagss = new Tag(213, "ERMAGEERD");
+	    	   updateButton(4,tagss);
+	    	  
 	    	   /**
 	           LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 	                   50, 50);
@@ -94,6 +97,7 @@ public class TagsOverviewActivity extends Activity implements OnTouchListener{
 	
 	           btn.invalidate();
 	           */
+	    	   view.invalidate();
 	       }
 	   }
 	   return false;

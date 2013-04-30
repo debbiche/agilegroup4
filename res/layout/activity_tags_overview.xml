@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/button3"
         android:layout_centerHorizontal="true"
-        android:text="Button4" />
+        android:text="Button4" 
+        android:onClick="handleTagOnClick"/>
 
     <Button
         android:id="@+id/button7"
@@ -23,7 +24,8 @@
         android:layout_alignBaseline="@+id/button6"
         android:layout_alignBottom="@+id/button6"
         android:layout_alignLeft="@+id/button5"
-        android:text="Button7" />
+        android:text="Button7" 
+        android:onClick="handleTagOnClick"/>
 
     <Button
         android:id="@+id/button5"
@@ -32,7 +34,8 @@
         android:layout_alignBaseline="@+id/button4"
         android:layout_alignBottom="@+id/button4"
         android:layout_alignParentRight="true"
-        android:text="Button5" />
+        android:text="Button5" 
+        android:onClick="handleTagOnClick"/>
 
     <Button
         android:id="@+id/button1"
@@ -41,7 +44,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="48dp"
-        android:text="Button1" />
+        android:text="Button1" 
+        android:onClick="handleTagOnClick"/>
 
     <Button
         android:id="@+id/button3"
@@ -49,7 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/button1"
         android:layout_centerVertical="true"
-        android:text="Button3" />
+        android:text="Button3" 
+        android:onClick="handleTagOnClick"/>
 
     <Button
         android:id="@+id/button6"
@@ -58,7 +63,8 @@
         android:layout_alignLeft="@+id/button3"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="36dp"
-        android:text="Button6" />
+        android:text="Button6" 
+        android:onClick="handleTagOnClick"/>
 
     <Button
         android:id="@+id/button2"
@@ -67,6 +73,7 @@
         android:layout_alignBaseline="@+id/button1"
         android:layout_alignBottom="@+id/button1"
         android:layout_alignLeft="@+id/button5"
-        android:text="Button2" />
+        android:text="Button2" 
+        android:onClick="handleTagOnClick"/>
 
 </RelativeLayout>

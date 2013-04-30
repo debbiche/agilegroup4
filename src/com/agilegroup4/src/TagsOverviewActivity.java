@@ -64,6 +64,36 @@ public class TagsOverviewActivity extends Activity {
 		
 	}
 	
+	public void handleTagOnClick(View view){
+		switch (view.getId()) {
+		case R.id.button1:
+			center = topLeft;
+			break;
+		case R.id.button2:
+			center = topRight;
+			break;
+		case R.id.button3:
+			center = left;
+			break;
+		case R.id.button4:
+			// Implement search functionality here
+			break;
+		case R.id.button5:
+			center = right;
+			break;
+		case R.id.button6:
+			center = bottomLeft;
+			break;
+		case R.id.button7:
+			center = bottomRight;
+			break;
+		}
+		
+		updateNextPrevTag();
+		updateRelatedTags();
+	}
+	
+	
 	private void updateNextPrevTag(){
 		int index = tags.indexOf(center);
 		int tagsSize = tags.size();

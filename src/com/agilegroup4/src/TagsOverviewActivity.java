@@ -1,6 +1,7 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -75,8 +76,8 @@ public class TagsOverviewActivity extends Activity {
 		case R.id.button3:
 			center = left;
 			break;
-		case R.id.button4:
-			// Implement search functionality here
+		case R.id.button4: //add tag to search
+			onSearchRequested();
 			break;
 		case R.id.button5:
 			center = right;
@@ -262,7 +263,8 @@ public class TagsOverviewActivity extends Activity {
 		ret.add(t8);
 		ret.add(t9);
 		
-		
+		//Collections.sort(ret);
+	
 		return ret;
 	}
 
@@ -273,9 +275,10 @@ public class TagsOverviewActivity extends Activity {
 		return true;
 	}
 	
-	@Override //invoked when Searchbutton pressed, just for testing
+	@Override //invoked when tag selected, sends tag name to search
 	public boolean onSearchRequested() {
-	    System.out.println("search pressed");
+		System.out.println(center.getTagName());
+	    getIntent().putExtra("selectedTag", center.getTagName());
 	    return super.onSearchRequested();
 	}
 	

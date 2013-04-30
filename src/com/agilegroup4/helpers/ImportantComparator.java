@@ -5,7 +5,12 @@ import java.util.Comparator;
 import com.agilegroup4.model.Question;
 
 /* 
- * TODO: should be tested with some bondary values
+ * Compares two Question objects according to their:
+ * - view count			1 = 1 weight point
+ * - score				1 = 50 weight points
+ * - favorite count		1 = 100 weight points
+ * 
+ * TODO: fails for large values (int times 100...)
  * */
 public class ImportantComparator implements Comparator<Question> {
 

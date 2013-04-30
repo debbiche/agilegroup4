@@ -47,7 +47,7 @@ public class FilterTest extends ActivityInstrumentationTestCase2<LoginActivity> 
 
 		// Next activity is opened and casted to intended activity type.
 		try{
-			mma = (MainMenuActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 50000);
+			mma = (MainMenuActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5000000);
 		}catch(java.lang.ClassCastException e){
 			mma = null;
 		}

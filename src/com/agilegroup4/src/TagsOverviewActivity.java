@@ -174,25 +174,25 @@ public class TagsOverviewActivity extends Activity {
 	private void updateButton(int pos, Tag tag){
 	    switch (pos) {
         case 1:
-        	buttonOne.setText(tag.getTag());
+        	buttonOne.setText(tag.getTagName());
         	break;
         case 2:
-        	buttonTwo.setText(tag.getTag());
+        	buttonTwo.setText(tag.getTagName());
             break;
         case 3:
-        	buttonThree.setText(tag.getTag());
+        	buttonThree.setText(tag.getTagName());
             break;
         case 4:
-        	buttonFour.setText(tag.getTag());
+        	buttonFour.setText(tag.getTagName());
             break;
         case 5:
-        	buttonFive.setText(tag.getTag());
+        	buttonFive.setText(tag.getTagName());
             break;
         case 6:
-        	buttonSix.setText(tag.getTag());
+        	buttonSix.setText(tag.getTagName());
             break;
         case 7:
-        	buttonSeven.setText(tag.getTag());
+        	buttonSeven.setText(tag.getTagName());
             break;
         default:
             break;

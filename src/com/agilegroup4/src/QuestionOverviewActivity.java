@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.agilegroup4.helpers.AnsweredComparator;
 import com.agilegroup4.helpers.ImportantComparator;
@@ -37,7 +38,7 @@ public class QuestionOverviewActivity extends Activity {
 	
 	// Containing the questions in the question overview
 	ArrayList<Question> questions;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -158,37 +159,64 @@ public class QuestionOverviewActivity extends Activity {
 
 	}
 	
+	/*
+	 * sort questions in questions object by date
+	 * for more information see the LatestComparator class
+	 * 
+	 * */
 	public void filterLatest(View view){
 		
-		//System.out.println("before:");
-		//questions.get(3).setCreationDate(Helper.stringToDate("2013-04-26"));
-		//questions.get(5).setCreationDate(Helper.stringToDate("2013-04-26"));
-		//questions.get(7).setCreationDate(Helper.stringToDate("2013-04-26"));
-//		for(int i=0; i < questions.size(); i++){
-//			System.out.println(questions.get(i).getCreationDate().toString());
-//		}
-		
 		Collections.sort(questions, new LatestComparator());
+
+		// create toast for sorting info  (see CR02)
+		Context context = getApplicationContext();
+		CharSequence text = "Sorting questions by creation date.";
+		int duration = Toast.LENGTH_SHORT;
+
+		Toast.makeText(context, text, duration).show();		
 		
-//		System.out.println("after:");
-//		for(int i=0; i < questions.size(); i++){
-//			System.out.println(questions.get(i).getCreationDate().toString());
-//		}
-		
+		// refresh list
 		displayQuestions();
 	}
 	
+	/*
+	 * sort questions in questions object by importance
+	 * for more information see the ImportantComparator class
+	 * 
+	 * */
 	public void filterImportant(View view){
 		
 		Collections.sort(questions, new ImportantComparator());
 		
+		// create toast for sorting info (see CR02)
+		Context context = getApplicationContext();
+		CharSequence text = "Sorting questions by score, view count and favorite count.";
+		int duration = Toast.LENGTH_SHORT;
+
+		Toast.makeText(context, text, duration).show();
+		
+		// refresh list
 		displayQuestions();
 	}
 	
+	/*
+	 * sort questions in questions object by amount of answers and comments
+	 * and if the answer was accepted
+	 * for more information see the AnsweredComparator class
+	 * 
+	 * */
 	public void filterAnswers(View view){
 		
 		Collections.sort(questions, new AnsweredComparator());
+
+		// create toast for sorting info  (see CR02)
+		Context context = getApplicationContext();
+		CharSequence text = "Sorting questions by amount of answers, accepted answers and comments.";
+		int duration = Toast.LENGTH_LONG;
+
+		Toast.makeText(context, text, duration).show();
 		
+		// refresh list
 		displayQuestions();
 	}
 	

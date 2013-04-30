@@ -38,7 +38,7 @@ public class TagsOverviewActivity extends Activity {
 	private Button buttonSix;
 	private Button buttonSeven;
 	
-	public static final int DURATION = 1000;
+	public static final int DURATION = 250;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +74,7 @@ public class TagsOverviewActivity extends Activity {
 		
 		switch (view.getId()) {
 		case R.id.button1:
-			Animation animation = new TranslateAnimation(0, 50,0, 50);
-			animation.setDuration(DURATION);
-			buttonOne.startAnimation(animation);
+			buttonOne.startAnimation(animTranslate);
 			center = topLeft;
 			break;
 		case R.id.button2:

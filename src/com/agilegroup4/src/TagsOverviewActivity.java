@@ -197,8 +197,8 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	    if (relatedSize > 3) {
         	topLeft = center.getRelatedTags().get(0);
         	topRight = center.getRelatedTags().get(1);
-        	bottomLeft = center.getRelatedTags().get(0);
-        	bottomRight = center.getRelatedTags().get(1);
+        	bottomLeft = center.getRelatedTags().get(2);
+        	bottomRight = center.getRelatedTags().get(3);
 	    	
 	    	updateButton(1, topLeft);
 	    	updateButton(2, topRight);

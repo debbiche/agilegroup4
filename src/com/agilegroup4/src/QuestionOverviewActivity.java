@@ -23,8 +23,9 @@ import com.agilegroup4.helpers.AnsweredComparator;
 import com.agilegroup4.helpers.ImportantComparator;
 import com.agilegroup4.helpers.LatestComparator;
 import com.agilegroup4.model.Question;
+import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class QuestionOverviewActivity extends Activity {
+public class QuestionOverviewActivity extends CustomTitleBarActivity {
 	
 	// HashMap for connecting question id with position in the list for the question
 	// Used for unit testing
@@ -41,12 +42,12 @@ public class QuestionOverviewActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		super.setHeader(R.string.title_activity_question_overview);
+		super.setContentResourceID(R.layout.activity_question_overview);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_question_overview);
 
 		SharedPreferences settings = getSharedPreferences(
 				LoginActivity.PREFS_NAME, 0);
-		int userID = settings.getInt("userID", 0);
 
 		getIntentData();
 		displayQuestions();
@@ -110,7 +111,6 @@ public class QuestionOverviewActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
-				final String item = (String) parent.getItemAtPosition(position);
 				//Intent intent = new Intent(getThis(), QuestionActivity.class);
 				// Send along question id to QuestionActivity
 				//intent.putExtra("questionId", ids.get((int) id));

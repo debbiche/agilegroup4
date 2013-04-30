@@ -8,19 +8,17 @@ import java.util.Date;
 
 import android.annotation.SuppressLint;
 import android.text.Html;
+
 @SuppressLint("SimpleDateFormat")
 public class StringUtility {
 
-	public StringUtility(){
-		
-	}
 	
-	/* converts a string containing HTML tags to a string readable for the android UI
-	 * 
-	 * */
+	/* 
+	 * Converts a string containing HTML tags to a string readable for the android UI
+	 */
 	public static String convertHTMLtoString (String html) {
 		
-		String parsedHtml =	removeBackslashNFromString(html) ;
+		final String parsedHtml = removeBackslashNFromString(html) ;
 		return Html.fromHtml(parsedHtml).toString();
 	}
 	
@@ -37,7 +35,6 @@ public class StringUtility {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 
 }

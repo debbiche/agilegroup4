@@ -1,17 +1,19 @@
 package com.agilegroup4.src;
 
+import com.agilegroup4.view.CustomTitleBarActivity;
+
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends CustomTitleBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		super.setHeader(R.string.title_activity_settings);
+		super.setContentResourceID(R.layout.activity_settings);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_settings);
 	}
 
 	@Override

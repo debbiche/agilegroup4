@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +23,9 @@ import android.widget.TextView;
 import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Answer;
 import com.agilegroup4.model.Question;
+import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class QuestionActivity extends Activity {
+public class QuestionActivity extends CustomTitleBarActivity {
 
 	ProgressDialog progress;
 	
@@ -45,8 +44,10 @@ public class QuestionActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		super.setHeader(R.string.title_activity_question);
+		super.setContentResourceID(R.layout.activity_question);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_question);
+
 		progress = new ProgressDialog(this);
 		//int questionId = getIntent().getIntExtra("questionId", 0);
 		
@@ -82,8 +83,7 @@ public class QuestionActivity extends Activity {
 		TextView body = (TextView) findViewById(R.id.question_body);
 		Button commentsButton = (Button) findViewById(R.id.comments_button);
 		title.setText(question.getTitle());
-		StringUtility h = new StringUtility();
-		body.setText(h.convertHTMLtoString(question.getBody()));
+		body.setText(StringUtility.convertHTMLtoString(question.getBody()));
 		title.setTypeface(null,Typeface.BOLD);
 		body.setMovementMethod(new ScrollingMovementMethod());
 		
@@ -139,9 +139,8 @@ public class QuestionActivity extends Activity {
 		// HashMap needed for displaying the bodies of the answers in the listview
 		final ArrayList<String> bodies = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
-		StringUtility help = new StringUtility();
 		for (int i = 0; i < answers.size(); i++) {
-			bodies.add(help.convertHTMLtoString(answers.get(i).getBody()));
+			bodies.add(StringUtility.convertHTMLtoString(answers.get(i).getBody()));
 			ids.put(i, answers.get(i).getId());
 		}
 
@@ -153,7 +152,6 @@ public class QuestionActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
-				final String item = (String) parent.getItemAtPosition(position);
 				
 				if(hasComment(answers.get((int) id))){
 					Intent intent = new Intent(getThis(), CommentsActivity.class);

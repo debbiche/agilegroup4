@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,23 +11,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Comment;
+import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class CommentsActivity extends Activity {
+public class CommentsActivity extends CustomTitleBarActivity {
 	
 	// The current comments
 	private ArrayList<Comment> comments;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		super.setHeader(R.string.title_activity_comments);
+		super.setContentResourceID(R.layout.activity_comments);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_comments);
-		
+
 		int id = getIntent().getIntExtra("id", 0);
-	
 		comments = DatabaseHandler.getComments(id);
 		//comments = createTestComments();
 		displayComments();
@@ -69,9 +68,8 @@ public class CommentsActivity extends Activity {
 		// HashMap needed for displaying the comments in the listview
 		final ArrayList<String> commentbodies = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
-		StringUtility help = new StringUtility();
 		for (int i = 0; i < comments.size(); i++){
-			commentbodies.add(help.convertHTMLtoString(comments.get(i).getText()));
+			commentbodies.add(StringUtility.convertHTMLtoString(comments.get(i).getText()));
 		}
 
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,

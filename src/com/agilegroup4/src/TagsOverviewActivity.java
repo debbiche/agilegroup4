@@ -2,7 +2,6 @@ package com.agilegroup4.src;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,8 +10,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.agilegroup4.model.Tag;
+import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class TagsOverviewActivity extends Activity {
+public class TagsOverviewActivity extends CustomTitleBarActivity {
 	
 	// Containing all the tags
 	private ArrayList<Tag> tags;
@@ -37,8 +37,9 @@ public class TagsOverviewActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		super.setHeader(R.string.title_activity_settings);
+		super.setContentResourceID(R.layout.activity_settings);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_tags_overview);
 		
 		buttonOne = (Button) findViewById(R.id.button1);
 		buttonTwo = (Button) findViewById(R.id.button2);

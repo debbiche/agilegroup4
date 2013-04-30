@@ -237,6 +237,12 @@ public class TagsOverviewActivity extends Activity {
 		Tag t1 = new Tag(1, "java");
 		Tag t2 = new Tag(2, "android");
 		Tag t3 = new Tag(3, "html");
+		Tag t4 = new Tag(4, "javascript");
+		Tag t5 = new Tag(5, "css");
+		Tag t6 = new Tag(6, "xml");
+		Tag t7 = new Tag(7, "c++");
+		Tag t8 = new Tag(8, "python");
+		Tag t9 = new Tag(9, "ios");
 		
 		t1.addRelatedTag(t2);
 		t2.addRelatedTag(t3);

@@ -89,6 +89,7 @@ public class TagsOverviewActivity extends Activity {
 			break;
 		}
 		
+		updateButton(4,center);
 		updateNextPrevTag();
 		updateRelatedTags();
 	}

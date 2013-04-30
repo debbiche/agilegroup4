@@ -3,35 +3,41 @@ package com.agilegroup4.model;
 import java.util.ArrayList;
 
 public class Tag {
-	
-	private int id;
-	private String tag;
+
+	private int tagId;
+	private String tagName;
 	private ArrayList<Tag> relatedTags;
-	
-	public Tag(int id, String tag, ArrayList<Tag> relatedTags) {
+
+	public Tag(int tagId, String tagName) {
 		super();
-		this.id = id;
-		this.tag = tag;
-		this.relatedTags = relatedTags;
+		this.tagId = tagId;
+		this.tagName = tagName;
 	}
-	
-	public int getId() {
-		return id;
+
+	public int getTagId() {
+		return tagId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setTagId(int id) {
+		this.tagId = id;
 	}
-	public String getTag() {
-		return tag;
+	public String getTagName() {
+		return tagName;
 	}
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
 	}
 	public ArrayList<Tag> getRelatedTags() {
 		return relatedTags;
 	}
-	public void setRelatedTags(ArrayList<Tag> relatedTags) {
-		this.relatedTags = relatedTags;
+	public void addRelatedTag(Tag tag) {
+		this.relatedTags.add(tag);
+	}
+	public void removeRelatedTag(Tag tag) {
+		for(int i = 0; i < this.relatedTags.size(); i++){
+			if(tag.getTagName().equals(this.relatedTags.get(i).getTagName()))
+				this.relatedTags.remove(i);
+		}
 	}
 
 }
+

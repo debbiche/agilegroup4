@@ -7,7 +7,6 @@ import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Answer;
 import com.agilegroup4.model.Question;
 import com.agilegroup4.model.QuestionList;
-import com.agilegroup4.model.User;
 import com.agilegroup4.src.DatabaseHandler;
 
 /*

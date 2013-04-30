@@ -1,7 +1,5 @@
 package com.agilegroup4.model;
 
-import java.util.ArrayList;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 

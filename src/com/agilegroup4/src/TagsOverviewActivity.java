@@ -26,7 +26,7 @@ public class TagsOverviewActivity extends Activity implements OnTouchListener{
 	// Containing all the tags
 	private ArrayList<Tag> tags;
 	
-	// The currently displayed tags
+	// The currently displayed tags hej
 	private Tag topLeft;
 	private Tag topRight;
 	private Tag left;

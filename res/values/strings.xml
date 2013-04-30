@@ -8,7 +8,7 @@
     <string name="menuitem_search">Search</string>
     <string name="hello_world">Hello world!</string>
     <string name="login_header">Welcome to AgileGroup4Life\'s Pocket Library. Please enter your username to login.</string>
-    <string name="text_login_username">username</string>
+    <string name="text_login_username">Login - Pocket Library</string>
     <string name="button_login">login</string>
     <string name="title_activity_question_overview">Question Overview</string>
     <string name="title_activity_main_menu">Main Menu</string>

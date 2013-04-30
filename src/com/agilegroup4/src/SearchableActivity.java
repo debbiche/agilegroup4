@@ -40,7 +40,7 @@ public class SearchableActivity extends ListActivity {
 				searchQuestionByTags(query);
 				break;
 			default:
-				//DO NOTHING!!
+				searchQuestionFreeText(query);
 				break;
 		}
 	}

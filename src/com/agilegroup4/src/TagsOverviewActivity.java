@@ -245,6 +245,9 @@ public class TagsOverviewActivity extends Activity {
 		Tag t9 = new Tag(9, "ios");
 		
 		t1.addRelatedTag(t2);
+		t1.addRelatedTag(t3);
+		t1.addRelatedTag(t4);
+		t1.addRelatedTag(t5);
 		t2.addRelatedTag(t3);
 		// html is not related to java
 		
@@ -252,6 +255,13 @@ public class TagsOverviewActivity extends Activity {
 		ret.add(t1);
 		ret.add(t2);
 		ret.add(t3);
+		ret.add(t4);
+		ret.add(t5);
+		ret.add(t6);
+		ret.add(t7);
+		ret.add(t8);
+		ret.add(t9);
+		
 		
 		return ret;
 	}

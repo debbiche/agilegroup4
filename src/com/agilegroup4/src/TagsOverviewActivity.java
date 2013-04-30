@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 
 import com.agilegroup4.model.Tag;
@@ -36,6 +37,8 @@ public class TagsOverviewActivity extends Activity {
 	private Button buttonFive;
 	private Button buttonSix;
 	private Button buttonSeven;
+	
+	public static final int DURATION = 1000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,9 @@ public class TagsOverviewActivity extends Activity {
 		
 		switch (view.getId()) {
 		case R.id.button1:
-			buttonOne.startAnimation(animTranslate);
+			Animation animation = new TranslateAnimation(0, 50,0, 50);
+			animation.setDuration(DURATION);
+			buttonOne.startAnimation(animation);
 			center = topLeft;
 			break;
 		case R.id.button2:

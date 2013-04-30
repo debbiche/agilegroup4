@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 
 import com.agilegroup4.model.Tag;
@@ -34,6 +37,8 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	private Button buttonFive;
 	private Button buttonSix;
 	private Button buttonSeven;
+	
+	public static final int DURATION = 250;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,26 +71,34 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	}
 	
 	public void handleTagOnClick(View view){
+		final Animation animTranslate = AnimationUtils.loadAnimation(this, R.anim.tag_animation);
+		
 		switch (view.getId()) {
 		case R.id.button1:
+			buttonOne.startAnimation(animTranslate);
 			center = topLeft;
 			break;
 		case R.id.button2:
+			buttonTwo.startAnimation(animTranslate);
 			center = topRight;
 			break;
 		case R.id.button3:
+			buttonThree.startAnimation(animTranslate);
 			center = left;
 			break;
 		case R.id.button4:
 			// Implement search functionality here
 			break;
 		case R.id.button5:
+			buttonFive.startAnimation(animTranslate);
 			center = right;
 			break;
 		case R.id.button6:
+			buttonSix.startAnimation(animTranslate);
 			center = bottomLeft;
 			break;
 		case R.id.button7:
+			buttonSeven.startAnimation(animTranslate);
 			center = bottomRight;
 			break;
 		}

@@ -26,6 +26,7 @@ public class SearchableActivity extends ListActivity {
 
 	// Get the intent, verify the action and get the query
 	private void handleIntent(Intent intent) {
+
 		if (!Intent.ACTION_SEARCH.equals(intent.getAction()))
 			return;
 			
@@ -39,6 +40,7 @@ public class SearchableActivity extends ListActivity {
 				searchQuestionByTags(query);
 				break;
 			default:
+				//DO NOTHING!!
 				break;
 		}
 	}

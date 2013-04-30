@@ -29,69 +29,72 @@ import com.agilegroup4.model.Question;
 public class QuestionActivity extends Activity {
 
 	ProgressDialog progress;
-	
+
 	// Current question
 	private Question question;
-	
+
 	// Current answers for the question
 	private ArrayList<Answer> answers;
-	
+
 	// List of questions from QuestionOverview
 	private ArrayList<Question> questions;
-	
+
 	// The max lines of the questionbody
 	public final static int MAX_LINES_WITH_COMMENTS = 10;
 	public final static int MAX_LINES_WITHOUT_COMMENTS = 20;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question);
 		progress = new ProgressDialog(this);
-		//int questionId = getIntent().getIntExtra("questionId", 0);
-		
-		
-		//questions = DatabaseHandler.getQuestions();
-		//question = findQuestion(questionId);
+		// int questionId = getIntent().getIntExtra("questionId", 0);
+
+		// questions = DatabaseHandler.getQuestions();
+		// question = findQuestion(questionId);
 		getIntentData();
 		loadAnswers();
-		
+
 	}
-	
-	public void getIntentData(){
-	    Intent i = getIntent();
-	    if(i != null && i.hasExtra("question")){   
-	    	Bundle b = i.getExtras(); 
-	    	question = b.getParcelable("question"); 
-	    }
+
+	public void getIntentData() {
+		Intent i = getIntent();
+		if (i != null && i.hasExtra("question")) {
+			Bundle b = i.getExtras();
+			question = b.getParcelable("question");
+		}
 	}
-	
-	private void loadAnswers(){
-		progress.setTitle("Please Wait");
-		progress.setMessage("Loading questions...");
-		progress.show();
-		new loadAnswers().execute();
-		
+
+	private void loadAnswers() {
+		if (!question.getQueriedAnswers()) {
+			progress.setTitle("Please Wait");
+			progress.setMessage("Loading questions...");
+			progress.show();
+			new loadAnswers().execute();
+		} else {
+			displayQuestion();
+			displayAnswers();
+		}
 	}
-	
+
 	/**
 	 * Displays question title and body
 	 */
-	private void displayQuestion(){
+	private void displayQuestion() {
 		TextView title = (TextView) findViewById(R.id.question_title);
 		TextView body = (TextView) findViewById(R.id.question_body);
 		Button commentsButton = (Button) findViewById(R.id.comments_button);
 		title.setText(question.getTitle());
 		StringUtility h = new StringUtility();
 		body.setText(h.convertHTMLtoString(question.getBody()));
-		title.setTypeface(null,Typeface.BOLD);
+		title.setTypeface(null, Typeface.BOLD);
 		body.setMovementMethod(new ScrollingMovementMethod());
-		
+
 		if (answers.size() > 0)
 			body.setMaxLines(MAX_LINES_WITH_COMMENTS);
 		else
 			body.setMaxLines(MAX_LINES_WITHOUT_COMMENTS);
-		
+
 		if (hasComment(question)) {
 			commentsButton.setVisibility(View.VISIBLE);
 			int com = question.getCommentCount();
@@ -99,29 +102,28 @@ public class QuestionActivity extends Activity {
 			if (com == 1)
 				buttontext = " comment";
 			commentsButton.setText(com + buttontext);
-			
-			
+
 			commentsButton.setOnClickListener(new View.OnClickListener() {
-		        public void onClick(View v) {
-					Intent intent = new Intent(getThis(), CommentsActivity.class);
+				public void onClick(View v) {
+					Intent intent = new Intent(getThis(),
+							CommentsActivity.class);
 					// Send along question id to CommentsActivity
 					intent.putExtra("id", question.getId());
 					startActivity(intent);
-		        }
-		    });
+				}
+			});
 		}
-		
+
 	}
-	
-	public boolean hasComment(Question q){
+
+	public boolean hasComment(Question q) {
 		return (q.getCommentCount() > 0);
 	}
-	
-	public boolean hasComment(Answer a){
+
+	public boolean hasComment(Answer a) {
 		return (a.getCommentCount() > 0);
 	}
-	
-	
+
 	/**
 	 * Display the answers
 	 */
@@ -132,11 +134,13 @@ public class QuestionActivity extends Activity {
 		if (ans == 1)
 			answertext = " answer";
 		answ.setText(ans + answertext);
-		answ.setTypeface(null,Typeface.BOLD);
-		
-		// HashMap for connecting answer id with position in the list for the question
-		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();
-		// HashMap needed for displaying the bodies of the answers in the listview
+		answ.setTypeface(null, Typeface.BOLD);
+
+		// HashMap for connecting answer id with position in the list for the
+		// question
+		final HashMap<Integer, Integer> ids = new HashMap<Integer, Integer>();
+		// HashMap needed for displaying the bodies of the answers in the
+		// listview
 		final ArrayList<String> bodies = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		StringUtility help = new StringUtility();
@@ -154,9 +158,10 @@ public class QuestionActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
 				final String item = (String) parent.getItemAtPosition(position);
-				
-				if(hasComment(answers.get((int) id))){
-					Intent intent = new Intent(getThis(), CommentsActivity.class);
+
+				if (hasComment(answers.get((int) id))) {
+					Intent intent = new Intent(getThis(),
+							CommentsActivity.class);
 					// Send along answer id to CommentsActivity
 					intent.putExtra("id", ids.get((int) id));
 					startActivity(intent);
@@ -164,13 +169,15 @@ public class QuestionActivity extends Activity {
 			}
 		});
 	}
-	
+
 	/**
 	 * Search for a question
-	 * @param qId question id
+	 * 
+	 * @param qId
+	 *            question id
 	 * @return the question
 	 */
-	private Question findQuestion(int qId){
+	private Question findQuestion(int qId) {
 		Question q;
 		for (int i = 0; i < questions.size(); i++) {
 			q = questions.get(i);
@@ -179,8 +186,8 @@ public class QuestionActivity extends Activity {
 		}
 		return null;
 	}
-	
-	private QuestionActivity getThis(){
+
+	private QuestionActivity getThis() {
 		return this;
 	}
 
@@ -190,21 +197,21 @@ public class QuestionActivity extends Activity {
 		getMenuInflater().inflate(R.menu.question, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;
-	    // Handle item selection
-	    switch (item.getItemId()) {
-	        case R.id.menuitem_mainmenu:
-				intent = new Intent(this, MainMenuActivity.class);
-				startActivity(intent);
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.menuitem_mainmenu:
+			intent = new Intent(this, MainMenuActivity.class);
+			startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
-	
+
 	/*
 	 * Puts the elements in the listview.
 	 */
@@ -232,7 +239,8 @@ public class QuestionActivity extends Activity {
 		}
 
 	}
-	private class loadAnswers extends AsyncTask<Object, Object, Object>{
+
+	private class loadAnswers extends AsyncTask<Object, Object, Object> {
 
 		@Override
 		protected Object doInBackground(Object... params) {
@@ -240,13 +248,13 @@ public class QuestionActivity extends Activity {
 			System.out.println("answers: " + answers.size());
 			return null;
 		}
-	
+
 		@Override
-	     protected void onPostExecute(Object params) {
+		protected void onPostExecute(Object params) {
 			progress.dismiss();
 			displayQuestion();
 			displayAnswers();
-	     }
-	 }
+		}
+	}
 
 }

@@ -76,10 +76,21 @@ public class TagsOverviewActivity extends Activity {
 	}
 	
 	/**
-	 * Used for test purpose only
+	 * Used for test purpose only, statically assign related tags
 	 */
 	private ArrayList<Tag> createTestTags(){
+		Tag t1 = new Tag(1, "java");
+		Tag t2 = new Tag(2, "android");
+		Tag t3 = new Tag(3, "html");
+		
+		t1.addRelatedTag(t2);
+		t2.addRelatedTag(t3);
+		// html is not related to java
+		
 		ArrayList<Tag> ret = new ArrayList<Tag>();
+		ret.add(t1);
+		ret.add(t2);
+		ret.add(t3);
 		
 		return ret;
 	}

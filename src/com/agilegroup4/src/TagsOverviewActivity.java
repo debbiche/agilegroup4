@@ -1,32 +1,25 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.agilegroup4.model.Tag;
 
-public class TagsOverviewActivity extends Activity implements OnTouchListener{
-	
-	private final static int START_DRAGGING = 0;
-	private final static int STOP_DRAGGING = 1;
-	private int status;
+public class TagsOverviewActivity extends Activity {
 	
 	// Containing all the tags
 	private ArrayList<Tag> tags;
 	
-	// The currently displayed tags hej
+	// The currently displayed tags
 	private Tag topLeft;
 	private Tag topRight;
 	private Tag left;
@@ -73,58 +66,35 @@ public class TagsOverviewActivity extends Activity implements OnTouchListener{
 		
 	}
 	
-		@Override
-	    public boolean onTouch(View view, MotionEvent me) {
-	   if (me.getAction() == MotionEvent.ACTION_DOWN) {
-		   if (view instanceof Button)
-			   status = START_DRAGGING;
-	
-	
-	   }
-	   if (me.getAction() == MotionEvent.ACTION_UP) {
-	       status = STOP_DRAGGING;
-	   } else if (me.getAction() == MotionEvent.ACTION_MOVE) {
-	       if (status == START_DRAGGING) {
-	    	   Tag tagss = new Tag(213, "ERMAGEERD");
-	    	   updateButton(4,tagss);
-	    	  
-	    	   /**
-	           LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-	                   50, 50);
-	           layoutParams.setMargins((int) me.getRawX() - 25,
-	                   (int) me.getRawY() - 50, 0, 0);
-	           layout.removeView(btn);
-	           layout.addView(btn, layoutParams);
-	
-	           btn.invalidate();
-	           */
-	    	   view.invalidate();
-	       }
-	   }
-	   return false;
-	}
-	
 	public void handleTagOnClick(View view){
+		final Animation animTranslate = AnimationUtils.loadAnimation(this, R.anim.tag_animation);
+		
 		switch (view.getId()) {
 		case R.id.button1:
+			buttonOne.startAnimation(animTranslate);
 			center = topLeft;
 			break;
 		case R.id.button2:
+			buttonTwo.startAnimation(animTranslate);
 			center = topRight;
 			break;
 		case R.id.button3:
+			buttonThree.startAnimation(animTranslate);
 			center = left;
 			break;
-		case R.id.button4: //add tag to search
-			onSearchRequested();
+		case R.id.button4:
+			// Implement search functionality here
 			break;
 		case R.id.button5:
+			buttonFive.startAnimation(animTranslate);
 			center = right;
 			break;
 		case R.id.button6:
+			buttonSix.startAnimation(animTranslate);
 			center = bottomLeft;
 			break;
 		case R.id.button7:
+			buttonSeven.startAnimation(animTranslate);
 			center = bottomRight;
 			break;
 		}
@@ -302,8 +272,7 @@ public class TagsOverviewActivity extends Activity implements OnTouchListener{
 		ret.add(t8);
 		ret.add(t9);
 		
-		//Collections.sort(ret);
-	
+		
 		return ret;
 	}
 
@@ -314,10 +283,9 @@ public class TagsOverviewActivity extends Activity implements OnTouchListener{
 		return true;
 	}
 	
-	@Override //invoked when tag selected, sends tag name to search
+	@Override //invoked when Searchbutton pressed, just for testing
 	public boolean onSearchRequested() {
-		System.out.println(center.getTagName());
-	    getIntent().putExtra("selectedTag", center.getTagName());
+	    System.out.println("search pressed");
 	    return super.onSearchRequested();
 	}
 	

@@ -40,10 +40,10 @@ public class SearchableActivity extends ListActivity {
 
 	// Get the intent, verify the action and get the query
 	private void handleIntent(Intent intent) {
-		//if(intent == null || intent.getExtras() == null){
-			//return;
-		//}
-		//System.out.println(intent.getStringExtra("action"));
+		if(intent == null || intent.getExtras() == null){
+			return;
+		}
+		System.out.println(intent.getStringExtra("selectedTag"));
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY).toLowerCase();
 			doSearch(query);

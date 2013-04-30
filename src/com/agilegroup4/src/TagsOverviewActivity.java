@@ -6,14 +6,22 @@ import java.util.Collections;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.agilegroup4.model.Tag;
 
-public class TagsOverviewActivity extends Activity {
+public class TagsOverviewActivity extends Activity implements OnTouchListener{
+	
+	private final static int START_DRAGGING = 0;
+	private final static int STOP_DRAGGING = 1;
+	private int status;
 	
 	// Containing all the tags
 	private ArrayList<Tag> tags;
@@ -63,6 +71,33 @@ public class TagsOverviewActivity extends Activity {
 		updateRelatedTags();
 		updateNextPrevTag();
 		
+	}
+	
+		@Override
+	    public boolean onTouch(View view, MotionEvent me) {
+	   if (me.getAction() == MotionEvent.ACTION_DOWN) {
+	       status = START_DRAGGING;
+	
+	
+	   }
+	   if (me.getAction() == MotionEvent.ACTION_UP) {
+	       status = STOP_DRAGGING;
+	   } else if (me.getAction() == MotionEvent.ACTION_MOVE) {
+	       if (status == START_DRAGGING) {
+	
+	    	   /**
+	           LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+	                   50, 50);
+	           layoutParams.setMargins((int) me.getRawX() - 25,
+	                   (int) me.getRawY() - 50, 0, 0);
+	           layout.removeView(btn);
+	           layout.addView(btn, layoutParams);
+	
+	           btn.invalidate();
+	           */
+	       }
+	   }
+	   return false;
 	}
 	
 	public void handleTagOnClick(View view){

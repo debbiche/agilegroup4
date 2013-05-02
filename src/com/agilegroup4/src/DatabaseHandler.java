@@ -129,6 +129,8 @@ public class DatabaseHandler {
 	 * list view elements.
 	 */
 	public static void queryQuestions(int numberOfQuestions) {
+		DatabaseHandlerTagDB.createTagsDB();
+
 		if (queriedQuestions == 0) {
 			Cursor questionsCursor = db
 					.rawQuery("SELECT id,title,body,comment_count,creation_date, " +
@@ -153,6 +155,7 @@ public class DatabaseHandler {
 			questionsCursor.close();
 			queriedQuestions = 1;
 		}
+		
 	}
 	
 	public static ArrayList<Answer> getAnswers(Question question){

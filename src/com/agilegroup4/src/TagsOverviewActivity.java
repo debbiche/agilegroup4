@@ -59,7 +59,7 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 		buttonSeven = (Button) findViewById(R.id.button7);
 		
 		//tags = createTestTags();
-		tags = DatabaseHandlerTagDB.queryTags(10);
+		tags = DatabaseHandlerTagDB.queryTags(560);
 				
 		
 		if (tags.size() > 0) {

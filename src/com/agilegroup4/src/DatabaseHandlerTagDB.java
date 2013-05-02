@@ -91,7 +91,7 @@ public class DatabaseHandlerTagDB {
 	}
 	
 
-	public void createTagsDB(){
+	public static void createTagsDB(){
 		// to be deleted after tags are extracted from DB
 				HashMap<String, String> tagsHash = new HashMap<String, String>();
 				
@@ -138,15 +138,27 @@ public class DatabaseHandlerTagDB {
 				
 
 				
+//				for (Entry<String, String> tagss : tagsHash.entrySet()){
+//					System.out.println("Tag: " + tagss.getKey() + " with related tags: " +  tagss.getValue());
+//					
+//				}		
+//				
+				int j = 1;
 				for (Entry<String, String> tagss : tagsHash.entrySet()){
 					System.out.println("Tag: " + tagss.getKey() + " with related tags: " +  tagss.getValue());
-
-				}		
+					db.execSQL("INSERT INTO tags VALUES (?,?,?)", new String[] { Integer.toString(j), tagss.getKey(), tagss.getValue() } );
+				//	t.close();
+					j++;
+				}
 				
-				db.rawQuery("CREATE TABLE tags(id int,tag text,related text)", null);
+				Cursor t = db.rawQuery("SELECT * from tags", null);
+				System.out.println("Database tags size: " + t.getCount());
 				
 				System.out.println("Created tags DB!!");
 				
+				DatabaseLoaderTagDB.copyDBToSDCard();
+				
+				db.close();
 	}
 
 	private static String buildRelatedTags(String[] array){

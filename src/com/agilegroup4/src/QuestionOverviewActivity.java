@@ -200,7 +200,7 @@ public class QuestionOverviewActivity extends CustomTitleBarActivity {
 		
 		Collections.sort(questions, new LatestComparator());
 
-		// create toast for sorting info  (see CR02)
+		// create toast for sorting info (see CR02)
 		Context context = getApplicationContext();
 		CharSequence text = "Sorting questions by creation date.";
 		int duration = Toast.LENGTH_SHORT;

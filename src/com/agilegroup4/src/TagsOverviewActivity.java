@@ -80,16 +80,25 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 		final Animation anim;
 		switch (view.getId()) {
 		case R.id.button1:
+			if (getTagByName(topLeft) == null)
+				break;
+			
 			anim = AnimationUtils.loadAnimation(this, R.anim.button_one_anim);
 			buttonOne.startAnimation(anim);
 			center = topLeft;
 			break;
 		case R.id.button2:
+			if (getTagByName(topRight) == null)
+				break;
+			
 			anim = AnimationUtils.loadAnimation(this, R.anim.button_two_anim);
 			buttonTwo.startAnimation(anim);
 			center = topRight;
 			break;
 		case R.id.button3:
+			if (getTagByName(left) == null)
+				break;
+			
 			anim = AnimationUtils.loadAnimation(this, R.anim.right_anim);
 			buttonThree.startAnimation(anim);
 			buttonFour.startAnimation(anim);
@@ -100,6 +109,9 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 			onSearchRequested();
 			break;
 		case R.id.button5:
+			if (getTagByName(right) == null)
+				break;
+			
 			anim = AnimationUtils.loadAnimation(this, R.anim.left_anim);
 			buttonThree.startAnimation(anim);
 			buttonFour.startAnimation(anim);
@@ -107,11 +119,17 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 			center = right;
 			break;
 		case R.id.button6:
+			if (getTagByName(bottomLeft) == null)
+				break;
+			
 			anim = AnimationUtils.loadAnimation(this, R.anim.button_six_anim);
 			buttonSix.startAnimation(anim);
 			center = bottomLeft;
 			break;
 		case R.id.button7:
+			if (getTagByName(bottomRight) == null)
+				break;
+			
 			anim = AnimationUtils.loadAnimation(this, R.anim.button_seven_anim);
 			buttonSeven.startAnimation(anim);
 			center = bottomRight;
@@ -138,14 +156,12 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 				updateButton(5,right);
 				buttonFive.setVisibility(View.VISIBLE);
 			}
-		}
-		else if (index == tags.size()-1){
+		} else if (index == tags.size()-1){
 			left = tags.get(index-1).getTagName();
 			updateButton(3,left);
 			buttonThree.setVisibility(View.VISIBLE);
 			buttonFive.setVisibility(View.INVISIBLE);
-		}
-		else {
+		} else {
 			left = tags.get(index-1).getTagName();
 			right = tags.get(index+1).getTagName();
 			updateButton(3,left);

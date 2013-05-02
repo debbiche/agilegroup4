@@ -70,7 +70,7 @@ public class DatabaseHandlerTagDB {
 	// TODO: add error handling
 	private static void addRelatedTags(Tag tag, String relatedTags){
 		if (relatedTags == null){
-			tag.addRelatedTag("");
+			//tag.addRelatedTag("");
 			return;
 		}
 		

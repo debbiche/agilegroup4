@@ -47,7 +47,7 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 		} else {
 			System.out.println("Database not loaded, loading it now...");
 			this.getWritableDatabase(); // open empty DB
-			inputDB = context.getAssets().open("so.sqlite"); // load db file
+			inputDB = context.getAssets().open("so.jpg"); // load db file
 			outputDB = new FileOutputStream(dbPath + dbName);
 			byte[] buffer = new byte[1024];
 			int length = inputDB.read(buffer);

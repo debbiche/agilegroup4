@@ -123,7 +123,7 @@ public class QuestionOverviewActivity extends CustomTitleBarActivity {
 			
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view,
-					int position, long id) {
+				int position, long id) {
 				//Intent intent = new Intent(getThis(), QuestionActivity.class);
 				// Send along question id to QuestionActivity
 				//intent.putExtra("questionId", ids.get((int) id));

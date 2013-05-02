@@ -1,90 +1,48 @@
 package com.agilegroup4.src;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.Map.Entry;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.agilegroup4.model.Tag;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteOpenHelper;
 
-/*
- * Handles DB access on tag db...
- * */
-public class DatabaseHandlerTagDB {
-	public static int loaded = 0;
-	protected static DatabaseLoaderTagDB dbLoader;
-	protected static SQLiteDatabase db;
+public class TagsDBLoader extends SQLiteOpenHelper{
+
+	private String dbPath = "data/data/com.agilegroup4.src/databases";
+	private String dbName = "TagsDB";
+	protected static SQLiteDatabase TagsDB;
+
+	
+	
+	public TagsDBLoader(Context context, String name, CursorFactory factory,
+			int version) {
+		super(context, name, factory, version);
+		loadDB();
+	}
+	
+	private void loadDB(){
 			
-	public DatabaseHandlerTagDB(Context context) {
-
-	}
-
-	public static void initDB(Context context) {
-		try {
-			if (loaded == 0)
-				dbLoader = new DatabaseLoaderTagDB(context, null, null, 1);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		db = dbLoader.getDb();
-		loaded = 1;
-	}
-	
-	/*
-	 *
-	 */
-	public static ArrayList<Tag> queryTags(int numberOfQuestions) {
-		String[] para = new String[] { Integer.toString(numberOfQuestions) };
 		
-		String rawQuery = "SELECT * FROM tags " +
-				"ORDER BY tag LIMIT ?";
-		Cursor cursorQuestions = db.rawQuery(rawQuery, para);
-		
-		return parseTags(cursorQuestions);
-	}
-	
-	/*
-	 * 
-	 * */
-	private static ArrayList<Tag> parseTags(Cursor cursor){
-		ArrayList<Tag> tags = new ArrayList<Tag>();
-		Tag tag;
-		String relatedTags;
-		
-		cursor.moveToFirst();
-		
-		while(!cursor.isAfterLast()){
-			tag = new Tag(cursor.getInt(0), cursor.getString(1));
-			relatedTags = cursor.getString(2);
+			System.out.println("Database not loaded, loading it now...");
+			this.getWritableDatabase(); // open empty DB
 			
-			addRelatedTags(tag, relatedTags);
-		
-			tags.add(tag);
-			cursor.moveToNext();
-		}
-		
-		return tags;
-	}
-	
-	// TODO: add error handling
-	/*
-	 * 
-	 * */
-	private static void addRelatedTags(Tag tag, String relatedTags){
-		if (relatedTags == null){
-			return;
-		}
-		
-		String [] relatedTagsArray = relatedTags.split(", ");
-		
-		for(int i = 0; i < relatedTagsArray.length; i++){
-			tag.addRelatedTag(relatedTagsArray[i]);
-		}
-		
-		return;
-	}
-	
+			TagsDB = SQLiteDatabase.openOrCreateDatabase(dbName, null);
 
-	public static void createTagsDB(){
+//			TagsDB = SQLiteDatabase.openDatabase(dbPath + dbName, null,
+//					SQLiteDatabase.OPEN_READWRITE
+//							| SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+//			// db.close();
+		
+	}
+	
+	
+	public void createTagsDB(){
 		// to be deleted after tags are extracted from DB
 				HashMap<String, String> tagsHash = new HashMap<String, String>();
 				
@@ -131,27 +89,15 @@ public class DatabaseHandlerTagDB {
 				
 
 				
-//				for (Entry<String, String> tagss : tagsHash.entrySet()){
-//					System.out.println("Tag: " + tagss.getKey() + " with related tags: " +  tagss.getValue());
-//					
-//				}		
-//				
-				int j = 1;
 				for (Entry<String, String> tagss : tagsHash.entrySet()){
 					System.out.println("Tag: " + tagss.getKey() + " with related tags: " +  tagss.getValue());
-					db.execSQL("INSERT INTO tags VALUES (?,?,?)", new String[] { Integer.toString(j), tagss.getKey(), tagss.getValue() } );
-				//	t.close();
-					j++;
-				}
+
+				}		
 				
-				Cursor t = db.rawQuery("SELECT * from tags", null);
-				System.out.println("Database tags size: " + t.getCount());
+				TagsDB.rawQuery("CREATE TABLE tags(id int,tag text,related text)", null);
 				
 				System.out.println("Created tags DB!!");
 				
-				DatabaseLoaderTagDB.copyDBToSDCard();
-				
-				db.close();
 	}
 
 	private static String buildRelatedTags(String[] array){
@@ -168,4 +114,22 @@ public class DatabaseHandlerTagDB {
 		}
 		return relatedTags;
 	}
+	
+	
+	
+	
+	
+
+	@Override
+	public void onCreate(SQLiteDatabase db) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

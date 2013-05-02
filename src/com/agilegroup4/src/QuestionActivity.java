@@ -65,7 +65,6 @@ public class QuestionActivity extends CustomTitleBarActivity {
 		//question = findQuestion(questionId);
 		getIntentData();
 		loadAnswers();
-		
 	}
 	
 	public void getIntentData(){

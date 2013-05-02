@@ -30,6 +30,7 @@ public class Question implements Parcelable {
 	private int favoriteCount;
 	private String tags;
 	private AnswerList answers = new AnswerList();
+	private boolean queriedAnswers = false;
 	
 	public Question(int id, String title, String body, int comment_count,
 					Date creation_date, int score, int viewCount, int favoriteCount, String tags){
@@ -162,6 +163,14 @@ public class Question implements Parcelable {
 	 */
 	public int describeContents() {
 		return this.hashCode();
+	}
+
+	public boolean getQueriedAnswers() {
+		return queriedAnswers;
+	}
+
+	public void setQueriedAnswers(boolean queriedAnswers) {
+		this.queriedAnswers = queriedAnswers;
 	}
 
 	/*

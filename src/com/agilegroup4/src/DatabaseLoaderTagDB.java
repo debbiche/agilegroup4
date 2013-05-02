@@ -118,6 +118,7 @@ public class DatabaseLoaderTagDB extends SQLiteOpenHelper {
 	        InputStream myInput = new FileInputStream(dbPath+"StackOverflowTags");
 
 	        File file = new File(Environment.getExternalStorageDirectory().getPath()+"/"+"tags.sqlite");
+	        
 	        if (!file.exists()){
 	            try {
 	                file.createNewFile();

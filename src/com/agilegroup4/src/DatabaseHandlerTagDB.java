@@ -78,7 +78,7 @@ public class DatabaseHandlerTagDB {
 			return;
 		}
 		
-		String [] relatedTagsArray = relatedTags.split(", ");
+		String [] relatedTagsArray = relatedTags.split(",");
 		
 		for(int i = 0; i < relatedTagsArray.length; i++){
 			tag.addRelatedTag(relatedTagsArray[i]);
@@ -153,9 +153,9 @@ public class DatabaseHandlerTagDB {
 				
 				System.out.println("Created tags DB!!");
 				
-				DatabaseLoaderTagDB.copyDBToSDCard();
+			//	DatabaseLoaderTagDB.copyDBToSDCard();
 				
-				db.close();
+//				db.close();
 	}
 
 	private static String buildRelatedTags(String[] array){

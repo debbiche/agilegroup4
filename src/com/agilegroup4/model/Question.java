@@ -28,11 +28,12 @@ public class Question implements Parcelable {
 	private int answerCount;
 	private int commentCount;
 	private int favoriteCount;
+	private String tags;
 	private AnswerList answers = new AnswerList();
 	private boolean queriedAnswers = false;
 	
 	public Question(int id, String title, String body, int comment_count,
-					Date creation_date, int score, int viewCount, int favoriteCount){
+					Date creation_date, int score, int viewCount, int favoriteCount, String tags){
 		this.title = title;
 		this.body = body;
 		this.commentCount = comment_count;
@@ -40,6 +41,7 @@ public class Question implements Parcelable {
 		this.creationDate = creation_date;
 		this.score = score;
 		this.favoriteCount = favoriteCount;
+		this.tags = tags;
 	}
 	
 	/*
@@ -55,6 +57,7 @@ public class Question implements Parcelable {
 		this.viewCount = in.readInt();
 		this.favoriteCount = in.readInt();
 		this.answers = in.readParcelable(Answer.class.getClassLoader());
+		this.tags = in.readString();
 	}
 	
 	/*
@@ -70,6 +73,7 @@ public class Question implements Parcelable {
 		out.writeInt(viewCount);
 		out.writeInt(favoriteCount);
 		out.writeParcelable(answers, flags);
+		out.writeString(tags);
 	}
 	
 	public int getCommentCount(){
@@ -145,6 +149,13 @@ public class Question implements Parcelable {
 
 	public void setFavoriteCount(int favoriteCount) {
 		this.favoriteCount = favoriteCount;
+	}
+	
+	public String getTags() {
+		return tags;
+	}
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 
 	/*

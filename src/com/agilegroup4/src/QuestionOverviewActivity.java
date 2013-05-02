@@ -3,7 +3,6 @@ package com.agilegroup4.src;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,20 +10,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.agilegroup4.helpers.AnsweredComparator;
 import com.agilegroup4.helpers.ImportantComparator;
 import com.agilegroup4.helpers.LatestComparator;
 import com.agilegroup4.model.Question;
+import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class QuestionOverviewActivity extends Activity {
+public class QuestionOverviewActivity extends CustomTitleBarActivity {
 	
 	// HashMap for connecting question id with position in the list for the question
 	// Used for unit testing
@@ -39,14 +42,20 @@ public class QuestionOverviewActivity extends Activity {
 	// Containing the questions in the question overview
 	ArrayList<Question> questions;
 	
+    static final String KEY_QUESTION = "question"; // parent node
+    static final String KEY_TITLE = "title";
+    static final String KEY_INFO = "answers";
+    private static LayoutInflater inflater=null;
+    public ArrayList<HashMap<String,String>> data;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		super.setHeader(R.string.title_activity_question_overview);
+		super.setContentResourceID(R.layout.activity_question_overview);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_question_overview);
 
 		SharedPreferences settings = getSharedPreferences(
 				LoginActivity.PREFS_NAME, 0);
-		int userID = settings.getInt("userID", 0);
 
 		getIntentData();
 		displayQuestions();
@@ -91,18 +100,22 @@ public class QuestionOverviewActivity extends Activity {
 		if(questions == null)
 			questions = DatabaseHandler.getQuestions();
 		
+		ArrayList<HashMap<String, String>> qsList = new ArrayList<HashMap<String, String>>();
+		
 		// HashMap for connecting question id with position in the list for the question
 		final HashMap<Integer,Question> ids = new HashMap<Integer,Question>();
-		// HashMap needed for displaying the titles in the listview
-		final ArrayList<String> titles = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		for (int i = 0; i < NR_OF_POSTS; i++) {
-			titles.add(questions.get(i).getTitle());
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put(KEY_TITLE, questions.get(i).getTitle());
+            map.put(KEY_INFO, "Score: " + Integer.toString(questions.get(i).getScore())
+            		+ " Comments: " + Integer.toString(questions.get(i).getCommentCount()));
 			ids.put(i,questions.get(i));
+			qsList.add(map);
 		}
 		idsTestMap = ids;
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
-				android.R.layout.simple_list_item_1, titles);
+				android.R.layout.simple_list_item_1, qsList);
 		listview.setAdapter(adapter);
 
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -110,7 +123,6 @@ public class QuestionOverviewActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view,
 				int position, long id) {
-				final String item = (String) parent.getItemAtPosition(position);
 				//Intent intent = new Intent(getThis(), QuestionActivity.class);
 				// Send along question id to QuestionActivity
 				//intent.putExtra("questionId", ids.get((int) id));
@@ -134,28 +146,48 @@ public class QuestionOverviewActivity extends Activity {
 	/*
 	 * Puts the elements in the listview.
 	 */
-	private class StableArrayAdapter extends ArrayAdapter<String> {
-
-		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-		public StableArrayAdapter(Context context, int textViewResourceId,
-				List<String> objects) {
-			super(context, textViewResourceId, objects);
-			for (int i = 0; i < objects.size(); ++i) {
-				mIdMap.put(objects.get(i), i);
-			}
+	private class StableArrayAdapter extends BaseAdapter {
+				
+		public StableArrayAdapter(Activity a, int textViewResourceId,
+				ArrayList<HashMap<String, String>> objects) {
+			data = objects;
+			inflater = (LayoutInflater)a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
+		
+		public int getCount() {
+	        return data.size();
+	    }
+		
+		public Object getItem(int position) {
+	        return position;
+	    }
 
 		@Override
 		public long getItemId(int position) {
-			String item = getItem(position);
-			return mIdMap.get(item);
+			return position;
 		}
 
 		@Override
 		public boolean hasStableIds() {
 			return true;
 		}
+		
+	    public View getView(int position, View convertView, ViewGroup parent) {
+	        View vi=convertView;
+	        if(convertView==null)
+	            vi = inflater.inflate(R.layout.list_row, null);
+	 
+	        TextView title = (TextView)vi.findViewById(R.id.title); // title
+	        TextView info = (TextView)vi.findViewById(R.id.info); // nr of answers
+	 
+	        HashMap<String, String> song = new HashMap<String, String>();
+	        song = data.get(position);
+	 
+	        // Setting all values in listview
+	        title.setText(song.get(QuestionOverviewActivity.KEY_TITLE));
+	        info.setText(song.get(QuestionOverviewActivity.KEY_INFO));
+	        return vi;
+	    }
 
 	}
 	
@@ -168,7 +200,7 @@ public class QuestionOverviewActivity extends Activity {
 		
 		Collections.sort(questions, new LatestComparator());
 
-		// create toast for sorting info  (see CR02)
+		// create toast for sorting info (see CR02)
 		Context context = getApplicationContext();
 		CharSequence text = "Sorting questions by creation date.";
 		int duration = Toast.LENGTH_SHORT;

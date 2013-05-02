@@ -1,27 +1,17 @@
 package com.agilegroup4.src;
 
-import java.util.ArrayList;
-
 import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
-
 
 import com.agilegroup4.infrastructure.QuestionHandler;
-import com.agilegroup4.model.Question;
 import com.agilegroup4.model.QuestionList;
+import com.agilegroup4.model.SearchMode;
 
 public class SearchableActivity extends ListActivity {
 
-	//The search result of questions.
-	private QuestionList searchResultQuestions;
-
-	public ArrayList<Question> getSearchResultQuestions() {
-		return searchResultQuestions;
-	}
+	public static SearchMode SearchMode;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,30 +24,31 @@ public class SearchableActivity extends ListActivity {
 		handleIntent(intent); 
 	} 
 
-	public void onListItemClick(ListView l, View v, int position, long id) { 
-		// Call detail activity for clicked entry
-	}
-
 	// Get the intent, verify the action and get the query
 	private void handleIntent(Intent intent) {
-		//if(intent == null || intent.getExtras() == null){
-			//return;
-		//}
-		//System.out.println(intent.getStringExtra("action"));
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			String query = intent.getStringExtra(SearchManager.QUERY).toLowerCase();
-			doSearch(query);
-			/*Intent intent2 = new Intent(this, QuestionOverviewActivity.class);
-			intent.putExtra("questionsData", searchResultQuestions);
-			startActivity(intent2);
-			 */
+		
+		if (!Intent.ACTION_SEARCH.equals(intent.getAction()))
+			return;
+			
+		String query = intent.getStringExtra(SearchManager.QUERY);
+		
+		switch(SearchMode){
+			case QUESTION_FREETEXT:
+				searchQuestionFreeText(query);
+				break;
+			case QUESTION_WITHTAGS:
+				searchQuestionByTags(query, TagsOverviewActivity.tagQuery); //provide tag query when middle tag button pressed
+				break;
+			default:
+				searchQuestionFreeText(query);
+				break;
 		}
 	}
 	
 	//Searches questions and sends QuestionList of questions
 	//to QuestionsOverview for presentation
-	private void doSearch(String query) { 
-		searchResultQuestions = QuestionHandler.searchForQuestions(query, 60);
+	private void searchQuestionFreeText(String query) { 
+		QuestionList searchResultQuestions = QuestionHandler.searchForQuestions(query, 60);
 		//Creates a bundle and parce the the search result QuestionList
 		Bundle b = new Bundle();
         b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object
@@ -67,5 +58,21 @@ public class SearchableActivity extends ListActivity {
 		startActivity(intent);
 	}
 		
+	//Searches questions and sends QuestionList of questions
+	//to QuestionsOverview for presentation
+	private void searchQuestionByTags(String query, String tag) { 
+		
+		if (query.equals("0"))
+			query = "";
+		
+		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag(query, tag, 60);
+		//Creates a bundle and parce the the search result QuestionList
+		Bundle b = new Bundle();
+        b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object
+		Intent intent = new Intent(this, QuestionOverviewActivity.class);
+		//Includes the bundle and parced search result into the intent for search activity.
+		intent.putExtras(b);
+		startActivity(intent);
+	}
 
 }

@@ -1,10 +1,9 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
-import java.util.Currency;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
 import android.content.Context;
@@ -29,9 +28,7 @@ public class DatabaseHandler {
 	protected static DatabaseLoader dbLoader;
 	protected static SQLiteDatabase db;
 	protected static ArrayList<Question> questions = new ArrayList<Question>();
-	private Context context;
-	static TagsDBLoader dbTags;
-	
+
 	public DatabaseHandler(Context context) {
 
 	}
@@ -40,9 +37,6 @@ public class DatabaseHandler {
 		try {
 			if (loaded == 0)
 				dbLoader = new DatabaseLoader(context, null, null, 1);
-				dbTags = new TagsDBLoader(context, null, null, 1);
-
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -127,82 +121,71 @@ public class DatabaseHandler {
 		return curUserID;
 	}
 
+	
+	
 	/*
 	 * Call this method then you can just just loop over the questions list
 	 * object created here and use get the title of each questions to put in the
 	 * list view elements.
 	 */
 	public static void queryQuestions(int numberOfQuestions) {
-		
-		dbTags.createTagsDB();
-
-		
 		if (queriedQuestions == 0) {
-			long start = System.currentTimeMillis();
-
-			Cursor questionsCursor = db.rawQuery(
-					"SELECT id,title,body,comment_count,creation_date, "
-							+ "score, view_count, favorite_count FROM posts "
-							+ "WHERE post_type_id = 1 LIMIT ?",
-					new String[] { Integer.toString(numberOfQuestions) });
+			Cursor questionsCursor = db
+					.rawQuery("SELECT id,title,body,comment_count,creation_date, " +
+									 "score, view_count, favorite_count, tags FROM posts " +
+									 "WHERE post_type_id = 1 LIMIT ?",
+							new String[] { Integer.toString(numberOfQuestions) });
 
 			questionsCursor.moveToFirst();
-
+		
 			while (questionsCursor.isAfterLast() == false) {
-				questions
-						.add(new Question(questionsCursor.getInt(0),
-								questionsCursor.getString(1), questionsCursor
-										.getString(2), questionsCursor
-										.getInt(3), StringUtility
-										.stringToDate(questionsCursor
-												.getString(4)), // convert to
-																// date
-								questionsCursor.getInt(5), // score
-								questionsCursor.getInt(6), // view count
-								questionsCursor.getInt(7)));
+				questions.add(new Question(questionsCursor.getInt(0),
+										   questionsCursor.getString(1), 
+										   questionsCursor.getString(2),
+										   questionsCursor.getInt(3),
+										   StringUtility.stringToDate(questionsCursor.getString(4)), // convert to date
+										   questionsCursor.getInt(5), // score
+										   questionsCursor.getInt(6), // view count
+										   questionsCursor.getInt(7),
+										   questionsCursor.getString(8))); // tag
 				questionsCursor.moveToNext();
-			}
+			}	
 			questionsCursor.close();
 			queriedQuestions = 1;
 		}
 	}
-
-	public static ArrayList<Answer> getAnswers(Question question) {
-		if ((question.getAnswerCount() != 0) || !question.getQueriedAnswers()) {
-			Cursor answersCursor = db.rawQuery(
-					"SELECT id,body,comment_count FROM posts WHERE "
-							+ "post_type_id = 2 AND parent_id = ?",
-					new String[] { Integer.toString(question.getId()) });
-			answersCursor.moveToFirst();
-			while (answersCursor.isAfterLast() == false) {
-				question.getAnswers().add(
-						new Answer(answersCursor.getInt(0), answersCursor
-								.getString(1), answersCursor.getInt(1)));
-				answersCursor.moveToNext();
-			}
-			question.setQueriedAnswers(true);
-			answersCursor.close();
+	
+	public static ArrayList<Answer> getAnswers(Question question){
+		Cursor answersCursor = db
+				.rawQuery("SELECT id,body,comment_count FROM posts WHERE post_type_id = 2 AND parent_id = ?",
+						new String[] { Integer.toString(question.getId()) });
+		answersCursor.moveToFirst();
+		while (answersCursor.isAfterLast() == false) {
+			question.getAnswers().add(new Answer(answersCursor.getInt(0), answersCursor.getString(1), answersCursor.getInt(1)));
+			answersCursor.moveToNext();
 		}
+		answersCursor.close();
 		return question.getAnswers();
 	}
-
-	public static ArrayList<Comment> getComments(int id) {
+	
+	
+	public static ArrayList<Comment> getComments(int id){
 		ArrayList<Comment> comments = new ArrayList<Comment>();
-
-		Cursor commentsCursor = db.rawQuery("SELECT id,text FROM comments"
-				+ " WHERE post_id = " + id, null);
+		
+		Cursor commentsCursor = db.rawQuery(
+				"SELECT id,text FROM comments"
+						+ " WHERE post_id = " + id, null);
 		commentsCursor.moveToFirst();
 		while (commentsCursor.isAfterLast() == false) {
-			comments.add(new Comment(commentsCursor.getInt(0), commentsCursor
-					.getString(1)));
+			comments.add(new Comment(commentsCursor.getInt(0),
+					commentsCursor.getString(1)));
 			commentsCursor.moveToNext();
 		}
 		commentsCursor.close();
-
+		
 		return comments;
 	}
 	
 	
-	
-	
+
 }

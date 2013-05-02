@@ -14,7 +14,7 @@ import com.agilegroup4.src.DatabaseHandler;
  */
 public class QuestionHandler extends DatabaseHandler {
 
-	//Holds the base query for relating questions and anwers.
+	//Holds the base query for relating questions and answers.
 	protected static String baseQuestionRawQuery = "SELECT R.id AS id, " +
 			"R.title AS title, " +
 			"R.body AS question, "  +
@@ -27,9 +27,11 @@ public class QuestionHandler extends DatabaseHandler {
 			"R.creation_date, " + 
 			"R.score, " +
 			"R.view_count, " +
-			"R.favorite_count " +
+			"R.favorite_count, " +
+			"R.tags AS taggy " + //test add
 			"FROM posts R INNER JOIN posts D ON " +
 			"D.parent_id = R.id";
+			
 	
 	/*
 	 * Creates a new question handler that is used to query questions in the database.
@@ -56,6 +58,27 @@ public class QuestionHandler extends DatabaseHandler {
 				new String[] { searchTermLike, searchTermLike, searchTermLike, Integer.toString(numberOfQuestions) });
 		return parseQuestions(cursorQuestions);
 	}
+	
+	/*
+	 * Returns a list of question that matches the searchTerm with added tag filter. 
+	 * Answer body, Question body and Title and Tags will be searched. 
+	 * You can limit the amount of questions by providing a number to numberOfQuestions
+	 */
+	public static QuestionList searchForQuestionsByTag(String searchTerm, String tag, int numberOfQuestions) {
+		if(searchTerm.length() < 2)
+			return new QuestionList();
+			
+		String searchTermLike = "%" + searchTerm + "%";
+		String tagLike = "%" + tag + "%";
+		String rawQuery = baseQuestionRawQuery + " WHERE question LIKE ? " +
+				"OR answer LIKE ? " +
+				"OR R.title LIKE ? " + 
+				"OR taggy LIKE ? " + 
+				"ORDER BY R.title LIMIT ?";
+		Cursor cursorQuestions = db.rawQuery(rawQuery,
+				new String[] { searchTermLike, searchTermLike, searchTermLike, tagLike, Integer.toString(numberOfQuestions) });
+		return parseQuestions(cursorQuestions);
+	}
 
 	/*
 	 * Parses a query result to questions and answers.
@@ -74,7 +97,8 @@ public class QuestionHandler extends DatabaseHandler {
 									   StringUtility.stringToDate(cursor.getString(9)), // convert to date
 									   cursor.getInt(10), // score
 									   cursor.getInt(11), // view count
-									   cursor.getInt(12)));
+									   cursor.getInt(12),
+									   cursor.getString(13))); //get tags
 
 			questions.get(questionCounter);
 			for (int i = 0; i < cursor.getInt(4) - 1; i++) {

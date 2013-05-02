@@ -26,7 +26,7 @@ public class SearchableActivity extends ListActivity {
 
 	// Get the intent, verify the action and get the query
 	private void handleIntent(Intent intent) {
-
+		
 		if (!Intent.ACTION_SEARCH.equals(intent.getAction()))
 			return;
 			
@@ -61,6 +61,7 @@ public class SearchableActivity extends ListActivity {
 	//Searches questions and sends QuestionList of questions
 	//to QuestionsOverview for presentation
 	private void searchQuestionByTags(String query, String tag) { 
+		//QuestionList searchResultQuestions = QuestionHandler.searchForQuestions(tag, 60);
 		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag(query, tag, 60);
 		//Creates a bundle and parce the the search result QuestionList
 		Bundle b = new Bundle();

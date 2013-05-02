@@ -1,6 +1,7 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -131,12 +132,12 @@ public class DatabaseHandler {
 		if (queriedQuestions == 0) {
 			Cursor questionsCursor = db
 					.rawQuery("SELECT id,title,body,comment_count,creation_date, " +
-									 "score, view_count, favorite_count FROM posts " +
+									 "score, view_count, favorite_count, tags FROM posts " +
 									 "WHERE post_type_id = 1 LIMIT ?",
 							new String[] { Integer.toString(numberOfQuestions) });
 
 			questionsCursor.moveToFirst();
-
+		
 			while (questionsCursor.isAfterLast() == false) {
 				questions.add(new Question(questionsCursor.getInt(0),
 										   questionsCursor.getString(1), 
@@ -145,7 +146,8 @@ public class DatabaseHandler {
 										   StringUtility.stringToDate(questionsCursor.getString(4)), // convert to date
 										   questionsCursor.getInt(5), // score
 										   questionsCursor.getInt(6), // view count
-										   questionsCursor.getInt(7)));
+										   questionsCursor.getInt(7),
+										   questionsCursor.getString(8))); // tag
 				questionsCursor.moveToNext();
 			}	
 			questionsCursor.close();

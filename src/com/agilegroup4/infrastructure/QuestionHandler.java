@@ -27,8 +27,8 @@ public class QuestionHandler extends DatabaseHandler {
 			"R.creation_date, " + 
 			"R.score, " +
 			"R.view_count, " +
-			"R.favorite_count " +
-			"R.tags AS tags " + //test add
+			"R.favorite_count, " +
+			"R.tags AS taggy " + //test add
 			"FROM posts R INNER JOIN posts D ON " +
 			"D.parent_id = R.id";
 			
@@ -69,13 +69,14 @@ public class QuestionHandler extends DatabaseHandler {
 			return new QuestionList();
 			
 		String searchTermLike = "%" + searchTerm + "%";
+		String tagLike = "%" + tag + "%";
 		String rawQuery = baseQuestionRawQuery + " WHERE question LIKE ? " +
 				"OR answer LIKE ? " +
 				"OR R.title LIKE ? " + 
-				"OR R.tags LIKE ? " + 
+				"OR taggy LIKE ? " + 
 				"ORDER BY R.title LIMIT ?";
 		Cursor cursorQuestions = db.rawQuery(rawQuery,
-				new String[] { searchTermLike, searchTermLike, searchTermLike, searchTermLike, Integer.toString(numberOfQuestions) });
+				new String[] { searchTermLike, searchTermLike, searchTermLike, tagLike, Integer.toString(numberOfQuestions) });
 		return parseQuestions(cursorQuestions);
 	}
 
@@ -96,7 +97,8 @@ public class QuestionHandler extends DatabaseHandler {
 									   StringUtility.stringToDate(cursor.getString(9)), // convert to date
 									   cursor.getInt(10), // score
 									   cursor.getInt(11), // view count
-									   cursor.getInt(12)));
+									   cursor.getInt(12),
+									   cursor.getString(13))); //get tags
 
 			questions.get(questionCounter);
 			for (int i = 0; i < cursor.getInt(4) - 1; i++) {

@@ -2,32 +2,27 @@ package com.agilegroup4.src.test;
 
 import java.sql.Date;
 
-import android.app.Instrumentation.ActivityMonitor;
-import android.test.ActivityInstrumentationTestCase2;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import junit.framework.TestCase;
 
-import com.agilegroup4.helpers.AnsweredComparator;
+import com.agilegroup4.helpers.ImportantComparator;
 import com.agilegroup4.model.Question;
-import com.agilegroup4.src.*;
 
-public class ImportantComparatorComparingTest extends ActivityInstrumentationTestCase2<LoginActivity> {
+public class ImportantComparatorComparingTest extends TestCase {
 
-	private AnsweredComparator aComp;
+	private ImportantComparator aComp;
 	private Question q1;
 	private Question q2;
 	
-	public ImportantComparatorComparingTest() {
-		super("com.agilegroup4.src", LoginActivity.class);
+	public ImportantComparatorComparingTest(String name) {
+		super(name);
 	}
 
 	protected void setUp() throws Exception {
-		aComp = new AnsweredComparator();
+		aComp = new ImportantComparator();
 		
 		//Question(id, title, body, comment count, date of creation, score, view count, favorite count)
-		q1 = new Question(0,"","", 0,new Date(0), 0,2,3);
-		q2 = new Question(1,"","", 0,new Date(0), 150,1,2);
+		q1 = new Question(0,"","", 0,new Date(0), 1,2,3, "");
+		q2 = new Question(1,"","", 0,new Date(0), 1,2,3, "");
 	}
 	
 	/**

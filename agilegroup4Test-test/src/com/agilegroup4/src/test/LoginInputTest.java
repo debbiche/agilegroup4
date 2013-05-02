@@ -1,7 +1,6 @@
 package com.agilegroup4.src.test;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.EditText;
 
@@ -11,8 +10,8 @@ import com.agilegroup4.src.LoginActivity;
 
 public class LoginInputTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 
-	public LoginInputTest() {
-		super("com.agilegroup4.src", LoginActivity.class);
+	public LoginInputTest(Class<LoginActivity> classTest) {
+		super(classTest);
 	}
 
 	protected void setUp() throws Exception {

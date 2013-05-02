@@ -35,6 +35,7 @@ public class QuestionHandler extends DatabaseHandler {
 	
 	/*
 	 * Creates a new question handler that is used to query questions in the database.
+	 * @param context a database context.
 	 */
 	public QuestionHandler(Context context) {
 		super(context);
@@ -44,6 +45,9 @@ public class QuestionHandler extends DatabaseHandler {
 	 * Returns a list of question that matches the searchTerm. 
 	 * Answer body, Question body and Title will be searched. 
 	 * You can limit the amount of questions by providing a number to numberOfQuestions
+	 * @param searchTerm The search term you want to search for. At least 2 chars needed.
+	 * @param numberOfQuestions The maximum number of questions you want back.
+	 * @return A list of questions matching your search term.
 	 */
 	public static QuestionList searchForQuestions(String searchTerm, int numberOfQuestions) {
 		if(searchTerm.length() < 2)
@@ -63,6 +67,10 @@ public class QuestionHandler extends DatabaseHandler {
 	 * Returns a list of question that matches the searchTerm with added tag filter. 
 	 * Answer body, Question body and Title and Tags will be searched. 
 	 * You can limit the amount of questions by providing a number to numberOfQuestions
+	 * @param searchTerm The search term you want to search for. At least 2 chars needed.
+	 * @param numberOfQuestions The maximum number of questions you want back.
+	 * @param tag The tag you want to match when searching questions.
+	 * @return A list of questions matching your search term and provided tag.
 	 */
 	public static QuestionList searchForQuestionsByTag(String searchTerm, String tag, int numberOfQuestions) {
 		if(searchTerm.length() < 2)
@@ -82,6 +90,8 @@ public class QuestionHandler extends DatabaseHandler {
 
 	/*
 	 * Parses a query result to questions and answers.
+	 * @param cursor A SQLLite database cursor to step through the results.
+	 * @returns A list of questions.
 	 */
 	protected static QuestionList parseQuestions(Cursor cursor) {
 		QuestionList questions = new QuestionList();

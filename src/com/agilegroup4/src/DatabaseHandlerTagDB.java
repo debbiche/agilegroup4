@@ -1,9 +1,6 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
-import com.agilegroup4.model.QuestionList;
 import com.agilegroup4.model.Tag;
 
 import android.content.Context;

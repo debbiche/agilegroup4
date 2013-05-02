@@ -6,21 +6,19 @@ import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.agilegroup4.model.Question;
 import com.agilegroup4.src.DatabaseHandler;
 import com.agilegroup4.src.LoginActivity;
 import com.agilegroup4.src.MainMenuActivity;
 import com.agilegroup4.src.QuestionOverviewActivity;
-import com.agilegroup4.src.R;
 
 public class QuestionIdTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 
 	public static final int TEST_QUESTION_ID = 8414287;
 	
-	public QuestionIdTest() {
-		super("com.agilegroup4.src", LoginActivity.class);
+	public QuestionIdTest(Class<LoginActivity> classTest) {
+		super(classTest);
 	}
 
 	protected void setUp() throws Exception {
@@ -90,7 +88,7 @@ public class QuestionIdTest extends ActivityInstrumentationTestCase2<LoginActivi
 		if (q == null)
 			assertTrue("Failed to find any question with answers",false);
 		
-		int qid = q.getId();
+		//int qid = q.getId();
 		/**
 		int posInListView = questionOverviewActivity.idsTestMap.get(qid);
 		final ListView listview = (ListView) questionOverviewActivity.findViewById(R.id.listview);

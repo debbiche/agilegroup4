@@ -44,7 +44,8 @@ public class QuestionOverviewActivity extends CustomTitleBarActivity {
 	
     static final String KEY_QUESTION = "question"; // parent node
     static final String KEY_TITLE = "title";
-    static final String KEY_INFO = "answers";
+    static final String KEY_TAGS = "answers";
+    static final String KEY_SCORE = "score";
     private static LayoutInflater inflater=null;
     public ArrayList<HashMap<String,String>> data;
     
@@ -108,8 +109,8 @@ public class QuestionOverviewActivity extends CustomTitleBarActivity {
 		for (int i = 0; i < NR_OF_POSTS; i++) {
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put(KEY_TITLE, questions.get(i).getTitle());
-            map.put(KEY_INFO, "Score: " + Integer.toString(questions.get(i).getScore())
-            		+ " Comments: " + Integer.toString(questions.get(i).getCommentCount()));
+            map.put(KEY_TAGS, "Tags: " + questions.get(i).getTags());
+            map.put(KEY_SCORE, "Score: " + Integer.toString(questions.get(i).getScore()));
 			ids.put(i,questions.get(i));
 			qsList.add(map);
 		}
@@ -178,14 +179,17 @@ public class QuestionOverviewActivity extends CustomTitleBarActivity {
 	            vi = inflater.inflate(R.layout.list_row, null);
 	 
 	        TextView title = (TextView)vi.findViewById(R.id.title); // title
-	        TextView info = (TextView)vi.findViewById(R.id.info); // nr of answers
+	        TextView tags = (TextView)vi.findViewById(R.id.tags); // tags
+	        TextView score = (TextView)vi.findViewById(R.id.score); // score
 	 
-	        HashMap<String, String> song = new HashMap<String, String>();
-	        song = data.get(position);
+	        HashMap<String, String> q = new HashMap<String, String>();
+	        q = data.get(position);
 	 
 	        // Setting all values in listview
-	        title.setText(song.get(QuestionOverviewActivity.KEY_TITLE));
-	        info.setText(song.get(QuestionOverviewActivity.KEY_INFO));
+	        title.setText(q.get(QuestionOverviewActivity.KEY_TITLE));
+	        tags.setText(q.get(QuestionOverviewActivity.KEY_TAGS));
+	        score.setText(q.get(QuestionOverviewActivity.KEY_SCORE));
+	        
 	        return vi;
 	    }
 

@@ -144,6 +144,12 @@ public class LoginActivity extends CustomTitleBarActivity {
 			progress.show();
 			new initDB().execute();
 		}
+		if (DatabaseHandlerTagDB.loaded == 0) {
+			progress.setTitle("Please Wait");
+			progress.setMessage("tag database is loading...");
+			progress.show();
+			new initTagDB().execute();
+		}
 	}
 	
 	// the return button at this screen shall always close the application
@@ -156,6 +162,21 @@ public class LoginActivity extends CustomTitleBarActivity {
 		@Override
 		protected Object doInBackground(Object... params) {
 			DatabaseHandler.initDB(getApplicationContext());
+			return null;
+		}
+	
+		@Override
+	     protected void onPostExecute(Object params) {
+			progress.dismiss();
+
+	     }
+	 }
+	
+	private class initTagDB extends AsyncTask<Object, Object, Object>{
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			DatabaseHandlerTagDB.initDB(getApplicationContext());
 			return null;
 		}
 	

@@ -25,13 +25,13 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	private ArrayList<Tag> tags;
 	
 	// The currently displayed tags
-	private Tag topLeft;
-	private Tag topRight;
-	private Tag left;
-	private Tag center;
-	private Tag right;
-	private Tag bottomLeft;
-	private Tag bottomRight;
+	private String topLeft;
+	private String topRight;
+	private String left;
+	private String center;
+	private String right;
+	private String bottomLeft;
+	private String bottomRight;
 	
 	// The current buttons
 	private Button buttonOne;
@@ -58,13 +58,15 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 		buttonSix = (Button) findViewById(R.id.button6);
 		buttonSeven = (Button) findViewById(R.id.button7);
 		
-		tags = createTestTags();
+		//tags = createTestTags();
+		tags = DatabaseHandlerTagDB.queryTags(10);
+				
 		
 		if (tags.size() > 0) {
-			center = tags.get(0);
+			center = tags.get(0).getTagName();
 			updateButton(4,center);
 			if (tags.size() > 1) {
-				right = tags.get(1);
+				right = tags.get(1).getTagName();
 				updateButton(5,right);
 			}
 		}
@@ -90,8 +92,8 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 		case R.id.button3:
 			anim = AnimationUtils.loadAnimation(this, R.anim.right_anim);
 			buttonThree.startAnimation(anim);
-			buttonFour.startAnimation(anim);
-			buttonFive.startAnimation(anim);
+			//buttonFour.startAnimation(anim);
+			//buttonFive.startAnimation(anim);
 			center = left;
 			break;
 		case R.id.button4:
@@ -99,8 +101,8 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 			break;
 		case R.id.button5:
 			anim = AnimationUtils.loadAnimation(this, R.anim.left_anim);
-			buttonThree.startAnimation(anim);
-			buttonFour.startAnimation(anim);
+			//buttonThree.startAnimation(anim);
+			//buttonFour.startAnimation(anim);
 			buttonFive.startAnimation(anim);
 			center = right;
 			break;
@@ -123,7 +125,7 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	
 	
 	private void updateNextPrevTag(){
-		int index = tags.indexOf(center);
+		int index = tags.indexOf(getTagByName(center));
 		int tagsSize = tags.size();
 		
 		if (index == 0){
@@ -132,20 +134,20 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 				buttonFive.setVisibility(View.INVISIBLE);
 			}
 			else {
-				right = tags.get(index+1);
+				right = tags.get(index+1).getTagName();
 				updateButton(5,right);
 				buttonFive.setVisibility(View.VISIBLE);
 			}
 		}
 		else if (index == tags.size()-1){
-			left = tags.get(index-1);
+			left = tags.get(index-1).getTagName();
 			updateButton(3,left);
 			buttonThree.setVisibility(View.VISIBLE);
 			buttonFive.setVisibility(View.INVISIBLE);
 		}
 		else {
-			left = tags.get(index-1);
-			right = tags.get(index+1);
+			left = tags.get(index-1).getTagName();
+			right = tags.get(index+1).getTagName();
 			updateButton(3,left);
 			updateButton(5,right);
 			buttonThree.setVisibility(View.VISIBLE);
@@ -154,7 +156,8 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	}
 	
 	private void updateRelatedTags(){
-		int relatedSize = center.getRelatedTags().size();
+		Tag centerTag = getTagByName(center);
+		int relatedSize = centerTag.getRelatedTags().size();
 		
 	    switch (relatedSize) {
         case 0:
@@ -164,7 +167,7 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
         	buttonSeven.setVisibility(View.INVISIBLE);
         	break;
         case 1:
-        	topLeft = center.getRelatedTags().get(0);
+        	topLeft = centerTag.getRelatedTags().get(0);
         	updateButton(1, topLeft);
         	
         	buttonOne.setVisibility(View.VISIBLE);
@@ -175,8 +178,8 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 
             break;
         case 2:
-        	topLeft = center.getRelatedTags().get(0);
-        	topRight = center.getRelatedTags().get(1);
+        	topLeft = centerTag.getRelatedTags().get(0);
+        	topRight = centerTag.getRelatedTags().get(1);
         	
         	updateButton(1, topLeft);
         	updateButton(2, topRight);
@@ -188,9 +191,9 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 
             break;
         case 3:
-        	topLeft = center.getRelatedTags().get(0);
-        	topRight = center.getRelatedTags().get(1);
-        	bottomLeft = center.getRelatedTags().get(2);
+        	topLeft = centerTag.getRelatedTags().get(0);
+        	topRight = centerTag.getRelatedTags().get(1);
+        	bottomLeft = centerTag.getRelatedTags().get(2);
         	
         	updateButton(1, topLeft);
         	updateButton(2,topRight);
@@ -206,10 +209,10 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
             break;
 	    }
 	    if (relatedSize > 3) {
-        	topLeft = center.getRelatedTags().get(0);
-        	topRight = center.getRelatedTags().get(1);
-        	bottomLeft = center.getRelatedTags().get(2);
-        	bottomRight = center.getRelatedTags().get(3);
+        	topLeft = centerTag.getRelatedTags().get(0);
+        	topRight = centerTag.getRelatedTags().get(1);
+        	bottomLeft = centerTag.getRelatedTags().get(2);
+        	bottomRight = centerTag.getRelatedTags().get(3);
 	    	
 	    	updateButton(1, topLeft);
 	    	updateButton(2, topRight);
@@ -229,28 +232,28 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	 * Updates a button
 	 * pos is the position of the button (1..7)
 	 */
-	private void updateButton(int pos, Tag tag){
+	private void updateButton(int pos, String tagName){
 	    switch (pos) {
         case 1:
-        	buttonOne.setText(tag.getTagName());
+        	buttonOne.setText(tagName);
         	break;
         case 2:
-        	buttonTwo.setText(tag.getTagName());
+        	buttonTwo.setText(tagName);
             break;
         case 3:
-        	buttonThree.setText(tag.getTagName());
+        	buttonThree.setText(tagName);
             break;
         case 4:
-        	buttonFour.setText(tag.getTagName());
+        	buttonFour.setText(tagName);
             break;
         case 5:
-        	buttonFive.setText(tag.getTagName());
+        	buttonFive.setText(tagName);
             break;
         case 6:
-        	buttonSix.setText(tag.getTagName());
+        	buttonSix.setText(tagName);
             break;
         case 7:
-        	buttonSeven.setText(tag.getTagName());
+        	buttonSeven.setText(tagName);
             break;
         default:
             break;
@@ -271,11 +274,11 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 		Tag t8 = new Tag(8, "python");
 		Tag t9 = new Tag(9, "ios");
 		
-		t1.addRelatedTag(t2);
-		t1.addRelatedTag(t3);
-		t1.addRelatedTag(t4);
-		t1.addRelatedTag(t5);
-		t2.addRelatedTag(t3);
+		t1.addRelatedTag("android");
+		t1.addRelatedTag("html");
+		t1.addRelatedTag("javascript");
+		t1.addRelatedTag("css");
+		t2.addRelatedTag("xml");
 		// html is not related to java
 		
 		ArrayList<Tag> ret = new ArrayList<Tag>();
@@ -324,4 +327,14 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	    }
 	}
 
+	private Tag getTagByName(String name){
+		for(int i = 0; i < this.tags.size(); i++){
+			if (this.tags.get(i).getTagName().equals(name)){
+				return this.tags.get(i);
+			}
+		}
+		
+		return null;
+	}
+	
 }

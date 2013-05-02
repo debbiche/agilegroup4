@@ -1,6 +1,11 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Scanner;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -24,7 +29,9 @@ public class DatabaseHandler {
 	protected static DatabaseLoader dbLoader;
 	protected static SQLiteDatabase db;
 	protected static ArrayList<Question> questions = new ArrayList<Question>();
-
+	private Context context;
+	static TagsDBLoader dbTags;
+	
 	public DatabaseHandler(Context context) {
 
 	}
@@ -33,12 +40,14 @@ public class DatabaseHandler {
 		try {
 			if (loaded == 0)
 				dbLoader = new DatabaseLoader(context, null, null, 1);
+				dbTags = new TagsDBLoader(context, null, null, 1);
+
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		db = dbLoader.getDb();
 		loaded = 1;
-
 	}
 
 	public static ArrayList<Question> getQuestions() {
@@ -124,6 +133,10 @@ public class DatabaseHandler {
 	 * list view elements.
 	 */
 	public static void queryQuestions(int numberOfQuestions) {
+		
+		dbTags.createTagsDB();
+
+		
 		if (queriedQuestions == 0) {
 			long start = System.currentTimeMillis();
 
@@ -188,5 +201,8 @@ public class DatabaseHandler {
 
 		return comments;
 	}
-
+	
+	
+	
+	
 }

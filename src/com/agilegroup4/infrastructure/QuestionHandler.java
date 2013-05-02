@@ -14,7 +14,7 @@ import com.agilegroup4.src.DatabaseHandler;
  */
 public class QuestionHandler extends DatabaseHandler {
 
-	//Holds the base query for relating questions and anwers.
+	//Holds the base query for relating questions and answers.
 	protected static String baseQuestionRawQuery = "SELECT R.id AS id, " +
 			"R.title AS title, " +
 			"R.body AS question, "  +
@@ -28,8 +28,10 @@ public class QuestionHandler extends DatabaseHandler {
 			"R.score, " +
 			"R.view_count, " +
 			"R.favorite_count " +
+			"R.tags AS tags " + //test add
 			"FROM posts R INNER JOIN posts D ON " +
 			"D.parent_id = R.id";
+			
 	
 	/*
 	 * Creates a new question handler that is used to query questions in the database.
@@ -54,6 +56,26 @@ public class QuestionHandler extends DatabaseHandler {
 				"ORDER BY R.title LIMIT ?";
 		Cursor cursorQuestions = db.rawQuery(rawQuery,
 				new String[] { searchTermLike, searchTermLike, searchTermLike, Integer.toString(numberOfQuestions) });
+		return parseQuestions(cursorQuestions);
+	}
+	
+	/*
+	 * Returns a list of question that matches the searchTerm with added tag filter. 
+	 * Answer body, Question body and Title and Tags will be searched. 
+	 * You can limit the amount of questions by providing a number to numberOfQuestions
+	 */
+	public static QuestionList searchForQuestionsByTag(String searchTerm, String tag, int numberOfQuestions) {
+		if(searchTerm.length() < 2)
+			return new QuestionList();
+			
+		String searchTermLike = "%" + searchTerm + "%";
+		String rawQuery = baseQuestionRawQuery + " WHERE question LIKE ? " +
+				"OR answer LIKE ? " +
+				"OR R.title LIKE ? " + 
+				"OR R.tags LIKE ? " + 
+				"ORDER BY R.title LIMIT ?";
+		Cursor cursorQuestions = db.rawQuery(rawQuery,
+				new String[] { searchTermLike, searchTermLike, searchTermLike, searchTermLike, Integer.toString(numberOfQuestions) });
 		return parseQuestions(cursorQuestions);
 	}
 

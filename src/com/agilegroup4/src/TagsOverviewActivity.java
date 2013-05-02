@@ -126,7 +126,7 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	
 	
 	private void updateNextPrevTag(){
-		int index = tags.indexOf(center);
+		int index = tags.indexOf(getTagByName(center));
 		int tagsSize = tags.size();
 		
 		if (index == 0){

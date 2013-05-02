@@ -76,36 +76,43 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	}
 	
 	public void handleTagOnClick(View view){
-		final Animation animTranslate = AnimationUtils.loadAnimation(this, R.anim.tag_animation);
-		
+		final Animation anim;
 		switch (view.getId()) {
 		case R.id.button1:
-			Animation animation = new TranslateAnimation(0, 375,0,375);
-			animation.setDuration(DURATION);
-			buttonOne.startAnimation(animation);
+			anim = AnimationUtils.loadAnimation(this, R.anim.button_one_anim);
+			buttonOne.startAnimation(anim);
 			center = topLeft;
 			break;
 		case R.id.button2:
-			buttonTwo.startAnimation(animTranslate);
+			anim = AnimationUtils.loadAnimation(this, R.anim.button_two_anim);
+			buttonTwo.startAnimation(anim);
 			center = topRight;
 			break;
 		case R.id.button3:
-			buttonThree.startAnimation(animTranslate);
+			anim = AnimationUtils.loadAnimation(this, R.anim.right_anim);
+			buttonThree.startAnimation(anim);
+			buttonFour.startAnimation(anim);
+			buttonFive.startAnimation(anim);
 			center = left;
 			break;
 		case R.id.button4:
 			onSearchRequested();
 			break;
 		case R.id.button5:
-			buttonFive.startAnimation(animTranslate);
+			anim = AnimationUtils.loadAnimation(this, R.anim.left_anim);
+			buttonThree.startAnimation(anim);
+			buttonFour.startAnimation(anim);
+			buttonFive.startAnimation(anim);
 			center = right;
 			break;
 		case R.id.button6:
-			buttonSix.startAnimation(animTranslate);
+			anim = AnimationUtils.loadAnimation(this, R.anim.button_six_anim);
+			buttonSix.startAnimation(anim);
 			center = bottomLeft;
 			break;
 		case R.id.button7:
-			buttonSeven.startAnimation(animTranslate);
+			anim = AnimationUtils.loadAnimation(this, R.anim.button_seven_anim);
+			buttonSeven.startAnimation(anim);
 			center = bottomRight;
 			break;
 		}

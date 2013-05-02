@@ -1,6 +1,10 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Scanner;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -138,7 +142,7 @@ public class DatabaseHandlerTagDB {
 //				
 				int j = 1;
 				for (Entry<String, String> tagss : tagsHash.entrySet()){
-					System.out.println("Tag: " + tagss.getKey() + " with related tags: " +  tagss.getValue());
+//					System.out.println("Tag: " + tagss.getKey() + " with related tags: " +  tagss.getValue());
 					db.execSQL("INSERT INTO tags VALUES (?,?,?)", new String[] { Integer.toString(j), tagss.getKey(), tagss.getValue() } );
 				//	t.close();
 					j++;

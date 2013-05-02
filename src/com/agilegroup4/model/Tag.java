@@ -6,13 +6,13 @@ public class Tag {
 
 	private int tagId;
 	private String tagName;
-	private ArrayList<Tag> relatedTags;
+	private ArrayList<String> relatedTags;
 
 	public Tag(int tagId, String tagName) {
 		super();
 		this.tagId = tagId;
 		this.tagName = tagName;
-		relatedTags = new ArrayList<Tag>();
+		relatedTags = new ArrayList<String>();
 	}
 
 	public int getTagId() {
@@ -27,15 +27,15 @@ public class Tag {
 	public void setTagName(String tagName) {
 		this.tagName = tagName;
 	}
-	public ArrayList<Tag> getRelatedTags() {
+	public ArrayList<String> getRelatedTags() {
 		return relatedTags;
 	}
-	public void addRelatedTag(Tag tag) {
+	public void addRelatedTag(String tag) {
 		this.relatedTags.add(tag);
 	}
-	public void removeRelatedTag(Tag tag) {
+	public void removeRelatedTag(String tag) {
 		for(int i = 0; i < this.relatedTags.size(); i++){
-			if(tag.getTagName().equals(this.relatedTags.get(i).getTagName()))
+			if(tag.equals(this.relatedTags.get(i)))
 				this.relatedTags.remove(i);
 		}
 	}

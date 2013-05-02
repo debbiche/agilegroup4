@@ -2,19 +2,15 @@ package com.agilegroup4.src.test;
 
 import java.sql.Date;
 
-import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import com.agilegroup4.helpers.AnsweredComparator;
+import com.agilegroup4.helpers.ImportantComparator;
 import com.agilegroup4.model.Question;
-import com.agilegroup4.src.*;
+import com.agilegroup4.src.LoginActivity;
 
 public class AnsweredComparatorComparingTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 
-	private AnsweredComparator aComp;
+	private ImportantComparator aComp;
 	private Question q1;
 	private Question q2;
 	
@@ -23,7 +19,7 @@ public class AnsweredComparatorComparingTest extends ActivityInstrumentationTest
 	}
 
 	protected void setUp() throws Exception {
-		aComp = new AnsweredComparator();
+		aComp = new ImportantComparator();
 		
 		//Question(id, title, body, comment count, date of creation, score, view count, favorite count)
 		q1 = new Question(0,"","", 11,new Date(0), 0,0,0);
@@ -34,7 +30,7 @@ public class AnsweredComparatorComparingTest extends ActivityInstrumentationTest
 	 * Test AnsweredComparator returning correct comparison.
 	 */
 	public void testAnsweredComparator() {
-		assertTrue(aComp.compare(q1, q2) > 0);
+		assertTrue("The comparison was done wrong", aComp.compare(q1, q2) > 0);
 	}
 
 }

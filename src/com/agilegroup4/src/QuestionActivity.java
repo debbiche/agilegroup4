@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,11 +12,14 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +45,11 @@ public class QuestionActivity extends CustomTitleBarActivity {
 	// The max lines of the questionbody
 	public final static int MAX_LINES_WITH_COMMENTS = 10;
 	public final static int MAX_LINES_WITHOUT_COMMENTS = 20;
+	
+    static final String KEY_ANSWER = "answer"; // parent node
+    static final String KEY_NR_OF_COMMENTS = "nr_of_comments";
+    private static LayoutInflater inflater=null;
+    public ArrayList<HashMap<String,String>> data;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,18 +143,24 @@ public class QuestionActivity extends CustomTitleBarActivity {
 		answ.setText(ans + answertext);
 		answ.setTypeface(null,Typeface.BOLD);
 		
+		ArrayList<HashMap<String, String>> asList = new ArrayList<HashMap<String, String>>();
+		
 		// HashMap for connecting answer id with position in the list for the question
 		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();
 		// HashMap needed for displaying the bodies of the answers in the listview
-		final ArrayList<String> bodies = new ArrayList<String>();
+		//final ArrayList<String> bodies = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		for (int i = 0; i < answers.size(); i++) {
-			bodies.add(StringUtility.convertHTMLtoString(answers.get(i).getBody()));
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put(KEY_ANSWER, StringUtility.convertHTMLtoString(answers.get(i).getBody()));
+            map.put(KEY_NR_OF_COMMENTS, "Comments: " + Integer.toString(answers.get(i).getCommentCount()));
+			asList.add(map);
+			//bodies.add(StringUtility.convertHTMLtoString(answers.get(i).getBody()));
 			ids.put(i, answers.get(i).getId());
 		}
 
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
-				android.R.layout.simple_list_item_1, bodies);
+				android.R.layout.simple_list_item_1, asList);
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -202,35 +217,54 @@ public class QuestionActivity extends CustomTitleBarActivity {
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
-	
 	/*
 	 * Puts the elements in the listview.
 	 */
-	private class StableArrayAdapter extends ArrayAdapter<String> {
-
-		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-		public StableArrayAdapter(Context context, int textViewResourceId,
-				List<String> objects) {
-			super(context, textViewResourceId, objects);
-			for (int i = 0; i < objects.size(); ++i) {
-				mIdMap.put(objects.get(i), i);
-			}
+	private class StableArrayAdapter extends BaseAdapter {
+				
+		public StableArrayAdapter(Activity a, int textViewResourceId,
+				ArrayList<HashMap<String, String>> objects) {
+			data = objects;
+			inflater = (LayoutInflater)a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
+		
+		public int getCount() {
+	        return data.size();
+	    }
+		
+		public Object getItem(int position) {
+	        return position;
+	    }
 
 		@Override
 		public long getItemId(int position) {
-			String item = getItem(position);
-			return mIdMap.get(item);
+			return position;
 		}
 
 		@Override
 		public boolean hasStableIds() {
 			return true;
 		}
+		
+	    public View getView(int position, View convertView, ViewGroup parent) {
+	        View vi=convertView;
+	        if(convertView==null)
+	            vi = inflater.inflate(R.layout.list_row_question, null);
+	 
+	        TextView answer = (TextView)vi.findViewById(R.id.answer); 
+	        TextView nr_of_comments = (TextView)vi.findViewById(R.id.nr_of_comments);
+	 
+	        HashMap<String, String> q = new HashMap<String, String>();
+	        q = data.get(position);
+	 
+	        // Setting all values in listview
+	        answer.setText(q.get(KEY_ANSWER));
+	        nr_of_comments.setText(q.get(KEY_NR_OF_COMMENTS));
+	        
+	        return vi;
+	    }
 
-	}
-	private class loadAnswers extends AsyncTask<Object, Object, Object>{
+	}	private class loadAnswers extends AsyncTask<Object, Object, Object>{
 
 		@Override
 		protected Object doInBackground(Object... params) {

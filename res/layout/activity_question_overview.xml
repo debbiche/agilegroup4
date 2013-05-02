@@ -31,6 +31,6 @@
         android:divider="#b5b5b5"
         android:dividerHeight="1dp"
         android:listSelector="@drawable/list_selector"
-        android:layout_below="@+id/footer" />
+        android:layout_below="@+id/footer" />    
 
 </RelativeLayout>

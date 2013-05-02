@@ -37,7 +37,7 @@ public class SearchableActivity extends ListActivity {
 				searchQuestionFreeText(query);
 				break;
 			case QUESTION_WITHTAGS:
-				searchQuestionByTags(query);
+				searchQuestionByTags(query, TagsOverviewActivity.tagQuery); //provide tag query when middle tag button pressed
 				break;
 			default:
 				searchQuestionFreeText(query);
@@ -60,8 +60,15 @@ public class SearchableActivity extends ListActivity {
 		
 	//Searches questions and sends QuestionList of questions
 	//to QuestionsOverview for presentation
-	private void searchQuestionByTags(String query) { 
-		
+	private void searchQuestionByTags(String query, String tag) { 
+		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag(query, tag, 60);
+		//Creates a bundle and parce the the search result QuestionList
+		Bundle b = new Bundle();
+        b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object
+		Intent intent = new Intent(this, QuestionOverviewActivity.class);
+		//Includes the bundle and parced search result into the intent for search activity.
+		intent.putExtras(b);
+		startActivity(intent);
 	}
 
 }

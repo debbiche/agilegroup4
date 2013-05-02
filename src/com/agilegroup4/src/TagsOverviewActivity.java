@@ -12,10 +12,15 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 
+import com.agilegroup4.model.SearchMode;
 import com.agilegroup4.model.Tag;
 import com.agilegroup4.view.CustomTitleBarActivity;
 
 public class TagsOverviewActivity extends CustomTitleBarActivity {
+	
+	//workaround for passing tag query to searchableActivity
+
+	public static String tagQuery ="";
 	
 	// Containing all the tags
 	private ArrayList<Tag> tags;
@@ -43,7 +48,7 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.setHeader(R.string.title_activity_settings);
-		super.setContentResourceID(R.layout.activity_settings);
+		super.setContentResourceID(R.layout.activity_tags_overview);
 		super.onCreate(savedInstanceState);
 		
 		buttonOne = (Button) findViewById(R.id.button1);
@@ -71,36 +76,43 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	}
 	
 	public void handleTagOnClick(View view){
-		final Animation animTranslate = AnimationUtils.loadAnimation(this, R.anim.tag_animation);
-		
+		final Animation anim;
 		switch (view.getId()) {
 		case R.id.button1:
-			Animation animation = new TranslateAnimation(0, 375,0,375);
-			animation.setDuration(DURATION);
-			buttonOne.startAnimation(animation);
+			anim = AnimationUtils.loadAnimation(this, R.anim.button_one_anim);
+			buttonOne.startAnimation(anim);
 			center = topLeft;
 			break;
 		case R.id.button2:
-			buttonTwo.startAnimation(animTranslate);
+			anim = AnimationUtils.loadAnimation(this, R.anim.button_two_anim);
+			buttonTwo.startAnimation(anim);
 			center = topRight;
 			break;
 		case R.id.button3:
-			buttonThree.startAnimation(animTranslate);
+			anim = AnimationUtils.loadAnimation(this, R.anim.right_anim);
+			buttonThree.startAnimation(anim);
+			buttonFour.startAnimation(anim);
+			buttonFive.startAnimation(anim);
 			center = left;
 			break;
 		case R.id.button4:
-			// Implement search functionality here
+			onSearchRequested();
 			break;
 		case R.id.button5:
-			buttonFive.startAnimation(animTranslate);
+			anim = AnimationUtils.loadAnimation(this, R.anim.left_anim);
+			buttonThree.startAnimation(anim);
+			buttonFour.startAnimation(anim);
+			buttonFive.startAnimation(anim);
 			center = right;
 			break;
 		case R.id.button6:
-			buttonSix.startAnimation(animTranslate);
+			anim = AnimationUtils.loadAnimation(this, R.anim.button_six_anim);
+			buttonSix.startAnimation(anim);
 			center = bottomLeft;
 			break;
 		case R.id.button7:
-			buttonSeven.startAnimation(animTranslate);
+			anim = AnimationUtils.loadAnimation(this, R.anim.button_seven_anim);
+			buttonSeven.startAnimation(anim);
 			center = bottomRight;
 			break;
 		}
@@ -291,14 +303,15 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	
 	@Override //invoked when Searchbutton pressed, just for testing
 	public boolean onSearchRequested() {
-	    System.out.println("search pressed");
+		tagQuery = (String) buttonFour.getText();
+		SearchableActivity.SearchMode = SearchMode.QUESTION_WITHTAGS;
 	    return super.onSearchRequested();
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;
-	    // Handle item selection
+	    // Handle item selections
 	    switch (item.getItemId()) {
 	        case R.id.menuitem_mainmenu:
 				intent = new Intent(this, MainMenuActivity.class);

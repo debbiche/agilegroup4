@@ -1,3 +1,3 @@
 <translate xmlns:android="http://schemas.android.com/apk/res/android"
-    android:toXDelta="50%p" android:toYDelta="-50%p" 
+    android:toXDelta="40%p" android:toYDelta="-40%p" 
     android:duration="400"/>

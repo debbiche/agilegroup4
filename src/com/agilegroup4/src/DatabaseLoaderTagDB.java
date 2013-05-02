@@ -59,7 +59,6 @@ public class DatabaseLoaderTagDB extends SQLiteOpenHelper {
 					SQLiteDatabase.OPEN_READONLY
 							| SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 			addIndexes();
-			// db.close();
 		}
 
 	}

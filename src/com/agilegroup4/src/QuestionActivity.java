@@ -47,11 +47,6 @@ public class QuestionActivity extends CustomTitleBarActivity {
 		super.onCreate(savedInstanceState);
 
 		progress = new ProgressDialog(this);
-		//int questionId = getIntent().getIntExtra("questionId", 0);
-		
-		
-		//questions = DatabaseHandler.getQuestions();
-		//question = findQuestion(questionId);
 		getIntentData();
 		loadAnswers();
 		

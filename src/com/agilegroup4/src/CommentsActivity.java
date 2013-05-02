@@ -29,7 +29,6 @@ public class CommentsActivity extends CustomTitleBarActivity {
 
 		int id = getIntent().getIntExtra("id", 0);
 		comments = DatabaseHandler.getComments(id);
-		//comments = createTestComments();
 		displayComments();
 	}
 

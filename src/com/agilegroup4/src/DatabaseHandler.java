@@ -16,8 +16,6 @@ import com.agilegroup4.model.Question;
 import com.agilegroup4.model.User;
 
 /* DatabaseHandler handles database queries, inserts, deletes, ...
- * 
- *  
  */
 public class DatabaseHandler {
 

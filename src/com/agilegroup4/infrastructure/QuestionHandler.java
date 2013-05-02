@@ -28,7 +28,7 @@ public class QuestionHandler extends DatabaseHandler {
 			"R.score, " +
 			"R.view_count, " +
 			"R.favorite_count, " +
-			"R.tags AS taggy " + //test add
+			"R.tags AS taggy " +
 			"FROM posts R INNER JOIN posts D ON " +
 			"D.parent_id = R.id";
 			

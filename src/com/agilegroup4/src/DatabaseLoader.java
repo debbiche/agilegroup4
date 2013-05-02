@@ -27,8 +27,6 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 		super(context, name, factory, version);
 		this.context = context;
 		loadDB();
-		// super.close();
-
 	}
 
 	/*
@@ -63,7 +61,6 @@ public class DatabaseLoader extends SQLiteOpenHelper {
 					SQLiteDatabase.OPEN_READONLY
 							| SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 			addIndexes();
-			// db.close();
 		}
 
 	}

@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 /*
  * Handles DB access on tag db...
- * */
+ */
 public class DatabaseHandlerTagDB {
 	public static int loaded = 0;
 	protected static DatabaseLoaderTagDB dbLoader;
@@ -49,7 +49,6 @@ public class DatabaseHandlerTagDB {
 		String relatedTags;
 		
 		cursor.moveToFirst();
-		//System.out.println(cursor.getString(1));
 		
 		while(!cursor.isAfterLast()){
 			tag = new Tag(cursor.getInt(0), cursor.getString(1));
@@ -67,7 +66,6 @@ public class DatabaseHandlerTagDB {
 	// TODO: add error handling
 	private static void addRelatedTags(Tag tag, String relatedTags){
 		if (relatedTags == null){
-			//tag.addRelatedTag("");
 			return;
 		}
 		
@@ -77,11 +75,6 @@ public class DatabaseHandlerTagDB {
 			tag.addRelatedTag(relatedTagsArray[i]);
 		}
 		
-		//Scanner scanner = new Scanner(relatedTags);
-		
-		//while (scanner.hasNext()){
-		//	tag.addRelatedTag(scanner.next().replace(", ", ""));
-		//}
 		return;
 	}
 }

@@ -6,12 +6,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".TagsOverviewActivity" >
+    tools:context=".TagsOverviewActivity">
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_alignBottom="@+id/button3"
         android:layout_centerHorizontal="true"
         android:onClick="handleTagOnClick"
@@ -19,8 +19,8 @@
 
     <Button
         android:id="@+id/button7"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_alignBaseline="@+id/button6"
         android:layout_alignBottom="@+id/button6"
         android:layout_alignLeft="@+id/button5"
@@ -29,8 +29,8 @@
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_alignBaseline="@+id/button4"
         android:layout_alignBottom="@+id/button4"
         android:layout_alignParentRight="true"
@@ -39,8 +39,8 @@
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="48dp"
@@ -49,8 +49,8 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_alignLeft="@+id/button1"
         android:layout_centerVertical="true"
         android:onClick="handleTagOnClick"
@@ -58,8 +58,8 @@
 
     <Button
         android:id="@+id/button6"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_alignLeft="@+id/button3"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="36dp"
@@ -68,8 +68,8 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_alignBaseline="@+id/button1"
         android:layout_alignBottom="@+id/button1"
         android:layout_alignLeft="@+id/button5"

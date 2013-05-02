@@ -12,10 +12,15 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 
+import com.agilegroup4.model.SearchMode;
 import com.agilegroup4.model.Tag;
 import com.agilegroup4.view.CustomTitleBarActivity;
 
 public class TagsOverviewActivity extends CustomTitleBarActivity {
+	
+	//workaround for passing tag query to searchableActivity
+
+	public static String tagQuery ="";
 	
 	// Containing all the tags
 	private ArrayList<Tag> tags;
@@ -89,7 +94,7 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 			center = left;
 			break;
 		case R.id.button4:
-			// Implement search functionality here
+			onSearchRequested();
 			break;
 		case R.id.button5:
 			buttonFive.startAnimation(animTranslate);
@@ -291,14 +296,15 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	
 	@Override //invoked when Searchbutton pressed, just for testing
 	public boolean onSearchRequested() {
-	    System.out.println("search pressed");
+		tagQuery = (String) buttonFour.getText();
+		SearchableActivity.SearchMode = SearchMode.QUESTION_WITHTAGS;
 	    return super.onSearchRequested();
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;
-	    // Handle item selection
+	    // Handle item selections
 	    switch (item.getItemId()) {
 	        case R.id.menuitem_mainmenu:
 				intent = new Intent(this, MainMenuActivity.class);

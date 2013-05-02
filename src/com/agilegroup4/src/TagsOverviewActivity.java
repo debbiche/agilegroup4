@@ -58,18 +58,6 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 		
 		if (tags.size() > 0) {
 			center = tags.get(0);
-			boolean tagIsNull = false;
-			boolean buttonIsNull = false;
-			boolean buttonOnee = false;
-			if (center == null)
-				tagIsNull = true;
-			if (buttonFour == null)
-				buttonIsNull = true;
-			if (buttonOne == null)
-				buttonOnee = true;
-			System.out.println("tag: " + tagIsNull + "\n button: "+ buttonIsNull + "one: "+ buttonOnee);
-			
-			
 			updateButton(4,center);
 			if (tags.size() > 1) {
 				right = tags.get(1);

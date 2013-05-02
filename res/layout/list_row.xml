@@ -32,7 +32,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/list_item_arrow"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
         android:layout_alignParentBottom="true"/>
     
         <TextView
@@ -42,8 +41,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/title"
         android:gravity="right"
-        android:layout_marginRight="5dip"
-        android:layout_above="@id/arrow"
+        android:layout_marginRight="1dip"
         android:textSize="10dip"
         android:textColor="#10bcc9"
         android:textStyle="bold"/>

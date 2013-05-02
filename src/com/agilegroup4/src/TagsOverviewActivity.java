@@ -92,8 +92,8 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 		case R.id.button3:
 			anim = AnimationUtils.loadAnimation(this, R.anim.right_anim);
 			buttonThree.startAnimation(anim);
-			//buttonFour.startAnimation(anim);
-			//buttonFive.startAnimation(anim);
+			buttonFour.startAnimation(anim);
+			buttonFive.startAnimation(anim);
 			center = left;
 			break;
 		case R.id.button4:
@@ -101,8 +101,8 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 			break;
 		case R.id.button5:
 			anim = AnimationUtils.loadAnimation(this, R.anim.left_anim);
-			//buttonThree.startAnimation(anim);
-			//buttonFour.startAnimation(anim);
+			buttonThree.startAnimation(anim);
+			buttonFour.startAnimation(anim);
 			buttonFive.startAnimation(anim);
 			center = right;
 			break;

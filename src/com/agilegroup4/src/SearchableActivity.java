@@ -61,7 +61,10 @@ public class SearchableActivity extends ListActivity {
 	//Searches questions and sends QuestionList of questions
 	//to QuestionsOverview for presentation
 	private void searchQuestionByTags(String query, String tag) { 
-		//QuestionList searchResultQuestions = QuestionHandler.searchForQuestions(tag, 60);
+		
+		if (query.equals("0"))
+			query = "";
+		
 		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag(query, tag, 60);
 		//Creates a bundle and parce the the search result QuestionList
 		Bundle b = new Bundle();

@@ -74,11 +74,17 @@ public class DatabaseHandlerTagDB {
 			return;
 		}
 		
-		Scanner scanner = new Scanner(relatedTags);
-					
-		while (scanner.hasNext()){
-			tag.addRelatedTag(scanner.next().replace(", ", ""));
+		String [] relatedTagsArray = relatedTags.split(", ");
+		
+		for(int i = 0; i < relatedTagsArray.length; i++){
+			tag.addRelatedTag(relatedTagsArray[i]);
 		}
+		
+		//Scanner scanner = new Scanner(relatedTags);
+		
+		//while (scanner.hasNext()){
+		//	tag.addRelatedTag(scanner.next().replace(", ", ""));
+		//}
 		return;
 	}
 }

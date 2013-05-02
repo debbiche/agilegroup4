@@ -147,15 +147,12 @@ public class QuestionActivity extends CustomTitleBarActivity {
 		
 		// HashMap for connecting answer id with position in the list for the question
 		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();
-		// HashMap needed for displaying the bodies of the answers in the listview
-		//final ArrayList<String> bodies = new ArrayList<String>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		for (int i = 0; i < answers.size(); i++) {
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put(KEY_ANSWER, StringUtility.convertHTMLtoString(answers.get(i).getBody()));
             map.put(KEY_NR_OF_COMMENTS, "Comments: " + Integer.toString(answers.get(i).getCommentCount()));
 			asList.add(map);
-			//bodies.add(StringUtility.convertHTMLtoString(answers.get(i).getBody()));
 			ids.put(i, answers.get(i).getId());
 		}
 

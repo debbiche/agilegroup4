@@ -2,6 +2,7 @@ package com.agilegroup4.src;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,9 +14,8 @@ import android.widget.Button;
 
 import com.agilegroup4.model.SearchMode;
 import com.agilegroup4.model.Tag;
-import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class TagsOverviewActivity extends CustomTitleBarActivity {
+public class TagsOverviewActivity extends Activity {
 	
 	//workaround for passing tag query to searchableActivity
 
@@ -46,8 +46,8 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.setHeader(R.string.title_activity_settings);
-		super.setContentResourceID(R.layout.activity_tags_overview);
+		//super.setHeader(R.string.title_activity_settings);
+		//super.setContentResourceID(R.layout.activity_tags_overview);
 		super.onCreate(savedInstanceState);
 		
 		buttonOne = (Button) findViewById(R.id.button1);

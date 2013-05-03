@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -24,9 +25,8 @@ import android.widget.TextView;
 import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Answer;
 import com.agilegroup4.model.Question;
-import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class QuestionActivity extends CustomTitleBarActivity {
+public class QuestionActivity extends Activity {
 
 	ProgressDialog progress;
 	
@@ -42,8 +42,8 @@ public class QuestionActivity extends CustomTitleBarActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.setHeader(R.string.title_activity_question);
-		super.setContentResourceID(R.layout.activity_question);
+		//super.setHeader(R.string.title_activity_question);
+		//super.setContentResourceID(R.layout.activity_question);
 		super.onCreate(savedInstanceState);
 
 		progress = new ProgressDialog(this);

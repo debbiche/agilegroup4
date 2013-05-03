@@ -1,8 +1,6 @@
 package com.agilegroup4.src;
 
-
-import com.agilegroup4.view.CustomTitleBarActivity;
-
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,12 +9,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
-public class MainMenuActivity extends CustomTitleBarActivity {
+public class MainMenuActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.setHeader(R.string.title_activity_main_menu);
-		super.setContentResourceID(R.layout.activity_main_menu);
+		//super.setHeader(R.string.title_activity_main_menu);
+		//super.setContentResourceID(R.layout.activity_main_menu);
 		super.onCreate(savedInstanceState);
 	}
 

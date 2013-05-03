@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,17 +15,16 @@ import android.widget.ListView;
 
 import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Comment;
-import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class CommentsActivity extends CustomTitleBarActivity {
+public class CommentsActivity extends Activity {
 	
 	// The current comments
 	private ArrayList<Comment> comments;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.setHeader(R.string.title_activity_comments);
-		super.setContentResourceID(R.layout.activity_comments);
+		//super.setHeader(R.string.title_activity_comments);
+		//super.setContentResourceID(R.layout.activity_comments);
 		super.onCreate(savedInstanceState);
 
 		int id = getIntent().getIntExtra("id", 0);

@@ -13,8 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-/* The login Activity is responsible for handling the login
- * and as it is always the first Activity to be called
+/**
+ * The login Activity is responsible for handling the login<p>
+ * and as it is always the first Activity to be called<p>
  * it handles all necessary initializations (DB init, SharedPreferences) in the onCreate function
  * */
 public class LoginActivity extends Activity {
@@ -22,7 +23,7 @@ public class LoginActivity extends Activity {
 	public static final String PREFS_NAME = "SETTINGS";
 	ProgressDialog progress;
  
-	/*
+	/**
      * The "constructor" for this activity
      * @param instanceState The instance state.
      */
@@ -50,7 +51,8 @@ public class LoginActivity extends Activity {
 		checkLoggedOut();
 	}
 	
-	/* Check if we just logged out
+	/**
+	 * Check if we just logged out
 	 * If the login activity is called because the user logged out
 	 * a info about the log out shall be displayed
 	 * @returns True if logged out correctly.
@@ -78,7 +80,7 @@ public class LoginActivity extends Activity {
 			return false;
 	}
 
-	/*
+	/**
      * The eventhandler for the phone menu-button pressed
      * @param menu The menu
      */
@@ -89,7 +91,7 @@ public class LoginActivity extends Activity {
 		return true;
 	}
 	
-	/*
+	/**
      * The eventhandler for pressing one item in the options menu
      * @param item The menu item
      */
@@ -105,7 +107,7 @@ public class LoginActivity extends Activity {
 	    }
 	}
 
-	/*
+	/**
 	 * Function called when login button is pressed
 	 * @param view The view
 	 */
@@ -153,8 +155,8 @@ public class LoginActivity extends Activity {
 			
 	}
 	
-	/*
-	 * Loads the question database.
+	/**
+	 * Loads the question and tag database.
 	 */
 	private void loadDB(){
 		if (DatabaseHandler.loaded == 0 || DatabaseHandlerTagDB.loaded == 0) {
@@ -163,15 +165,9 @@ public class LoginActivity extends Activity {
 			progress.show();
 			new initDB().execute();
 		}
-//		if (DatabaseHandlerTagDB.loaded == 0) {
-//			progress.setTitle("Please Wait");
-//			progress.setMessage("tag database is loading...");
-//			progress.show();
-//			new initTagDB().execute();
-//		}
 	}
 	
-	/*
+	/**
 	 * The return button at this screen shall always close the application(non-Javadoc)
 	 * @see android.app.Activity#onBackPressed()
 	 */
@@ -179,32 +175,14 @@ public class LoginActivity extends Activity {
 		System.exit(0);
 	}
 	
-	/*
-	 * Initiation of the questions database asyncroniously.
+	/**
+	 * Initiation of the questions database asynchronously.
 	 */
 	private class initDB extends AsyncTask<Object, Object, Object>{
 
 		@Override
 		protected Object doInBackground(Object... params) {
 			DatabaseHandler.initDB(getApplicationContext());
-			DatabaseHandlerTagDB.initDB(getApplicationContext());
-			return null;
-		}
-	
-		@Override
-	     protected void onPostExecute(Object params) {
-			progress.dismiss();
-
-	     }
-	 }
-	
-	/*
-	 * Initiation of the tags database asyncroniously.
-	 */
-	private class initTagDB extends AsyncTask<Object, Object, Object>{
-
-		@Override
-		protected Object doInBackground(Object... params) {
 			DatabaseHandlerTagDB.initDB(getApplicationContext());
 			return null;
 		}

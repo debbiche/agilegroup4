@@ -18,6 +18,7 @@ public class AllTests {
 		suite.addTestSuite(MainMenuProfileNavigation.class);
 		suite.addTestSuite(MainMenuQuestionsNavigation.class);
 		suite.addTestSuite(QuestionIdTest.class);
+		suite.addTestSuite(TagsOverviewActivityButtonUpdate.class);
 		//$JUnit-END$
 		return suite;
 	}

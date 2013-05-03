@@ -16,7 +16,6 @@ public class StringUtility_ConvertStringToDate extends TestCase {
 	private DateFormat dateFormat;
 	private Date resultingDate;
 	
-	@SuppressWarnings("deprecation")
 	public StringUtility_ConvertStringToDate(String name) {
 		super(name);
 	}

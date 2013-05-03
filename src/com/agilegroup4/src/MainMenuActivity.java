@@ -1,8 +1,6 @@
 package com.agilegroup4.src;
 
-
-import com.agilegroup4.view.CustomTitleBarActivity;
-
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,27 +9,48 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
-public class MainMenuActivity extends CustomTitleBarActivity {
+/*
+ * The main menu activity showing the main menu of this application.
+ */
+public class MainMenuActivity extends Activity {
 	
+	/*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.setHeader(R.string.title_activity_main_menu);
-		super.setContentResourceID(R.layout.activity_main_menu);
+		//super.setHeader(R.string.title_activity_main_menu);
+		//super.setContentResourceID(R.layout.activity_main_menu);
+		
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main_menu);
 	}
 
+	/*
+     * The eventhandler for the phone menu-button pressed
+     * @param menu The menu
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// The menu option is not available in this activity
 		return true;
 	}
 	
-	@Override //invoked when Searchbutton pressed
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onSearchRequested()
+	 */
+	@Override 
 	public boolean onSearchRequested() {
 	    System.out.println("search pressed");
 	    return super.onSearchRequested();
 	}
 
+	/*
+	 * Invoked when user clicks a menu button.
+	 * @param view The view for fetching the id of the selected button.
+	 */
 	public void handleMenuItemOnClick(View view) {
 		Intent intent;
 		switch (view.getId()) {
@@ -65,6 +84,9 @@ public class MainMenuActivity extends CustomTitleBarActivity {
 		}
 	}
 
+	/*
+	 * Handle log out selection in the menu.
+	 */
 	private void checkLogout() {
 		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 			@Override
@@ -95,6 +117,9 @@ public class MainMenuActivity extends CustomTitleBarActivity {
 				.setNegativeButton("Cancel", dialogClickListener).show();
 	}
 	
+	/*
+	 * Returns the current main menu activity object.
+	 */
 	private MainMenuActivity getThis(){
 		return this;
 	}

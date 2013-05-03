@@ -28,13 +28,14 @@ public class QuestionHandler extends DatabaseHandler {
 			"R.score, " +
 			"R.view_count, " +
 			"R.favorite_count, " +
-			"R.tags AS taggy " + //test add
+			"R.tags AS taggy " +
 			"FROM posts R INNER JOIN posts D ON " +
 			"D.parent_id = R.id";
 			
 	
 	/*
 	 * Creates a new question handler that is used to query questions in the database.
+	 * @param context a database context.
 	 */
 	public QuestionHandler(Context context) {
 		super(context);
@@ -44,6 +45,9 @@ public class QuestionHandler extends DatabaseHandler {
 	 * Returns a list of question that matches the searchTerm. 
 	 * Answer body, Question body and Title will be searched. 
 	 * You can limit the amount of questions by providing a number to numberOfQuestions
+	 * @param searchTerm The search term you want to search for. At least 2 chars needed.
+	 * @param numberOfQuestions The maximum number of questions you want back.
+	 * @return A list of questions matching your search term.
 	 */
 	public static QuestionList searchForQuestions(String searchTerm, int numberOfQuestions) {
 		if(searchTerm.length() < 2)
@@ -63,25 +67,30 @@ public class QuestionHandler extends DatabaseHandler {
 	 * Returns a list of question that matches the searchTerm with added tag filter. 
 	 * Answer body, Question body and Title and Tags will be searched. 
 	 * You can limit the amount of questions by providing a number to numberOfQuestions
+	 * @param searchTerm The search term you want to search for. At least 2 chars needed.
+	 * @param numberOfQuestions The maximum number of questions you want back.
+	 * @param tag The tag you want to match when searching questions.
+	 * @return A list of questions matching your search term and provided tag.
 	 */
 	public static QuestionList searchForQuestionsByTag(String searchTerm, String tag, int numberOfQuestions) {
 		if(searchTerm.length() < 2)
 			return new QuestionList();
 			
 		String searchTermLike = "%" + searchTerm + "%";
-		String tagLike = "%" + tag + "%";
 		String rawQuery = baseQuestionRawQuery + " WHERE question LIKE ? " +
 				"OR answer LIKE ? " +
 				"OR R.title LIKE ? " + 
-				"OR taggy LIKE ? " + 
+				"AND taggy = ? " + 
 				"ORDER BY R.title LIMIT ?";
 		Cursor cursorQuestions = db.rawQuery(rawQuery,
-				new String[] { searchTermLike, searchTermLike, searchTermLike, tagLike, Integer.toString(numberOfQuestions) });
+				new String[] { searchTermLike, searchTermLike, searchTermLike, tag, Integer.toString(numberOfQuestions) });
 		return parseQuestions(cursorQuestions);
 	}
 
 	/*
 	 * Parses a query result to questions and answers.
+	 * @param cursor A SQLLite database cursor to step through the results.
+	 * @returns A list of questions.
 	 */
 	protected static QuestionList parseQuestions(Cursor cursor) {
 		QuestionList questions = new QuestionList();

@@ -1,10 +1,6 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -14,12 +10,9 @@ import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Answer;
 import com.agilegroup4.model.Comment;
 import com.agilegroup4.model.Question;
-import com.agilegroup4.model.QuestionList;
 import com.agilegroup4.model.User;
 
 /* DatabaseHandler handles database queries, inserts, deletes, ...
- * 
- *  
  */
 public class DatabaseHandler {
 
@@ -129,7 +122,7 @@ public class DatabaseHandler {
 	 * list view elements.
 	 */
 	public static void queryQuestions(int numberOfQuestions) {
-		DatabaseHandlerTagDB.createTagsDB();
+		//DatabaseHandlerTagDB.createTagsDB();
 
 		if (queriedQuestions == 0) {
 			Cursor questionsCursor = db

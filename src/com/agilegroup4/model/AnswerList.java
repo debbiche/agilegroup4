@@ -9,9 +9,6 @@ import android.os.Parcelable;
  */
 public class AnswerList extends ArrayList<Answer> implements Parcelable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/*
@@ -23,6 +20,7 @@ public class AnswerList extends ArrayList<Answer> implements Parcelable{
 
 	/*
 	 * Creates a new answer list based on a Parcel.
+	 * @param in The Parcel to base the new answer list on.
 	 */
 	public AnswerList(Parcel in){
 		readFromParcel(in);
@@ -43,7 +41,8 @@ public class AnswerList extends ArrayList<Answer> implements Parcelable{
 	};
 
 	/*
-	 * Reads a parce and creates the list of answers.
+	 * Reads a parcel and creates the list of answers.
+	 * @param in The parcel to read from.
 	 */
 	private void readFromParcel(Parcel in) {
 		this.clear();
@@ -59,6 +58,7 @@ public class AnswerList extends ArrayList<Answer> implements Parcelable{
 
 	/*
 	 * Describes the contents of this list, returning its hash code. 
+	 * @returns The hashcode for the answer list.
 	 */
 	public int describeContents() {
 		return hashCode();
@@ -66,6 +66,8 @@ public class AnswerList extends ArrayList<Answer> implements Parcelable{
 
 	/*
 	 * Reads this answer list and parce it into a Parcel..
+	 * @param out The parcel to create. Based on the current answer list
+	 * @param flags Flags for writing parcel.
 	 */
 	public void writeToParcel(Parcel dest, int flags) {
 		int size = this.size();

@@ -8,8 +8,8 @@ import com.agilegroup4.src.*;
 
 public class MainMenuQuestionsNavigation extends ActivityInstrumentationTestCase2<MainMenuActivity> {
 
-	public MainMenuQuestionsNavigation() {
-		super("com.agilegroup4.src", MainMenuActivity.class);
+	public MainMenuQuestionsNavigation(Class<MainMenuActivity> classTest) {
+		super(classTest);
 	}
 
 	protected void setUp() throws Exception {

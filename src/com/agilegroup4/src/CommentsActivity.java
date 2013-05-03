@@ -2,7 +2,6 @@ package com.agilegroup4.src;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,16 +12,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Comment;
-import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class CommentsActivity extends CustomTitleBarActivity {
+/*
+ * The comments activity showing the provided comments.
+ */
+public class CommentsActivity extends Activity {
 	
 	// The current comments
 	private ArrayList<Comment> comments;
@@ -31,18 +31,28 @@ public class CommentsActivity extends CustomTitleBarActivity {
     private static LayoutInflater inflater=null;
     public ArrayList<HashMap<String,String>> data;
 	
+    /*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.setHeader(R.string.title_activity_comments);
-		super.setContentResourceID(R.layout.activity_comments);
+		//super.setHeader(R.string.title_activity_comments);
+		//super.setContentResourceID(R.layout.activity_comments);
+		
+		
 		super.onCreate(savedInstanceState);
-
+		setContentView(R.layout.activity_comments);
+		
 		int id = getIntent().getIntExtra("id", 0);
 		comments = DatabaseHandler.getComments(id);
-		//comments = createTestComments();
 		displayComments();
 	}
 
+	/*
+     * The eventhandler for the phone menu-button pressed
+     * @param menu The menu
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -50,6 +60,10 @@ public class CommentsActivity extends CustomTitleBarActivity {
 		return true;
 	}
 	
+	/*
+     * The eventhandler for pressing one item in the options menu
+     * @param item The menu item
+     */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;
@@ -67,12 +81,19 @@ public class CommentsActivity extends CustomTitleBarActivity {
 	    }
 	}
 	
-	@Override //invoked when Searchbutton pressed
+	/*
+     * Invoked when Searchbutton pressed
+     * @returns If the search bar should be shown or not.
+     */
+	@Override
 	public boolean onSearchRequested() {
 	    System.out.println("search pressed");
 	    return super.onSearchRequested();
 	}
 	
+	/*
+     * Shows and fetches the comments into the GUI
+     */
 	public void displayComments(){
 
 		ArrayList<HashMap<String, String>> csList = new ArrayList<HashMap<String, String>>();
@@ -101,24 +122,49 @@ public class CommentsActivity extends CustomTitleBarActivity {
 			inflater = (LayoutInflater)a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
 		
+		/*
+		 * Gets the number of items
+		 * @returns The number of ites in the list view.
+		 */
 		public int getCount() {
 	        return data.size();
 	    }
 		
+		/*
+		 * Gets an item in the list view at position
+		 * @returns The item.
+		 * @param position The position
+		 */
 		public Object getItem(int position) {
 	        return position;
 	    }
 
+		/*
+		 * Gets the item id in the list view at position
+		 * @returns The item id.
+		 * @param position The position
+		 */
 		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
+		/*
+		 * Check if the set has stable ids.
+		 * @returns True if stable ids..
+		 */
 		@Override
 		public boolean hasStableIds() {
 			return true;
 		}
 		
+		/*
+		 * Gets the list view graphical represntation
+		 * @param position The current item position
+		 * @param convertView The view to convert
+		 * @param parent The parent item.
+		 * @returns The view
+		 */
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        View vi=convertView;
 	        if(convertView==null)

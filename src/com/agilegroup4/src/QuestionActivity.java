@@ -2,8 +2,8 @@ package com.agilegroup4.src;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -27,9 +27,12 @@ import android.widget.TextView;
 import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Answer;
 import com.agilegroup4.model.Question;
-import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class QuestionActivity extends CustomTitleBarActivity {
+
+/*
+ * The question activity showing the provided question.
+ */
+public class QuestionActivity extends Activity {
 
 	ProgressDialog progress;
 	
@@ -38,9 +41,6 @@ public class QuestionActivity extends CustomTitleBarActivity {
 	
 	// Current answers for the question
 	private ArrayList<Answer> answers;
-	
-	// List of questions from QuestionOverview
-	private ArrayList<Question> questions;
 	
 	// The max lines of the questionbody
 	public final static int MAX_LINES_WITH_COMMENTS = 10;
@@ -51,22 +51,26 @@ public class QuestionActivity extends CustomTitleBarActivity {
     private static LayoutInflater inflater=null;
     public ArrayList<HashMap<String,String>> data;
 	
+    /*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.setHeader(R.string.title_activity_question);
-		super.setContentResourceID(R.layout.activity_question);
+		//super.setHeader(R.string.title_activity_question);
+		//super.setContentResourceID(R.layout.activity_question);
+		
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_question);
 
 		progress = new ProgressDialog(this);
-		//int questionId = getIntent().getIntExtra("questionId", 0);
-		
-		
-		//questions = DatabaseHandler.getQuestions();
-		//question = findQuestion(questionId);
 		getIntentData();
 		loadAnswers();
 	}
 	
+	/*
+	 * Gets and handles the intent data when loading this activity.
+	 */
 	public void getIntentData(){
 	    Intent i = getIntent();
 	    if(i != null && i.hasExtra("question")){   
@@ -75,15 +79,18 @@ public class QuestionActivity extends CustomTitleBarActivity {
 	    }
 	}
 	
+	/*
+	 * Invokes a asyncronously method loading answers.
+	 * Showing a progress bar during execution.
+	 */
 	private void loadAnswers(){
 		progress.setTitle("Please Wait");
 		progress.setMessage("Loading questions...");
 		progress.show();
 		new loadAnswers().execute();
-		
 	}
 	
-	/**
+	/*
 	 * Displays question title and body
 	 */
 	private void displayQuestion(){
@@ -121,18 +128,29 @@ public class QuestionActivity extends CustomTitleBarActivity {
 		
 	}
 	
+	/*
+	 * Does the question have comments?
+	 * @param q The question
+	 * @returns True if it has comments.
+	 */
 	public boolean hasComment(Question q){
 		return (q.getCommentCount() > 0);
 	}
 	
+	/*
+	 * Does the answer have comments?
+	 * @param a The answer
+	 * @returns True if it has comments.
+	 */
 	public boolean hasComment(Answer a){
 		return (a.getCommentCount() > 0);
 	}
 	
 	
-	/**
-	 * Display the answers
+	/*
+	 * Displays the answers
 	 */
+	@SuppressLint("UseSparseArrays")
 	public void displayAnswers() {
 		TextView answ = (TextView) findViewById(R.id.question_answers);
 		int ans = answers.size();
@@ -174,25 +192,17 @@ public class QuestionActivity extends CustomTitleBarActivity {
 		});
 	}
 	
-	/**
-	 * Search for a question
-	 * @param qId question id
-	 * @return the question
+	/*
+	 * Returns the current question activity object.
 	 */
-	private Question findQuestion(int qId){
-		Question q;
-		for (int i = 0; i < questions.size(); i++) {
-			q = questions.get(i);
-			if (q.getId() == qId)
-				return q;
-		}
-		return null;
-	}
-	
 	private QuestionActivity getThis(){
 		return this;
 	}
 
+	/*
+     * The eventhandler for the phone menu-button pressed
+     * @param menu The menu
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -200,6 +210,10 @@ public class QuestionActivity extends CustomTitleBarActivity {
 		return true;
 	}
 	
+	/*
+     * The eventhandler for pressing one item in the options menu
+     * @param item The menu item
+     */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;
@@ -224,24 +238,44 @@ public class QuestionActivity extends CustomTitleBarActivity {
 			inflater = (LayoutInflater)a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
 		
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.Adapter#getCount()
+		 */
 		public int getCount() {
 	        return data.size();
 	    }
 		
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.Adapter#getItem(int)
+		 */
 		public Object getItem(int position) {
 	        return position;
 	    }
 
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.Adapter#getItemId(int)
+		 */
 		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.BaseAdapter#hasStableIds()
+		 */
 		@Override
 		public boolean hasStableIds() {
 			return true;
 		}
 		
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
+		 */
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        View vi=convertView;
 	        if(convertView==null)
@@ -262,6 +296,10 @@ public class QuestionActivity extends CustomTitleBarActivity {
 
 	}	private class loadAnswers extends AsyncTask<Object, Object, Object>{
 
+		/*
+		 * (non-Javadoc)
+		 * @see android.os.AsyncTask#doInBackground(Params[])
+		 */
 		@Override
 		protected Object doInBackground(Object... params) {
 			answers = DatabaseHandler.getAnswers(question);
@@ -269,6 +307,10 @@ public class QuestionActivity extends CustomTitleBarActivity {
 			return null;
 		}
 	
+		/*
+		 * (non-Javadoc)
+		 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+		 */
 		@Override
 	     protected void onPostExecute(Object params) {
 			progress.dismiss();

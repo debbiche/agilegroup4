@@ -1,18 +1,17 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
+import com.agilegroup4.model.Tag;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Scanner;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.agilegroup4.model.Tag;
 
-/*
- * Handles DB access on tag db...
- * */
+/**
+ * Handles all DB access on tag db...
+ */
 public class DatabaseHandlerTagDB {
 	public static int loaded = 0;
 	protected static DatabaseLoaderTagDB dbLoader;
@@ -22,6 +21,10 @@ public class DatabaseHandlerTagDB {
 
 	}
 
+	/**
+	 * 
+	 * 
+	 */
 	public static void initDB(Context context) {
 		try {
 			if (loaded == 0)
@@ -33,7 +36,8 @@ public class DatabaseHandlerTagDB {
 		loaded = 1;
 	}
 	
-	/*
+	/**
+	 *
 	 *
 	 */
 	public static ArrayList<Tag> queryTags(int numberOfQuestions) {
@@ -46,9 +50,10 @@ public class DatabaseHandlerTagDB {
 		return parseTags(cursorQuestions);
 	}
 	
-	/*
+	/**
 	 * 
-	 * */
+	 * 
+	 */
 	private static ArrayList<Tag> parseTags(Cursor cursor){
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		Tag tag;
@@ -68,11 +73,12 @@ public class DatabaseHandlerTagDB {
 		
 		return tags;
 	}
+
 	
-	// TODO: add error handling
-	/*
+	/**
+	 * TODO: error handling
 	 * 
-	 * */
+	 */
 	private static void addRelatedTags(Tag tag, String relatedTags){
 		if (relatedTags == null){
 			return;

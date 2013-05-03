@@ -2,6 +2,7 @@ package com.agilegroup4.src;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,9 +14,8 @@ import android.widget.Button;
 
 import com.agilegroup4.model.SearchMode;
 import com.agilegroup4.model.Tag;
-import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class TagsOverviewActivity extends CustomTitleBarActivity {
+public class TagsOverviewActivity extends Activity {
 	
 	//workaround for passing tag query to searchableActivity
 
@@ -44,11 +44,17 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	
 	public static final int DURATION = 250;
 
+	/*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.setHeader(R.string.title_activity_settings);
-		super.setContentResourceID(R.layout.activity_tags_overview);
+		//super.setHeader(R.string.title_activity_settings);
+		//super.setContentResourceID(R.layout.activity_tags_overview);
+		
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_tags_overview);
 		
 		buttonOne = (Button) findViewById(R.id.button1);
 		buttonTwo = (Button) findViewById(R.id.button2);
@@ -76,6 +82,10 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 		
 	}
 	
+	/*
+	 * Invoked when clicking a tag
+	 * @param view The view object invoking.
+	 */
 	public void handleTagOnClick(View view){
 		final Animation anim;
 		switch (view.getId()) {
@@ -276,7 +286,7 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	    }
 	}
 	
-	/**
+	/*
 	 * Used for test purpose only, statically assign related tags
 	 */
 	private ArrayList<Tag> createTestTags(){
@@ -312,6 +322,10 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 		return ret;
 	}
 
+	/*
+     * The eventhandler for the phone menu-button pressed
+     * @param menu The menu
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -326,6 +340,10 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	    return super.onSearchRequested();
 	}
 	
+	/*
+     * The eventhandler for pressing one item in the options menu
+     * @param item The menu item
+     */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;
@@ -343,6 +361,11 @@ public class TagsOverviewActivity extends CustomTitleBarActivity {
 	    }
 	}
 
+	/*
+	 * Queries the <b>tags</b> object of this class for one Tag by it's name
+	 * @param name String containing the name of the tag you are looking for
+	 * @return <b>Tag</b> if a related tag was found OR <b>null</b> if no tag was found
+	 */
 	private Tag getTagByName(String name){
 		for(int i = 0; i < this.tags.size(); i++){
 			if (this.tags.get(i).getTagName().equals(name)){

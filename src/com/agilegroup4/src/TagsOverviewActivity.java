@@ -48,8 +48,9 @@ public class TagsOverviewActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_settings);
 		//super.setContentResourceID(R.layout.activity_tags_overview);
-		setContentView(R.layout.activity_tags_overview);
+		
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_tags_overview);
 		
 		buttonOne = (Button) findViewById(R.id.button1);
 		buttonTwo = (Button) findViewById(R.id.button2);

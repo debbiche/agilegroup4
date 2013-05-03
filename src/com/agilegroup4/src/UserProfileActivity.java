@@ -12,8 +12,9 @@ public class UserProfileActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_user_profile);
 		//super.setContentResourceID(R.layout.activity_user_profile);
-		setContentView(R.layout.activity_user_profile);
+		
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_user_profile);
 	}
 
 	@Override

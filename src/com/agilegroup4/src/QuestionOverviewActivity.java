@@ -52,8 +52,9 @@ public class QuestionOverviewActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_question_overview);
 		//super.setContentResourceID(R.layout.activity_question_overview);
-		setContentView(R.layout.activity_question_overview);
+		
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_question_overview);
 
 		SharedPreferences settings = getSharedPreferences(
 				LoginActivity.PREFS_NAME, 0);

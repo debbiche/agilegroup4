@@ -28,8 +28,9 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.text_login_username);
 		//super.setContentResourceID(R.layout.activity_login);
-		setContentView(R.layout.activity_login);
+		
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_login);
 		progress = new ProgressDialog(this);
 		
 		loadDB();

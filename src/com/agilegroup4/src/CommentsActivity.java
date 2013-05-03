@@ -32,9 +32,10 @@ public class CommentsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_comments);
 		//super.setContentResourceID(R.layout.activity_comments);
-		setContentView(R.layout.activity_comments);
+		
 		
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_comments);
 		
 		int id = getIntent().getIntExtra("id", 0);
 		comments = DatabaseHandler.getComments(id);

@@ -51,8 +51,9 @@ public class QuestionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_question);
 		//super.setContentResourceID(R.layout.activity_question);
-		setContentView(R.layout.activity_question);
+		
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_question);
 
 		progress = new ProgressDialog(this);
 		getIntentData();

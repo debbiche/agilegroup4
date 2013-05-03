@@ -24,7 +24,11 @@ public class QuestionIdTest extends ActivityInstrumentationTestCase2<LoginActivi
 	protected void setUp() throws Exception {
 		super.setUp(); 
 	}
+	public QuestionIdTest() {
+        super("", LoginActivity.class);
+}
 
+	
 	/**
 	 * Test ???.
 	 */

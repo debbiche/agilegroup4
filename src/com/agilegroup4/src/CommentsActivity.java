@@ -2,7 +2,6 @@ package com.agilegroup4.src;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,16 +12,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Comment;
-import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class CommentsActivity extends CustomTitleBarActivity {
+public class CommentsActivity extends Activity {
 	
 	// The current comments
 	private ArrayList<Comment> comments;
@@ -33,13 +30,14 @@ public class CommentsActivity extends CustomTitleBarActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.setHeader(R.string.title_activity_comments);
-		super.setContentResourceID(R.layout.activity_comments);
+		//super.setHeader(R.string.title_activity_comments);
+		//super.setContentResourceID(R.layout.activity_comments);
+		setContentView(R.layout.activity_comments);
+		
 		super.onCreate(savedInstanceState);
-
+		
 		int id = getIntent().getIntExtra("id", 0);
 		comments = DatabaseHandler.getComments(id);
-		//comments = createTestComments();
 		displayComments();
 	}
 

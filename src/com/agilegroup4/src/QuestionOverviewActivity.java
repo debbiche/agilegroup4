@@ -25,9 +25,8 @@ import com.agilegroup4.helpers.AnsweredComparator;
 import com.agilegroup4.helpers.ImportantComparator;
 import com.agilegroup4.helpers.LatestComparator;
 import com.agilegroup4.model.Question;
-import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class QuestionOverviewActivity extends CustomTitleBarActivity {
+public class QuestionOverviewActivity extends Activity {
 	
 	// HashMap for connecting question id with position in the list for the question
 	// Used for unit testing
@@ -51,8 +50,9 @@ public class QuestionOverviewActivity extends CustomTitleBarActivity {
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.setHeader(R.string.title_activity_question_overview);
-		super.setContentResourceID(R.layout.activity_question_overview);
+		//super.setHeader(R.string.title_activity_question_overview);
+		//super.setContentResourceID(R.layout.activity_question_overview);
+		setContentView(R.layout.activity_question_overview);
 		super.onCreate(savedInstanceState);
 
 		SharedPreferences settings = getSharedPreferences(
@@ -122,12 +122,7 @@ public class QuestionOverviewActivity extends CustomTitleBarActivity {
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			
 			@Override
-			public void onItemClick(AdapterView<?> parent, final View view,
-				int position, long id) {
-				//Intent intent = new Intent(getThis(), QuestionActivity.class);
-				// Send along question id to QuestionActivity
-				//intent.putExtra("questionId", ids.get((int) id));
-				//startActivity(intent);
+			public void onItemClick(AdapterView<?> parent, final View view,					int position, long id) {
 				//Creates a bundle and parce the the search result QuestionList
 				Bundle b = new Bundle();
 		        b.putParcelable("question", ids.get((int) id)); //Insert list in a Bundle object
@@ -198,8 +193,7 @@ public class QuestionOverviewActivity extends CustomTitleBarActivity {
 	/*
 	 * sort questions in questions object by date
 	 * for more information see the LatestComparator class
-	 * 
-	 * */
+	 */
 	public void filterLatest(View view){
 		
 		Collections.sort(questions, new LatestComparator());
@@ -219,7 +213,7 @@ public class QuestionOverviewActivity extends CustomTitleBarActivity {
 	 * sort questions in questions object by importance
 	 * for more information see the ImportantComparator class
 	 * 
-	 * */
+	 */
 	public void filterImportant(View view){
 		
 		Collections.sort(questions, new ImportantComparator());

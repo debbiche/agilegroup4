@@ -1,6 +1,8 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
+
+import com.agilegroup4.model.Tag;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Scanner;
@@ -8,11 +10,9 @@ import java.util.Scanner;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.agilegroup4.model.Tag;
-
 /*
  * Handles DB access on tag db...
- * */
+ */
 public class DatabaseHandlerTagDB {
 	public static int loaded = 0;
 	protected static DatabaseLoaderTagDB dbLoader;

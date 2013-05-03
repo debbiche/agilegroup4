@@ -3,12 +3,20 @@ package com.agilegroup4.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/*
+ * Represents a comment to an answer in the database.
+ */
 public class Comment {
 
 	private int id;
 	private String text;
 	private int parent_id;
 	
+	/*
+	 * Creates a new comment
+	 * @param id The comment id
+	 * @param text The comment
+	 */
 	public Comment(int id, String text){
 		this.id = id;
 		this.text = text;
@@ -16,6 +24,7 @@ public class Comment {
 	
 	/*
 	 * Creates a new comment based on a Parcel.
+	 * @param in A parcel to base the new comment on
 	 */
 	private Comment(Parcel in) {
 		this.id = in.readInt();
@@ -25,6 +34,8 @@ public class Comment {
 	
 	/*
 	 * Reads this comment and parce it into a Parcel.
+	 * @param out The parcel to create. Based on the current comment.
+	 * @param flags Flags for writing parcel.
 	 */
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeInt(id);
@@ -32,23 +43,41 @@ public class Comment {
 		out.writeString(text);
 	}
 	
+	/*
+	 * Gets the comment text.
+	 * @returns comment text.
+	 */
 	public String getText() {
 		return text;
 	}
+	
+	/*
+	 * Sets the comment text.
+	 * @param text The comment text.
+	 */
 	public void setText(String text) {
 		this.text = text;
 	}
 
+	/*
+	 * Gets the comment id.
+	 * @returns The comment id.
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/*
+	 * Sets the comment id.
+	 * @param text The comment id.
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 	
 	/*
 	 * Describes the contents of this comment, returning its hash code. 
+	 * @returns The comment hash code.
 	 */
 	public int describeContents() {
 		return this.hashCode();

@@ -1,6 +1,5 @@
 package com.agilegroup4.src.test;
 
-import junit.framework.Assert;
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
@@ -11,8 +10,8 @@ import com.agilegroup4.src.QuestionOverviewActivity;
 
 public class LoginTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 
-	public LoginTest() {
-		super("com.agilegroup4.src", LoginActivity.class);
+	public LoginTest(Class<LoginActivity> classTest) {
+		super(classTest);
 	}
 
 	protected void setUp() throws Exception {

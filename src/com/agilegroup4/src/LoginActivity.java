@@ -1,7 +1,6 @@
 package com.agilegroup4.src;
 
-import com.agilegroup4.view.CustomTitleBarActivity;
-
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -18,7 +17,7 @@ import android.widget.EditText;
  * and as it is always the first Activity to be called
  * it handles all necessary initializations (DB init, SharedPreferences) in the onCreate function
  * */
-public class LoginActivity extends CustomTitleBarActivity {
+public class LoginActivity extends Activity {
 	public final static String EXTRA_USERNAME = "USERNAME";
 	public static final String PREFS_NAME = "SETTINGS";
 	ProgressDialog progress;
@@ -27,8 +26,9 @@ public class LoginActivity extends CustomTitleBarActivity {
  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.setHeader(R.string.text_login_username);
-		super.setContentResourceID(R.layout.activity_login);
+		//super.setHeader(R.string.text_login_username);
+		//super.setContentResourceID(R.layout.activity_login);
+		setContentView(R.layout.activity_login);
 		super.onCreate(savedInstanceState);
 		progress = new ProgressDialog(this);
 		

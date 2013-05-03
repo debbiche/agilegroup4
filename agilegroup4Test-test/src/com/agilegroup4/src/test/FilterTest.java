@@ -4,14 +4,13 @@ import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.agilegroup4.src.*;
 
 public class FilterTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 
-	public FilterTest() {
-		super("com.agilegroup4.src", LoginActivity.class);
+	public FilterTest(Class<LoginActivity> classTest) {
+		super(classTest);
 	}
 
 	protected void setUp() throws Exception {

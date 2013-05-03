@@ -2,8 +2,8 @@ package com.agilegroup4.src;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -27,9 +27,8 @@ import android.widget.TextView;
 import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Answer;
 import com.agilegroup4.model.Question;
-import com.agilegroup4.view.CustomTitleBarActivity;
 
-public class QuestionActivity extends CustomTitleBarActivity {
+public class QuestionActivity extends Activity {
 
 	ProgressDialog progress;
 	
@@ -38,9 +37,6 @@ public class QuestionActivity extends CustomTitleBarActivity {
 	
 	// Current answers for the question
 	private ArrayList<Answer> answers;
-	
-	// List of questions from QuestionOverview
-	private ArrayList<Question> questions;
 	
 	// The max lines of the questionbody
 	public final static int MAX_LINES_WITH_COMMENTS = 10;
@@ -53,16 +49,12 @@ public class QuestionActivity extends CustomTitleBarActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.setHeader(R.string.title_activity_question);
-		super.setContentResourceID(R.layout.activity_question);
+		//super.setHeader(R.string.title_activity_question);
+		//super.setContentResourceID(R.layout.activity_question);
+		setContentView(R.layout.activity_question);
 		super.onCreate(savedInstanceState);
 
 		progress = new ProgressDialog(this);
-		//int questionId = getIntent().getIntExtra("questionId", 0);
-		
-		
-		//questions = DatabaseHandler.getQuestions();
-		//question = findQuestion(questionId);
 		getIntentData();
 		loadAnswers();
 	}
@@ -133,6 +125,7 @@ public class QuestionActivity extends CustomTitleBarActivity {
 	/**
 	 * Display the answers
 	 */
+	@SuppressLint("UseSparseArrays")
 	public void displayAnswers() {
 		TextView answ = (TextView) findViewById(R.id.question_answers);
 		int ans = answers.size();
@@ -172,21 +165,6 @@ public class QuestionActivity extends CustomTitleBarActivity {
 				}
 			}
 		});
-	}
-	
-	/**
-	 * Search for a question
-	 * @param qId question id
-	 * @return the question
-	 */
-	private Question findQuestion(int qId){
-		Question q;
-		for (int i = 0; i < questions.size(); i++) {
-			q = questions.get(i);
-			if (q.getId() == qId)
-				return q;
-		}
-		return null;
 	}
 	
 	private QuestionActivity getThis(){

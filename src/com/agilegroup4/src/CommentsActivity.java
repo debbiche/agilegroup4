@@ -19,6 +19,9 @@ import android.widget.TextView;
 import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Comment;
 
+/*
+ * The comments activity showing the provided comments.
+ */
 public class CommentsActivity extends Activity {
 	
 	// The current comments
@@ -28,6 +31,10 @@ public class CommentsActivity extends Activity {
     private static LayoutInflater inflater=null;
     public ArrayList<HashMap<String,String>> data;
 	
+    /*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_comments);
@@ -42,6 +49,10 @@ public class CommentsActivity extends Activity {
 		displayComments();
 	}
 
+	/*
+     * The eventhandler for the phone menu-button pressed
+     * @param menu The menu
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -49,6 +60,10 @@ public class CommentsActivity extends Activity {
 		return true;
 	}
 	
+	/*
+     * The eventhandler for pressing one item in the options menu
+     * @param item The menu item
+     */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;
@@ -66,12 +81,19 @@ public class CommentsActivity extends Activity {
 	    }
 	}
 	
-	@Override //invoked when Searchbutton pressed
+	/*
+     * Invoked when Searchbutton pressed
+     * @returns If the search bar should be shown or not.
+     */
+	@Override
 	public boolean onSearchRequested() {
 	    System.out.println("search pressed");
 	    return super.onSearchRequested();
 	}
 	
+	/*
+     * Shows and fetches the comments into the GUI
+     */
 	public void displayComments(){
 
 		ArrayList<HashMap<String, String>> csList = new ArrayList<HashMap<String, String>>();
@@ -100,24 +122,49 @@ public class CommentsActivity extends Activity {
 			inflater = (LayoutInflater)a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
 		
+		/*
+		 * Gets the number of items
+		 * @returns The number of ites in the list view.
+		 */
 		public int getCount() {
 	        return data.size();
 	    }
 		
+		/*
+		 * Gets an item in the list view at position
+		 * @returns The item.
+		 * @param position The position
+		 */
 		public Object getItem(int position) {
 	        return position;
 	    }
 
+		/*
+		 * Gets the item id in the list view at position
+		 * @returns The item id.
+		 * @param position The position
+		 */
 		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
+		/*
+		 * Check if the set has stable ids.
+		 * @returns True if stable ids..
+		 */
 		@Override
 		public boolean hasStableIds() {
 			return true;
 		}
 		
+		/*
+		 * Gets the list view graphical represntation
+		 * @param position The current item position
+		 * @param convertView The view to convert
+		 * @param parent The parent item.
+		 * @returns The view
+		 */
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        View vi=convertView;
 	        if(convertView==null)

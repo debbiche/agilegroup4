@@ -22,6 +22,10 @@ public class CustomTitleBarActivity extends Activity {
 		_activityTitle = getResources().getString(resourceStringID);
 	}
 	
+	/*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

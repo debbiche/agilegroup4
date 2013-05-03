@@ -28,6 +28,10 @@ import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Answer;
 import com.agilegroup4.model.Question;
 
+
+/*
+ * The question activity showing the provided question.
+ */
 public class QuestionActivity extends Activity {
 
 	ProgressDialog progress;
@@ -47,6 +51,10 @@ public class QuestionActivity extends Activity {
     private static LayoutInflater inflater=null;
     public ArrayList<HashMap<String,String>> data;
 	
+    /*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_question);
@@ -60,6 +68,9 @@ public class QuestionActivity extends Activity {
 		loadAnswers();
 	}
 	
+	/*
+	 * Gets and handles the intent data when loading this activity.
+	 */
 	public void getIntentData(){
 	    Intent i = getIntent();
 	    if(i != null && i.hasExtra("question")){   
@@ -68,15 +79,18 @@ public class QuestionActivity extends Activity {
 	    }
 	}
 	
+	/*
+	 * Invokes a asyncronously method loading answers.
+	 * Showing a progress bar during execution.
+	 */
 	private void loadAnswers(){
 		progress.setTitle("Please Wait");
 		progress.setMessage("Loading questions...");
 		progress.show();
 		new loadAnswers().execute();
-		
 	}
 	
-	/**
+	/*
 	 * Displays question title and body
 	 */
 	private void displayQuestion(){
@@ -114,17 +128,27 @@ public class QuestionActivity extends Activity {
 		
 	}
 	
+	/*
+	 * Does the question have comments?
+	 * @param q The question
+	 * @returns True if it has comments.
+	 */
 	public boolean hasComment(Question q){
 		return (q.getCommentCount() > 0);
 	}
 	
+	/*
+	 * Does the answer have comments?
+	 * @param a The answer
+	 * @returns True if it has comments.
+	 */
 	public boolean hasComment(Answer a){
 		return (a.getCommentCount() > 0);
 	}
 	
 	
-	/**
-	 * Display the answers
+	/*
+	 * Displays the answers
 	 */
 	@SuppressLint("UseSparseArrays")
 	public void displayAnswers() {
@@ -168,10 +192,17 @@ public class QuestionActivity extends Activity {
 		});
 	}
 	
+	/*
+	 * Returns the current question activity object.
+	 */
 	private QuestionActivity getThis(){
 		return this;
 	}
 
+	/*
+     * The eventhandler for the phone menu-button pressed
+     * @param menu The menu
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -179,6 +210,10 @@ public class QuestionActivity extends Activity {
 		return true;
 	}
 	
+	/*
+     * The eventhandler for pressing one item in the options menu
+     * @param item The menu item
+     */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;
@@ -203,24 +238,44 @@ public class QuestionActivity extends Activity {
 			inflater = (LayoutInflater)a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
 		
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.Adapter#getCount()
+		 */
 		public int getCount() {
 	        return data.size();
 	    }
 		
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.Adapter#getItem(int)
+		 */
 		public Object getItem(int position) {
 	        return position;
 	    }
 
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.Adapter#getItemId(int)
+		 */
 		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.BaseAdapter#hasStableIds()
+		 */
 		@Override
 		public boolean hasStableIds() {
 			return true;
 		}
 		
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
+		 */
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        View vi=convertView;
 	        if(convertView==null)
@@ -241,6 +296,10 @@ public class QuestionActivity extends Activity {
 
 	}	private class loadAnswers extends AsyncTask<Object, Object, Object>{
 
+		/*
+		 * (non-Javadoc)
+		 * @see android.os.AsyncTask#doInBackground(Params[])
+		 */
 		@Override
 		protected Object doInBackground(Object... params) {
 			answers = DatabaseHandler.getAnswers(question);
@@ -248,6 +307,10 @@ public class QuestionActivity extends Activity {
 			return null;
 		}
 	
+		/*
+		 * (non-Javadoc)
+		 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+		 */
 		@Override
 	     protected void onPostExecute(Object params) {
 			progress.dismiss();

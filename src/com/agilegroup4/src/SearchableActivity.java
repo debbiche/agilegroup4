@@ -13,6 +13,10 @@ public class SearchableActivity extends ListActivity {
 
 	public static SearchMode SearchMode;
 
+	/*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

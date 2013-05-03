@@ -11,6 +11,10 @@ import android.view.View;
 
 public class MainMenuActivity extends Activity {
 	
+	/*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_main_menu);
@@ -20,18 +24,27 @@ public class MainMenuActivity extends Activity {
 		setContentView(R.layout.activity_main_menu);
 	}
 
+	/*
+     * The eventhandler for the phone menu-button pressed
+     * @param menu The menu
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// The menu option is not available in this activity
 		return true;
 	}
 	
-	@Override //invoked when Searchbutton pressed
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onSearchRequested()
+	 */
+	@Override 
 	public boolean onSearchRequested() {
 	    System.out.println("search pressed");
 	    return super.onSearchRequested();
 	}
 
+	
 	public void handleMenuItemOnClick(View view) {
 		Intent intent;
 		switch (view.getId()) {

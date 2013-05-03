@@ -9,6 +9,10 @@ import android.view.MenuItem;
 
 public class UsersActivity extends Activity {
 
+	/*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_users);
@@ -18,6 +22,10 @@ public class UsersActivity extends Activity {
 		setContentView(R.layout.activity_users);
 	}
 
+	/*
+     * The eventhandler for the phone menu-button pressed
+     * @param menu The menu
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -25,12 +33,20 @@ public class UsersActivity extends Activity {
 		return true;
 	}
 	
-	@Override //invoked when Searchbutton pressed, just for testing
+	/*
+     * Invoked when Searchbutton pressed
+     * @returns If the search bar should be shown or not.
+     */
+	@Override
 	public boolean onSearchRequested() {
 		//getIntent().putExtra("action", "users");
 	    return super.onSearchRequested();
 	}
 	
+	/*
+     * The eventhandler for pressing one item in the options menu
+     * @param item The menu item
+     */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;

@@ -24,6 +24,10 @@ public class LoginActivity extends Activity {
 
 	//public static DatabaseHandler dbHandler;
  
+	/*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.text_login_username);
@@ -48,9 +52,11 @@ public class LoginActivity extends Activity {
 		checkLoggedOut();
 	}
 	
-	// Check if we just logged out
-	// If the login activity is called because the user logged out
-	// a info about the log out shall be displayed
+	/* Check if we just logged out
+	 * If the login activity is called because the user logged out
+	 * a info about the log out shall be displayed
+	 * @returns True if logged out correctly.
+	 */
 	public boolean checkLoggedOut(){ 
 		if (getIntent().getExtras() == null)  
 			return false;
@@ -74,6 +80,10 @@ public class LoginActivity extends Activity {
 			return false;
 	}
 
+	/*
+     * The eventhandler for the phone menu-button pressed
+     * @param menu The menu
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -81,6 +91,10 @@ public class LoginActivity extends Activity {
 		return true;
 	}
 	
+	/*
+     * The eventhandler for pressing one item in the options menu
+     * @param item The menu item
+     */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle item selection
@@ -93,7 +107,10 @@ public class LoginActivity extends Activity {
 	    }
 	}
 
-	// function called when login button is pressed
+	/*
+	 * Function called when login button is pressed
+	 * @param view The view
+	 */
 	public void loginButton(View view){
 		
 		// read username from text field and save in String inputText
@@ -136,8 +153,11 @@ public class LoginActivity extends Activity {
 			alert.show();
 		}		
 			
-		}
+	}
 	
+	/*
+	 * Loads the question database.
+	 */
 	private void loadDB(){
 		if (DatabaseHandler.loaded == 0) {
 			progress.setTitle("Please Wait");
@@ -153,11 +173,17 @@ public class LoginActivity extends Activity {
 		}
 	}
 	
-	// the return button at this screen shall always close the application
+	/*
+	 * The return button at this screen shall always close the application(non-Javadoc)
+	 * @see android.app.Activity#onBackPressed()
+	 */
 	public void onBackPressed(){
 		System.exit(0);
 	}
 	
+	/*
+	 * Initiation of the questions database asyncroniously.
+	 */
 	private class initDB extends AsyncTask<Object, Object, Object>{
 
 		@Override
@@ -173,6 +199,9 @@ public class LoginActivity extends Activity {
 	     }
 	 }
 	
+	/*
+	 * Initiation of the tags database asyncroniously.
+	 */
 	private class initTagDB extends AsyncTask<Object, Object, Object>{
 
 		@Override

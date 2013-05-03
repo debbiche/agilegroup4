@@ -8,6 +8,10 @@ import android.view.MenuItem;
 
 public class UserProfileActivity extends Activity {
 
+	/*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_user_profile);
@@ -17,6 +21,10 @@ public class UserProfileActivity extends Activity {
 		setContentView(R.layout.activity_user_profile);
 	}
 
+	/*
+     * The eventhandler for the phone menu-button pressed
+     * @param menu The menu
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -24,6 +32,10 @@ public class UserProfileActivity extends Activity {
 		return true;
 	}
 
+	/*
+     * The eventhandler for pressing one item in the options menu
+     * @param item The menu item
+     */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;

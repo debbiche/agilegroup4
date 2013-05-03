@@ -47,6 +47,10 @@ public class QuestionActivity extends Activity {
     private static LayoutInflater inflater=null;
     public ArrayList<HashMap<String,String>> data;
 	
+    /*
+     * The "constructor" for this activity
+     * @param instanceState The instance state.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_question);
@@ -73,7 +77,6 @@ public class QuestionActivity extends Activity {
 		progress.setMessage("Loading questions...");
 		progress.show();
 		new loadAnswers().execute();
-		
 	}
 	
 	/**
@@ -172,6 +175,10 @@ public class QuestionActivity extends Activity {
 		return this;
 	}
 
+	/*
+     * The eventhandler for the phone menu-button pressed
+     * @param menu The menu
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -179,6 +186,10 @@ public class QuestionActivity extends Activity {
 		return true;
 	}
 	
+	/*
+     * The eventhandler for pressing one item in the options menu
+     * @param item The menu item
+     */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;

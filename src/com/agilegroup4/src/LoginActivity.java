@@ -139,18 +139,18 @@ public class LoginActivity extends Activity {
 		}
 	
 	private void loadDB(){
-		if (DatabaseHandler.loaded == 0) {
+		if (DatabaseHandler.loaded == 0 || DatabaseHandlerTagDB.loaded == 0) {
 			progress.setTitle("Please Wait");
 			progress.setMessage("Database is loading...");
 			progress.show();
 			new initDB().execute();
 		}
-		if (DatabaseHandlerTagDB.loaded == 0) {
-			progress.setTitle("Please Wait");
-			progress.setMessage("tag database is loading...");
-			progress.show();
-			new initTagDB().execute();
-		}
+//		if (DatabaseHandlerTagDB.loaded == 0) {
+//			progress.setTitle("Please Wait");
+//			progress.setMessage("tag database is loading...");
+//			progress.show();
+//			new initTagDB().execute();
+//		}
 	}
 	
 	// the return button at this screen shall always close the application
@@ -163,6 +163,7 @@ public class LoginActivity extends Activity {
 		@Override
 		protected Object doInBackground(Object... params) {
 			DatabaseHandler.initDB(getApplicationContext());
+			DatabaseHandlerTagDB.initDB(getApplicationContext());
 			return null;
 		}
 	

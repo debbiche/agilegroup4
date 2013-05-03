@@ -12,6 +12,10 @@ public class FilterTest extends ActivityInstrumentationTestCase2<LoginActivity> 
 	public FilterTest(Class<LoginActivity> classTest) {
 		super(classTest);
 	}
+	
+	public FilterTest(){
+		super("", LoginActivity.class);
+	}
 
 	protected void setUp() throws Exception {
 		super.setUp(); 

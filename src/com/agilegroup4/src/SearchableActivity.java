@@ -49,7 +49,7 @@ public class SearchableActivity extends ListActivity {
 		}
 	}
 	
-	//Searches questions and sends QuestionList of questions
+	//jSearches questions and sends QuestionList of questions
 	//to QuestionsOverview for presentation
 	private void searchQuestionFreeText(String query) { 
 		QuestionList searchResultQuestions = QuestionHandler.searchForQuestions(query, 60);

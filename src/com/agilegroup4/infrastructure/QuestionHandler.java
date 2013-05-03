@@ -77,14 +77,14 @@ public class QuestionHandler extends DatabaseHandler {
 			return new QuestionList();
 			
 		String searchTermLike = "%" + searchTerm + "%";
-		String tagLike = "%" + tag + "%";
+		String tagWithTags = "<" + tag + ">";
 		String rawQuery = baseQuestionRawQuery + " WHERE question LIKE ? " +
 				"OR answer LIKE ? " +
 				"OR R.title LIKE ? " + 
-				"OR taggy LIKE ? " + 
+				"OR taggy = ? " + 
 				"ORDER BY R.title LIMIT ?";
 		Cursor cursorQuestions = db.rawQuery(rawQuery,
-				new String[] { searchTermLike, searchTermLike, searchTermLike, tagLike, Integer.toString(numberOfQuestions) });
+				new String[] { searchTermLike, searchTermLike, searchTermLike, tagWithTags, Integer.toString(numberOfQuestions) });
 		return parseQuestions(cursorQuestions);
 	}
 

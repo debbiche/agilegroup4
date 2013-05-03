@@ -2,16 +2,19 @@ package com.agilegroup4.src;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Comment;
@@ -21,12 +24,18 @@ public class CommentsActivity extends Activity {
 	// The current comments
 	private ArrayList<Comment> comments;
 	
+    static final String KEY_COMMENT = "comment";
+    private static LayoutInflater inflater=null;
+    public ArrayList<HashMap<String,String>> data;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_comments);
 		//super.setContentResourceID(R.layout.activity_comments);
+		setContentView(R.layout.activity_comments);
+		
 		super.onCreate(savedInstanceState);
-
+		
 		int id = getIntent().getIntExtra("id", 0);
 		comments = DatabaseHandler.getComments(id);
 		displayComments();
@@ -64,57 +73,65 @@ public class CommentsActivity extends Activity {
 	
 	public void displayComments(){
 
-		// HashMap needed for displaying the comments in the listview
-		final ArrayList<String> commentbodies = new ArrayList<String>();
+		ArrayList<HashMap<String, String>> csList = new ArrayList<HashMap<String, String>>();
+
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		for (int i = 0; i < comments.size(); i++){
-			commentbodies.add(StringUtility.convertHTMLtoString(comments.get(i).getText()));
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put(KEY_COMMENT, StringUtility.convertHTMLtoString(comments.get(i).getText()));
+			csList.add(map);
 		}
 
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
-				android.R.layout.simple_list_item_1, commentbodies);
+				android.R.layout.simple_list_item_1, csList);
 		listview.setAdapter(adapter);
 	
 	}
 	
-	
 	/*
 	 * Puts the elements in the listview.
 	 */
-	private class StableArrayAdapter extends ArrayAdapter<String> {
-
-		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-		public StableArrayAdapter(Context context, int textViewResourceId,
-				List<String> objects) {
-			super(context, textViewResourceId, objects);
-			for (int i = 0; i < objects.size(); ++i) {
-				mIdMap.put(objects.get(i), i);
-			}
+	private class StableArrayAdapter extends BaseAdapter {
+				
+		public StableArrayAdapter(Activity a, int textViewResourceId,
+				ArrayList<HashMap<String, String>> objects) {
+			data = objects;
+			inflater = (LayoutInflater)a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
+		
+		public int getCount() {
+	        return data.size();
+	    }
+		
+		public Object getItem(int position) {
+	        return position;
+	    }
 
 		@Override
 		public long getItemId(int position) {
-			String item = getItem(position);
-			return mIdMap.get(item);
+			return position;
 		}
 
 		@Override
 		public boolean hasStableIds() {
 			return true;
 		}
+		
+	    public View getView(int position, View convertView, ViewGroup parent) {
+	        View vi=convertView;
+	        if(convertView==null)
+	            vi = inflater.inflate(R.layout.list_row_comments, null);
+	 
+	        TextView text = (TextView)vi.findViewById(R.id.text);
+	 
+	        HashMap<String, String> q = new HashMap<String, String>();
+	        q = data.get(position);
+	 
+	        // Setting all values in listview
+	        text.setText(q.get(KEY_COMMENT));
+	        
+	        return vi;
+	    }
 
 	}
-	
-	public ArrayList<Comment> createTestComments(){
-		ArrayList<Comment> ret = new ArrayList<Comment>();
-		Comment one = new Comment(1, "Comment one");
-		Comment two = new Comment(2, "Comment two");
-		Comment three = new Comment(3, "Comment three");
-		ret.add(one);
-		ret.add(two);
-		ret.add(three);
-		return ret;
-	}
-
 }

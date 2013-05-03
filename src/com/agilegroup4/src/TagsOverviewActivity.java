@@ -48,6 +48,7 @@ public class TagsOverviewActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_settings);
 		//super.setContentResourceID(R.layout.activity_tags_overview);
+		setContentView(R.layout.activity_tags_overview);
 		super.onCreate(savedInstanceState);
 		
 		buttonOne = (Button) findViewById(R.id.button1);
@@ -59,7 +60,7 @@ public class TagsOverviewActivity extends Activity {
 		buttonSeven = (Button) findViewById(R.id.button7);
 		
 		//tags = createTestTags();
-		tags = DatabaseHandlerTagDB.queryTags(10);
+		tags = DatabaseHandlerTagDB.queryTags(560);
 				
 		
 		if (tags.size() > 0) {

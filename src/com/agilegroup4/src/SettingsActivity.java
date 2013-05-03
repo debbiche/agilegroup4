@@ -12,6 +12,7 @@ public class SettingsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_settings);
 		//super.setContentResourceID(R.layout.activity_settings);
+		setContentView(R.layout.activity_settings);
 		super.onCreate(savedInstanceState);
 	}
 

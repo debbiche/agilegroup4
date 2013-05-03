@@ -52,6 +52,7 @@ public class QuestionOverviewActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_question_overview);
 		//super.setContentResourceID(R.layout.activity_question_overview);
+		setContentView(R.layout.activity_question_overview);
 		super.onCreate(savedInstanceState);
 
 		SharedPreferences settings = getSharedPreferences(
@@ -121,8 +122,7 @@ public class QuestionOverviewActivity extends Activity {
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			
 			@Override
-			public void onItemClick(AdapterView<?> parent, final View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, final View view,					int position, long id) {
 				//Creates a bundle and parce the the search result QuestionList
 				Bundle b = new Bundle();
 		        b.putParcelable("question", ids.get((int) id)); //Insert list in a Bundle object

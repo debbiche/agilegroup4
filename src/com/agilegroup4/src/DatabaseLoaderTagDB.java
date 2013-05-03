@@ -1,6 +1,9 @@
 package com.agilegroup4.src;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -9,12 +12,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.os.Environment;
+import android.util.Log;
 
 public class DatabaseLoaderTagDB extends SQLiteOpenHelper {
 	
 	private SQLiteDatabase db;
 	private Context context;
-	private String dbPath = "data/data/com.agilegroup4.src/databases";
+	private static String dbPath = "data/data/com.agilegroup4.src/databases";
 	private String dbName = "StackOverflowTags";
 	private InputStream inputDB;
 	private OutputStream outputDB;
@@ -36,7 +41,7 @@ public class DatabaseLoaderTagDB extends SQLiteOpenHelper {
 			System.out
 					.println("Database already exists, not loading it again!");
 			this.db = SQLiteDatabase.openDatabase(dbPath + dbName, null,
-					SQLiteDatabase.OPEN_READONLY
+					SQLiteDatabase.OPEN_READWRITE
 							| SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 			addIndexes();
 			return;
@@ -56,7 +61,7 @@ public class DatabaseLoaderTagDB extends SQLiteOpenHelper {
 			outputDB.close();
 
 			db = SQLiteDatabase.openDatabase(dbPath + dbName, null,
-					SQLiteDatabase.OPEN_READONLY
+					SQLiteDatabase.OPEN_READWRITE
 							| SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 			addIndexes();
 		}
@@ -104,5 +109,41 @@ public class DatabaseLoaderTagDB extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	public static void copyDBToSDCard() {
+	    try {
+	        InputStream myInput = new FileInputStream(dbPath+"StackOverflowTags");
+
+	        File file = new File(Environment.getExternalStorageDirectory().getPath()+"/"+"tags.sqlite");
+	        
+	        if (!file.exists()){
+	            try {
+	                file.createNewFile();
+	            } catch (IOException e) {
+	                Log.i("FO","File creation failed for " + file);
+	            }
+	        }
+
+	        OutputStream myOutput = new FileOutputStream(Environment.getExternalStorageDirectory().getPath()+"/"+"tags.sqlite");
+
+	        byte[] buffer = new byte[1024];
+	        int length;
+	        while ((length = myInput.read(buffer))>0){
+	            myOutput.write(buffer, 0, length);
+	        }
+
+	        //Close the streams
+	        myOutput.flush();
+	        myOutput.close();
+	        myInput.close();
+	        Log.i("FO","copied");
+
+	    } catch (Exception e) {
+	        Log.i("FO","exception="+e);
+	    }
+
+
 	}
 }

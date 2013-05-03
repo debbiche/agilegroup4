@@ -13,6 +13,7 @@ public class UsersActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//super.setHeader(R.string.title_activity_users);
 		//super.setContentResourceID(R.layout.activity_users);
+		setContentView(R.layout.activity_users);
 		super.onCreate(savedInstanceState);
 	}
 

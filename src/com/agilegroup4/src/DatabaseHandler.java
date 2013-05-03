@@ -1,9 +1,6 @@
 package com.agilegroup4.src;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -125,6 +122,8 @@ public class DatabaseHandler {
 	 * list view elements.
 	 */
 	public static void queryQuestions(int numberOfQuestions) {
+		DatabaseHandlerTagDB.createTagsDB();
+
 		if (queriedQuestions == 0) {
 			Cursor questionsCursor = db
 					.rawQuery("SELECT id,title,body,comment_count,creation_date, " +
@@ -149,6 +148,7 @@ public class DatabaseHandler {
 			questionsCursor.close();
 			queriedQuestions = 1;
 		}
+		
 	}
 	
 	public static ArrayList<Answer> getAnswers(Question question){
@@ -182,31 +182,6 @@ public class DatabaseHandler {
 		return comments;
 	}
 	
-	private void createTagsDB(){
-		// to be deleted after tags are extracted from DB
-				HashMap<String, List<String>> hashi = new HashMap<String, List<String>>();
-				List<String> related;
-				String tags, tag;
-				Cursor curUserID;
-				Scanner scanner;
-				
-				curUserID = db.rawQuery("select tags from posts", new String[] { });
-				curUserID.moveToFirst();
-				
-				while(!curUserID.isAfterLast()){
-					tags = curUserID.getString(0);
-					scanner = new Scanner(tags);
-					
-					while(scanner.hasNext()){
-						tag = scanner.next();
-						System.out.println(tag);
-					}
-					//hashi.put(tag, related);
-					curUserID.moveToNext();
-				}
-				
-				curUserID.close();
-				// delete above until comment
-	}
+	
 
 }

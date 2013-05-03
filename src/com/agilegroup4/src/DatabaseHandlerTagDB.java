@@ -130,16 +130,42 @@ public class DatabaseHandlerTagDB {
 					}
 				}
 				
-				System.out.println("Size of tags hash:" + tagsHash.size());
-				
-				
-
-				
 //				for (Entry<String, String> tagss : tagsHash.entrySet()){
 //					System.out.println("Tag: " + tagss.getKey() + " with related tags: " +  tagss.getValue());
-//					
-//				}		
+//
+//				}
 //				
+			
+				HashMap<String, String> tagsHash2 = new HashMap<String, String>();
+				
+				for (Entry<String, String> tagss : tagsHash.entrySet()){
+					String[] currentTags = tagss.getValue().split(",");
+					//System.err.println("tags size: " + currentTags.length);
+					int total =0;
+					
+					if (currentTags.length > 10) total = 10 ; 
+					else total = currentTags.length;
+					
+					for (int i =1; i < total; i++){
+						if (!tagsHash.containsKey(currentTags[i])) {
+							//currentTags[i] = currentTags[i].substring(1);
+							if (!(i == currentTags.length-1))
+							tagsHash2.put(currentTags[i], buildRelatedTags2(currentTags));
+							//System.out.println("Added hash object in new hash!");
+						}
+						
+						
+					}
+					//System.out.println("Looped!");
+				}
+					System.out.println("Size of tags hash2:" + tagsHash2.size());
+				
+				System.out.println("Hash tags before merging: " + tagsHash.size());
+				tagsHash.putAll(tagsHash2);
+				System.out.println("Hash tags after merging: " + tagsHash.size());
+
+//				
+						
 				int j = 1;
 				for (Entry<String, String> tagss : tagsHash.entrySet()){
 //					System.out.println("Tag: " + tagss.getKey() + " with related tags: " +  tagss.getValue());
@@ -148,8 +174,13 @@ public class DatabaseHandlerTagDB {
 					j++;
 				}
 				
-				Cursor t = db.rawQuery("SELECT * from tags", null);
-				System.out.println("Database tags size: " + t.getCount());
+				for (Entry<String, String> tagss : tagsHash.entrySet()){
+					System.out.println("Tag: " + tagss.getKey() + " with related tags: " +  tagss.getValue());
+				}
+				
+				
+			//	Cursor t = db.rawQuery("SELECT * from tags", null);
+				//System.out.println("Database tags size: " + t.getCount());
 				
 				System.out.println("Created tags DB!!");
 				
@@ -158,10 +189,30 @@ public class DatabaseHandlerTagDB {
 //				db.close();
 	}
 
+	
+	private static String buildRelatedTags2(String[] array){
+		String relatedTags = "";
+		int total = 0;
+		if (array.length > 10 ) total = 10; 
+		else total = array.length;
+		for (int i = 1; i < total; i++){
+			//array[i] = array[i].substring(1);
+			if (i!=1){
+			relatedTags = relatedTags.concat(",");
+			relatedTags = relatedTags.concat(array[i]);
+			} else relatedTags = relatedTags.concat(array[i]);
+
+			
+		}
+		return relatedTags;
+	}
+	
 	private static String buildRelatedTags(String[] array){
 		String relatedTags = "";
-		
-		for (int i = 1; i < array.length; i++){
+		int total = 0;
+		if (array.length > 10 ) total = 10; 
+		else total = array.length;
+		for (int i = 1; i < total; i++){
 			array[i] = array[i].substring(1);
 			if (i!=1){
 			relatedTags = relatedTags.concat(",");

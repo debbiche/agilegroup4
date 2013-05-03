@@ -156,31 +156,53 @@ public class QuestionOverviewActivity extends Activity {
 	 * Puts the elements in the listview.
 	 */
 	private class StableArrayAdapter extends BaseAdapter {
-				
+			
+		/*
+		 * Stableadapter for the question elements in the listview.
+		 */
 		public StableArrayAdapter(Activity a, int textViewResourceId,
 				ArrayList<HashMap<String, String>> objects) {
 			data = objects;
 			inflater = (LayoutInflater)a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		}
-		
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.Adapter#getCount()
+		 */
 		public int getCount() {
 	        return data.size();
 	    }
 		
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.Adapter#getItem(int)
+		 */
 		public Object getItem(int position) {
 	        return position;
 	    }
 
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.Adapter#getItemId(int)
+		 */
 		@Override
 		public long getItemId(int position) {
 			return position;
 		}
 
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.BaseAdapter#hasStableIds()
+		 */
 		@Override
 		public boolean hasStableIds() {
 			return true;
 		}
 		
+		/*
+		 * (non-Javadoc)
+		 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
+		 */
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        View vi=convertView;
 	        if(convertView==null)
@@ -225,7 +247,7 @@ public class QuestionOverviewActivity extends Activity {
 	/*
 	 * sort questions in questions object by importance
 	 * for more information see the ImportantComparator class
-	 * 
+	 * @param view The view invoking this method.
 	 */
 	public void filterImportant(View view){
 		
@@ -246,7 +268,7 @@ public class QuestionOverviewActivity extends Activity {
 	 * sort questions in questions object by amount of answers and comments
 	 * and if the answer was accepted
 	 * for more information see the AnsweredComparator class
-	 * 
+	 * @param view The view invoking this method.
 	 * */
 	public void filterAnswers(View view){
 		
@@ -263,12 +285,20 @@ public class QuestionOverviewActivity extends Activity {
 		displayQuestions();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onBackPressed()
+	 */
 	public void onBackPressed(){
 		// call next activity
 		Intent intent = new Intent(this, MainMenuActivity.class);
 		startActivity(intent);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onSearchRequested()
+	 */
 	@Override //invoked when Searchbutton pressed, just for testing
 	public boolean onSearchRequested() {
 	    System.out.println("search pressed");

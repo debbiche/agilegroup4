@@ -21,8 +21,6 @@ public class LoginActivity extends Activity {
 	public final static String EXTRA_USERNAME = "USERNAME";
 	public static final String PREFS_NAME = "SETTINGS";
 	ProgressDialog progress;
-
-	//public static DatabaseHandler dbHandler;
  
 	/*
      * The "constructor" for this activity

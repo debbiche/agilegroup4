@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
+/*
+ * The main menu activity showing the main menu of this application.
+ */
 public class MainMenuActivity extends Activity {
 	
 	/*
@@ -44,7 +47,10 @@ public class MainMenuActivity extends Activity {
 	    return super.onSearchRequested();
 	}
 
-	
+	/*
+	 * Invoked when user clicks a menu button.
+	 * @param view The view for fetching the id of the selected button.
+	 */
 	public void handleMenuItemOnClick(View view) {
 		Intent intent;
 		switch (view.getId()) {
@@ -78,6 +84,9 @@ public class MainMenuActivity extends Activity {
 		}
 	}
 
+	/*
+	 * Handle log out selection in the menu.
+	 */
 	private void checkLogout() {
 		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 			@Override
@@ -108,6 +117,9 @@ public class MainMenuActivity extends Activity {
 				.setNegativeButton("Cancel", dialogClickListener).show();
 	}
 	
+	/*
+	 * Returns the current main menu activity object.
+	 */
 	private MainMenuActivity getThis(){
 		return this;
 	}

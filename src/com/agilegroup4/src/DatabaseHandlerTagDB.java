@@ -10,7 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * Handles all DB access on tag db...
+ * Handles all DB access on tag database.
  */
 public class DatabaseHandlerTagDB {
 	public static int loaded = 0;
@@ -22,8 +22,7 @@ public class DatabaseHandlerTagDB {
 	}
 
 	/**
-	 * 
-	 * 
+	 * initialize the database
 	 */
 	public static void initDB(Context context) {
 		try {
@@ -37,15 +36,16 @@ public class DatabaseHandlerTagDB {
 	}
 	
 	/**
-	 *
-	 *
+	 * queries all tags from the tag database.
+	 * @param numberOfQuestions limits the resulting query
+	 * @return ArrayList
 	 */
 	public static ArrayList<Tag> queryTags(int numberOfQuestions) {
 		String[] para = new String[] { Integer.toString(numberOfQuestions) };
 		
 		String rawQuery = "SELECT * FROM tags " +
-				"ORDER BY tag LIMIT ?";
-		Cursor cursorQuestions = db.rawQuery(rawQuery, para);
+				"ORDER BY tag";
+		Cursor cursorQuestions = db.rawQuery(rawQuery, null);
 		
 		return parseTags(cursorQuestions);
 	}

@@ -65,7 +65,7 @@ public class TagsOverviewActivity extends Activity {
 		buttonSeven = (Button) findViewById(R.id.button7);
 		
 		//tags = createTestTags();
-		tags = DatabaseHandlerTagDB.queryTags(560);
+		tags = DatabaseHandlerTagDB.queryTags(680);
 				
 		
 		if (tags.size() > 0) {

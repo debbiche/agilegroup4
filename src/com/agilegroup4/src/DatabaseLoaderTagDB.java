@@ -36,14 +36,14 @@ public class DatabaseLoaderTagDB extends SQLiteOpenHelper {
 	private void loadDB() throws Exception {
 		if (dbExists()) {
 			System.out
-					.println("Database already exists, not loading it again!");
+					.println("Tags database already exists, not loading it again!");
 			this.db = SQLiteDatabase.openDatabase(dbPath + dbName, null,
 					SQLiteDatabase.OPEN_READWRITE
 							| SQLiteDatabase.NO_LOCALIZED_COLLATORS);
 			addIndexes();
 			return;
 		} else {
-			System.out.println("Database not loaded, loading it now...");
+			System.out.println("Tags database not loaded, loading it now...");
 			this.getWritableDatabase(); // open empty DB
 			inputDB = context.getAssets().open("tags.sqlite"); // load db file
 			outputDB = new FileOutputStream(dbPath + dbName);

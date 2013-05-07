@@ -122,7 +122,9 @@ public class DatabaseHandler {
 	 * list view elements.
 	 */
 	public static void queryQuestions(int numberOfQuestions) {
-		DatabaseHandlerTagDB.createTagsDB();
+		
+		if (DatabaseHandlerTagDB.createTagsDB == 1)
+			DatabaseHandlerTagDB.createTagsDB();
 
 		if (queriedQuestions == 0) {
 			Cursor questionsCursor = db

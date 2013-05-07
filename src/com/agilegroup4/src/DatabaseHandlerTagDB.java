@@ -18,7 +18,9 @@ public class DatabaseHandlerTagDB {
 	public static int loaded = 0;
 	protected static DatabaseLoaderTagDB dbLoader;
 	protected static SQLiteDatabase db;
-
+	public static int createTagsDB = 0;
+	
+	
 	public DatabaseHandlerTagDB(Context context) {
 
 	}
@@ -130,7 +132,7 @@ public class DatabaseHandlerTagDB {
 		for (int i = 0; i < listOfTags.size(); i++) { // Main loop
 			String[] currentTags = listOfTags.get(i).split(">"); // split tags
 			
-			for (int k = 0; k < currentTags.length; k++) {
+			for (int k = 0; k < currentTags.length; k++) { // remove the "<"
 				currentTags[k] = currentTags[k].substring(1);
 			}
 			
@@ -153,14 +155,32 @@ public class DatabaseHandlerTagDB {
 		System.out.println("Size of duplicate tags hash: " + dupTagsHash.size());
 
 		
-//		for (Entry<String, String> tagss : tagsHash.entrySet()) {
-//			String[] tagsss = tagss.getValue().split(",");
+//		for (Entry<String, String> tagss : dupTagsHash.entrySet()) {
+//			//String[] tagsss = tagss.getValue().split(",");
 //			System.out.println("Tag: " + tagss.getKey()
 //					+ " with related tags: " + tagss.getValue());
 //		}
 		
-		
+		// Set the weights
+		for (Entry<String, String> tagss : tagsHash.entrySet()) {
+			String[] currentTags = tagss.getValue().split(","); // split tags
+			
+			for (int j = 1; j < currentTags.length; j++) {
+				//Cursor weights = db.rawQuery("SELECT * FROM posts WHERE CHARINDEX(?,tags)", new String[]{tagss.getKey()});
+				
+				int weight = getWeight(tagss.getKey(), currentTags[j], listOfTags);
+				//System.out.println("Tag " + tagss.getKey() + " has weight " + weight + " with related tag " + currentTags[j]);
+					
+				db.execSQL("INSERT INTO imp VALUES (?,?,?)", new String[] {
+						tagss.getKey(), currentTags[j],  Integer.toString(weight)});
+				System.out.println("Inserted imp in db");
+				}
 
+			
+		}
+
+		
+		
 
 		int j = 1;
 		for (Entry<String, String> tagss : tagsHash.entrySet()) {
@@ -175,12 +195,29 @@ public class DatabaseHandlerTagDB {
 
 		 Cursor t = db.rawQuery("SELECT * from tags", null);
 		 System.out.println("Database tags size: " + t.getCount());
+		 t.close();
+		 Cursor tt = db.rawQuery("SELECT * from imp", null);
+		 System.out.println("Database imp size: " + tt.getCount());
+		 tt.close();
 
 		System.out.println("Created tags DB!!");
 
 		// DatabaseLoaderTagDB.copyDBToSDCard();
 
 	//	db.close();
+	}
+	
+	private static int getWeight(String currentTag, String relatedTag, ArrayList<String> tags){
+		int weight = 0;
+		for (int j = 0; j < tags.size(); j++) {
+				//Cursor weights = db.rawQuery("SELECT * FROM posts WHERE CHARINDEX(?,tags)", new String[]{tagss.getKey()});
+				
+				if (tags.get(j).contains(currentTag) && tags.get(j).contains(relatedTag))
+					weight++;
+				
+				
+				}
+		return weight;
 	}
 
 	private static String buildRelatedTags(String[] array, String currentTag) {

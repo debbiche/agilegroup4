@@ -127,11 +127,6 @@ public class DatabaseHandlerTagDB {
 		HashMap<String, String> dupTagsHash = new HashMap<String, String>();
 
 		
-		//tagsHash.put("android", "<android-sdk><android-java><android-sqlite>");
-		
-	//	listOfTags.clear();
-	//	listOfTags.add("<android><android-sdk><android-java><android-sqlite>");
-		
 		for (int i = 0; i < listOfTags.size(); i++) { // Main loop
 			String[] currentTags = listOfTags.get(i).split(">"); // split tags
 			
@@ -177,10 +172,6 @@ public class DatabaseHandlerTagDB {
 			j++;
 		}
 
-//		for (Entry<String, String> tagss : tagsHash.entrySet()) {
-//			System.out.println("Tag: " + tagss.getKey()
-//					+ " with related tags: " + tagss.getValue());
-//		}
 
 		 Cursor t = db.rawQuery("SELECT * from tags", null);
 		 System.out.println("Database tags size: " + t.getCount());
@@ -192,23 +183,6 @@ public class DatabaseHandlerTagDB {
 	//	db.close();
 	}
 
-	private static String buildRelatedTags2(String[] array) {
-		String relatedTags = "";
-		// int total = 0;
-		// if (array.length > 10 ) total = 10;
-		// else total = array.length;
-		for (int i = 1; i < array.length; i++) {
-//			/array[i] = array[i].substring(1);
-			if (i != 1) { // if used to avoid having ',' in front of the first element
-				relatedTags = relatedTags.concat(",");
-				relatedTags = relatedTags.concat(array[i]);
-			} else
-				relatedTags = relatedTags.concat(array[i]);
-
-		}
-		return relatedTags;
-	}
-
 	private static String buildRelatedTags(String[] array, String currentTag) {
 		String relatedTags = "";
 		int total = 0;
@@ -216,10 +190,7 @@ public class DatabaseHandlerTagDB {
 //			total = 10;
 //		else
 			total = array.length;
-		
-		
-		
-		
+	
 		
 		for (int i = 0; i < total; i++) {
 			//array[i] = array[i].substring(1);

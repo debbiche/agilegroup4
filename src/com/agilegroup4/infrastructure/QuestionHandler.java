@@ -81,12 +81,13 @@ public class QuestionHandler extends DatabaseHandler {
 			
 		String searchTermLike = "%" + searchTerm + "%";
 		tag = "%" + tag + "%";
-		String rawQuery = "SELECT * FROM posts " +
-									 "WHERE post_type_id = 1 " +
-									 "AND ( ( body LIKE ? " +
-									 "OR title LIKE ? )" + 
-									 "AND tags LIKE ? )" + 
-									 "ORDER BY title LIMIT ?";
+		String rawQuery = "SELECT id, title, body, comment_count, creation_date,  score, view_count, favorite_count, tags " +
+				"FROM posts " +
+				"WHERE post_type_id = 1 " +
+				"AND ( ( body LIKE ? " +
+				"OR title LIKE ? ) " +
+				"AND tags LIKE ? ) " +
+				"ORDER BY title LIMIT ?";
 		Cursor cursorQuestions = db.rawQuery(rawQuery,
 				new String[] { searchTermLike, searchTermLike, tag, Integer.toString(numberOfQuestions) });
 		return parseQuestions(cursorQuestions);
@@ -104,14 +105,14 @@ public class QuestionHandler extends DatabaseHandler {
 		while (cursor.isAfterLast() == false) {
 
 			questions.add(new Question(cursor.getInt(0),	// id
-									   cursor.getString(15), // title
-									   cursor.getString(7),	// body
-									   cursor.getInt(18),	// comment count
+									   cursor.getString(1), // title
+									   cursor.getString(2),	// body
+									   cursor.getInt(3),	// comment count
 									   StringUtility.stringToDate(cursor.getString(4)), // convert to date
 									   cursor.getInt(5), 	// score
 									   cursor.getInt(6), 	// view count
-									   cursor.getInt(19),	// favorite count
- 									   cursor.getString(16))); //get tags
+									   cursor.getInt(7),	// favorite count
+ 									   cursor.getString(8))); //get tags
 
 			cursor.moveToNext();
 		}

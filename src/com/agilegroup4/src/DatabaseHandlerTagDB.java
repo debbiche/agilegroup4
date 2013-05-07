@@ -12,7 +12,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * Handles all DB access on tag db...
+ * Handles all DB access on tag database.
  */
 public class DatabaseHandlerTagDB {
 	public static int loaded = 0;
@@ -24,8 +24,7 @@ public class DatabaseHandlerTagDB {
 	}
 
 	/**
-	 * 
-	 * 
+	 * initialize the database
 	 */
 	public static void initDB(Context context) {
 		try {
@@ -39,15 +38,18 @@ public class DatabaseHandlerTagDB {
 	}
 
 	/**
-	 *
-	 *
+	 * queries all tags from the tag database.
+	 * @param numberOfQuestions limits the resulting query
+	 * @return ArrayList
 	 */
 	public static ArrayList<Tag> queryTags(int numberOfQuestions) {
 		String[] para = new String[] { Integer.toString(numberOfQuestions) };
 
-		String rawQuery = "SELECT * FROM tags " + "ORDER BY tag LIMIT ?";
-		Cursor cursorQuestions = db.rawQuery(rawQuery, para);
-
+		
+		String rawQuery = "SELECT * FROM tags " +
+				"ORDER BY tag";
+		Cursor cursorQuestions = db.rawQuery(rawQuery, null);
+		
 		return parseTags(cursorQuestions);
 	}
 
@@ -121,64 +123,49 @@ public class DatabaseHandlerTagDB {
 		curUserID.close();
 		// delete above until comment
 
-		for (int i = 0; i < listOfTags.size(); i++) {
-			String[] currentTags = listOfTags.get(i).split(">");
-			currentTags[0] = currentTags[0].substring(1); // remove the '<'
-			if (tagsHash.get(currentTags[0]) == null) {
-				tagsHash.put(currentTags[0], buildRelatedTags(currentTags));
-			} else {
-				String relatedAndroid = tagsHash.get(currentTags[0]).concat(
-						buildRelatedTags(currentTags));
-				tagsHash.remove(tagsHash.get(currentTags[0]));
-				tagsHash.put(currentTags[0], relatedAndroid);
-				System.out.println("Added primary tag: " + currentTags[0]
-						+ " with related tags: " + relatedAndroid);
+		
+		HashMap<String, String> dupTagsHash = new HashMap<String, String>();
 
+		
+		//tagsHash.put("android", "<android-sdk><android-java><android-sqlite>");
+		
+	//	listOfTags.clear();
+	//	listOfTags.add("<android><android-sdk><android-java><android-sqlite>");
+		
+		for (int i = 0; i < listOfTags.size(); i++) { // Main loop
+			String[] currentTags = listOfTags.get(i).split(">"); // split tags
+			
+			for (int k = 0; k < currentTags.length; k++) {
+				currentTags[k] = currentTags[k].substring(1);
 			}
-		}
+			
+			for (int j = 0; j < currentTags.length; j++) {
+				//currentTags[j] = currentTags[j].substring(1); // remove the '<'
+				
+				if (tagsHash.get(currentTags[j]) == null) { // tag hasn't been inserted before
+					tagsHash.put(currentTags[j], buildRelatedTags(currentTags, currentTags[j]));
 
-		
-		for (Entry<String, String> tagss : tagsHash.entrySet()) {
-			String[] tagsss = tagss.getValue().split(",");
-			System.out.println("Tag: " + tagss.getKey()
-					+ " with related tags: " + tagsss.length);
-		}
-		
-		
-		HashMap<String, String> tagsHash2 = new HashMap<String, String>();
+					} else
+						dupTagsHash.put(currentTags[j], buildRelatedTags(currentTags, currentTags[j]));
 
-		// Create the secondary tags
-		for (Entry<String, String> tagss : tagsHash.entrySet()) {
-			String[] currentTags = tagss.getValue().split(",");
-			// System.err.println("tags size: " + currentTags.length);
-			int total = 0;
-			String current = currentTags[0];
-			if (currentTags.length > 10)
-				total = 10;
-			else
-				total = currentTags.length;
-
-			for (int i = 1; i < total; i++) {
-				if (!tagsHash.containsKey(current)) {
-					// currentTags[i] = currentTags[i].substring(1);
-					if (!(i == currentTags.length - 1)) {
-						String related = buildRelatedTags2(currentTags);
-						tagsHash2.put(current, related);
-						System.out.println("Added sec tag: " + current
-								+ " with related tags: " + related);
-					}
+				
+				
 				}
+		} // end main loop
+		
+		
+		System.out.println("Size of tags hash: " + tagsHash.size());
+		System.out.println("Size of duplicate tags hash: " + dupTagsHash.size());
 
-			}
-			// System.out.println("Looped!");
-		}
-		System.out.println("Size of tags hash2:" + tagsHash2.size());
+		
+//		for (Entry<String, String> tagss : tagsHash.entrySet()) {
+//			String[] tagsss = tagss.getValue().split(",");
+//			System.out.println("Tag: " + tagss.getKey()
+//					+ " with related tags: " + tagss.getValue());
+//		}
+		
+		
 
-		System.out.println("Hash tags before merging: " + tagsHash.size());
-		tagsHash.putAll(tagsHash2);
-		System.out.println("Hash tags after merging: " + tagsHash.size());
-
-		//
 
 		int j = 1;
 		for (Entry<String, String> tagss : tagsHash.entrySet()) {
@@ -195,14 +182,14 @@ public class DatabaseHandlerTagDB {
 //					+ " with related tags: " + tagss.getValue());
 //		}
 
-		// Cursor t = db.rawQuery("SELECT * from tags", null);
-		// System.out.println("Database tags size: " + t.getCount());
+		 Cursor t = db.rawQuery("SELECT * from tags", null);
+		 System.out.println("Database tags size: " + t.getCount());
 
 		System.out.println("Created tags DB!!");
 
 		// DatabaseLoaderTagDB.copyDBToSDCard();
 
-		// db.close();
+	//	db.close();
 	}
 
 	private static String buildRelatedTags2(String[] array) {
@@ -211,7 +198,7 @@ public class DatabaseHandlerTagDB {
 		// if (array.length > 10 ) total = 10;
 		// else total = array.length;
 		for (int i = 1; i < array.length; i++) {
-			array[i] = array[i].substring(1);
+//			/array[i] = array[i].substring(1);
 			if (i != 1) { // if used to avoid having ',' in front of the first element
 				relatedTags = relatedTags.concat(",");
 				relatedTags = relatedTags.concat(array[i]);
@@ -222,21 +209,29 @@ public class DatabaseHandlerTagDB {
 		return relatedTags;
 	}
 
-	private static String buildRelatedTags(String[] array) {
+	private static String buildRelatedTags(String[] array, String currentTag) {
 		String relatedTags = "";
 		int total = 0;
-		if (array.length > 10)
-			total = 10;
-		else
+//		if (array.length > 10)
+//			total = 10;
+//		else
 			total = array.length;
-		for (int i = 1; i < total; i++) {
-			array[i] = array[i].substring(1);
-			if (i != 1) {
+		
+		
+		
+		
+		
+		for (int i = 0; i < total; i++) {
+			//array[i] = array[i].substring(1);
+		if (!array[i].equals(currentTag)) {
+			//array[i] = array[i].substring(1);
+			if (i != 0 ) {
+				
 				relatedTags = relatedTags.concat(",");
 				relatedTags = relatedTags.concat(array[i]);
 			} else
 				relatedTags = relatedTags.concat(array[i]);
-
+		}
 		}
 		return relatedTags;
 	}

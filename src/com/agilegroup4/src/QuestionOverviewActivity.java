@@ -236,7 +236,7 @@ public class QuestionOverviewActivity extends Activity {
 		// create toast for sorting info (see CR02)
 		Context context = getApplicationContext();
 		CharSequence text = "Sorting questions by creation date.";
-		int duration = Toast.LENGTH_SHORT;
+		int duration = Toast.LENGTH_LONG;
 
 		Toast.makeText(context, text, duration).show();		
 		
@@ -256,7 +256,7 @@ public class QuestionOverviewActivity extends Activity {
 		// create toast for sorting info (see CR02)
 		Context context = getApplicationContext();
 		CharSequence text = "Sorting questions by score, view count and favorite count.";
-		int duration = Toast.LENGTH_SHORT;
+		int duration = Toast.LENGTH_LONG;
 
 		Toast.makeText(context, text, duration).show();
 		

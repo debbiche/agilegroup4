@@ -5,10 +5,33 @@ import java.util.ArrayList;
 public class TagList extends ArrayList<Tag> {
 	
 	private int MAX_NR_OF_COMBINATIONS = 4;
+	private ArrayList<Tag> _allTags;
 	
-	public TagList(){
-		
+	public TagList(ArrayList<Tag> allTags){
+		_allTags = allTags;
 	}
+	
+	/**
+	 * @return next tag in order
+	 */
+	public Tag getNext(){
+		int returnPos = _allTags.indexOf(this.get(0));
+		if (returnPos == _allTags.size()-1)
+			return null;
+		return _allTags.get(returnPos + 1);
+	}
+	
+	/**
+	 * @return previous tag in order
+	 */
+	public Tag getPrevious(){
+		int returnPos = _allTags.indexOf(this.get(0));
+		if (returnPos == 0)
+			return null;
+		return _allTags.get(returnPos - 1);
+	}
+	
+	
 	
 	/*
 	 * (non-Javadoc)

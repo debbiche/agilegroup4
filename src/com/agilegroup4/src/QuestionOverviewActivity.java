@@ -119,7 +119,13 @@ public class QuestionOverviewActivity extends Activity {
 		// HashMap for connecting question id with position in the list for the question
 		final HashMap<Integer,Question> ids = new HashMap<Integer,Question>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
-		for (int i = 0; i < NR_OF_POSTS; i++) {
+		int questionCount = NR_OF_POSTS;
+		
+		if (questions.size() < NR_OF_POSTS){
+			questionCount = questions.size();
+		}
+		
+		for (int i = 0; i < questionCount; i++) {
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put(KEY_TITLE, questions.get(i).getTitle());
             map.put(KEY_TAGS, "Tags: " + questions.get(i).getTags());

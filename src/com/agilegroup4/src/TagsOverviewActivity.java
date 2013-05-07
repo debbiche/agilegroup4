@@ -70,7 +70,7 @@ public class TagsOverviewActivity extends Activity {
 		//tags = createTestTags();
 		tags = DatabaseHandlerTagDB.queryTags(680);
 				
-		mainTags.add(tags.get(0));
+		//mainTags.add(tags.get(0));
 		
 		if (tags.size() > 0) {
 			center = tags.get(0).getTagName();

@@ -61,6 +61,16 @@ public class Tag {
 	}
 	
 	/*
+	 * Gets the related tags.
+	 * @param n the max number of tags returned
+	 * @returns Related tags.
+	 */
+	public ArrayList<String> getRelatedTags(int n) {
+		int nrToFetch = n < relatedTags.size() ? relatedTags.size() : n;
+		return (ArrayList<String>) relatedTags.subList(0, nrToFetch-1);
+	}
+	
+	/*
 	 * Adds related tags.
 	 * @param tag Related tag.
 	 */

@@ -71,19 +71,25 @@ public class QuestionHandler extends DatabaseHandler {
 	 * @param numberOfQuestions The maximum number of questions you want back.
 	 * @param tag The tag you want to match when searching questions.
 	 * @return A list of questions matching your search term and provided tag.
+	 * 
+	 * id,title,body,comment_count,creation_date," +
+	 *								 "score,view_count,favorite_count,tags
 	 */
 	public static QuestionList searchForQuestionsByTag(String searchTerm, String tag, int numberOfQuestions) {
 		if(searchTerm.length() < 2)
 			return new QuestionList();
 			
 		String searchTermLike = "%" + searchTerm + "%";
-		String rawQuery = baseQuestionRawQuery + " WHERE question LIKE ? " +
-				"OR answer LIKE ? " +
-				"OR R.title LIKE ? " + 
-				"AND taggy = ? " + 
-				"ORDER BY R.title LIMIT ?";
+		tag = "%" + tag + "%";
+		String rawQuery = "SELECT id, title, body, comment_count, creation_date,  score, view_count, favorite_count, tags " +
+				"FROM posts " +
+				"WHERE post_type_id = 1 " +
+				"AND ( ( body LIKE ? " +
+				"OR title LIKE ? ) " +
+				"AND tags LIKE ? ) " +
+				"ORDER BY title LIMIT ?";
 		Cursor cursorQuestions = db.rawQuery(rawQuery,
-				new String[] { searchTermLike, searchTermLike, searchTermLike, tag, Integer.toString(numberOfQuestions) });
+				new String[] { searchTermLike, searchTermLike, tag, Integer.toString(numberOfQuestions) });
 		return parseQuestions(cursorQuestions);
 	}
 
@@ -95,36 +101,112 @@ public class QuestionHandler extends DatabaseHandler {
 	protected static QuestionList parseQuestions(Cursor cursor) {
 		QuestionList questions = new QuestionList();
 		cursor.moveToFirst();
-		int questionCounter = 0;
 
 		while (cursor.isAfterLast() == false) {
 
-			questions.add(new Question(cursor.getInt(0),
-									   cursor.getString(1), 
-									   cursor.getString(2),
-									   cursor.getInt(6),
-									   StringUtility.stringToDate(cursor.getString(9)), // convert to date
-									   cursor.getInt(10), // score
-									   cursor.getInt(11), // view count
-									   cursor.getInt(12),
-									   cursor.getString(13))); //get tags
-
-			questions.get(questionCounter);
-			for (int i = 0; i < cursor.getInt(4) - 1; i++) {
-				questions
-						.get(questionCounter)
-						.getAnswers()
-						.add(new Answer(cursor.getInt(7),
-								cursor.getString(3), cursor.getInt(8)));
-				cursor.moveToNext();
-
-			}
+			questions.add(new Question(cursor.getInt(0),	// id
+									   cursor.getString(1), // title
+									   cursor.getString(2),	// body
+									   cursor.getInt(3),	// comment count
+									   StringUtility.stringToDate(cursor.getString(4)), // convert to date
+									   cursor.getInt(5), 	// score
+									   cursor.getInt(6), 	// view count
+									   cursor.getInt(7),	// favorite count
+ 									   cursor.getString(8))); //get tags
 
 			cursor.moveToNext();
-			questionCounter++;
 		}
 		cursor.close();
 		return questions;
 	}
+	
+	// TODO: remove the following stuff if search feature works :)
+	
+//	/*
+//	 * Returns a list of question that matches the searchTerm. 
+//	 * Answer body, Question body and Title will be searched. 
+//	 * You can limit the amount of questions by providing a number to numberOfQuestions
+//	 * @param searchTerm The search term you want to search for. At least 2 chars needed.
+//	 * @param numberOfQuestions The maximum number of questions you want back.
+//	 * @return A list of questions matching your search term.
+//	 */
+//	public static QuestionList searchForQuestions(String searchTerm, int numberOfQuestions) {
+//		if(searchTerm.length() < 2)
+//			return new QuestionList();
+//			
+//		String searchTermLike = "%" + searchTerm + "%";
+//		String rawQuery = baseQuestionRawQuery + " WHERE question LIKE ? " +
+//				"OR answer LIKE ? " +
+//				"OR R.title LIKE ? " + 
+//				"ORDER BY R.title LIMIT ?";
+//		Cursor cursorQuestions = db.rawQuery(rawQuery,
+//				new String[] { searchTermLike, searchTermLike, searchTermLike, Integer.toString(numberOfQuestions) });
+//		return parseQuestions(cursorQuestions);
+//	}
+//	
+//	/*
+//	 * Returns a list of question that matches the searchTerm with added tag filter. 
+//	 * Answer body, Question body and Title and Tags will be searched. 
+//	 * You can limit the amount of questions by providing a number to numberOfQuestions
+//	 * @param searchTerm The search term you want to search for. At least 2 chars needed.
+//	 * @param numberOfQuestions The maximum number of questions you want back.
+//	 * @param tag The tag you want to match when searching questions.
+//	 * @return A list of questions matching your search term and provided tag.
+//	 */
+//	public static QuestionList searchForQuestionsByTag(String searchTerm, String tag, int numberOfQuestions) {
+//		if(searchTerm.length() < 2)
+//			return new QuestionList();
+//			
+//		String searchTermLike = "%" + searchTerm + "%";
+//		String rawQuery = baseQuestionRawQuery + " WHERE question LIKE ? " +
+//				"OR answer LIKE ? " +
+//				"OR R.title LIKE ? " + 
+//				"AND taggy = ? " + 
+//				"ORDER BY R.title LIMIT ?";
+//		Cursor cursorQuestions = db.rawQuery(rawQuery,
+//				new String[] { searchTermLike, searchTermLike, searchTermLike, tag, Integer.toString(numberOfQuestions) });
+//		return parseQuestions(cursorQuestions);
+//	}
+//
+//	/*
+//	 * Parses a query result to questions and answers.
+//	 * @param cursor A SQLLite database cursor to step through the results.
+//	 * @returns A list of questions.
+//	 */
+//	protected static QuestionList parseQuestions(Cursor cursor) {
+//		QuestionList questions = new QuestionList();
+//		cursor.moveToFirst();
+//		int questionCounter = 0;
+//
+//		while (cursor.isAfterLast() == false) {
+//
+//			questions.add(new Question(cursor.getInt(0),
+//									   cursor.getString(1), 
+//									   cursor.getString(2),
+//									   cursor.getInt(6),
+//									   StringUtility.stringToDate(cursor.getString(9)), // convert to date
+//									   cursor.getInt(10), // score
+//									   cursor.getInt(11), // view count
+//									   cursor.getInt(12),
+//									   cursor.getString(13))); //get tags
+//
+//			questions.get(questionCounter);
+//			System.out.println(cursor.getInt(4));
+//			for (int i = 0; i < cursor.getInt(4) - 1; i++) {
+//				questions
+//						.get(questionCounter)
+//						.getAnswers()
+//						.add(new Answer(cursor.getInt(7),
+//								cursor.getString(3), cursor.getInt(8)));
+//				cursor.moveToNext();
+//
+//			}
+//
+//			cursor.moveToNext();
+//			questionCounter++;
+//		}
+//		cursor.close();
+//		return questions;
+//	}
 
 }

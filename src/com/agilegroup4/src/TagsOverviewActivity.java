@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.agilegroup4.model.SearchMode;
 import com.agilegroup4.model.Tag;
+import com.agilegroup4.model.TagList;
 
 public class TagsOverviewActivity extends Activity {
 	
@@ -42,6 +43,8 @@ public class TagsOverviewActivity extends Activity {
 	private Button buttonSix;
 	private Button buttonSeven;
 	
+	private TagList mainTags;
+	
 	public static final int DURATION = 250;
 
 	/*
@@ -67,6 +70,7 @@ public class TagsOverviewActivity extends Activity {
 		//tags = createTestTags();
 		tags = DatabaseHandlerTagDB.queryTags(680);
 				
+		//mainTags.add(tags.get(0));
 		
 		if (tags.size() > 0) {
 			center = tags.get(0).getTagName();

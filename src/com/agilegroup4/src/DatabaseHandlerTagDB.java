@@ -45,8 +45,6 @@ public class DatabaseHandlerTagDB {
 	 * @return ArrayList
 	 */
 	public static ArrayList<Tag> queryTags(int numberOfQuestions) {
-		String[] para = new String[] { Integer.toString(numberOfQuestions) };
-
 		
 		String rawQuery = "SELECT * FROM tags " +
 				"ORDER BY tag";

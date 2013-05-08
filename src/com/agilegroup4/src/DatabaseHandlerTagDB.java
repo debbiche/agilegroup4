@@ -18,7 +18,7 @@ public class DatabaseHandlerTagDB {
 	public static int loaded = 0;
 	protected static DatabaseLoaderTagDB dbLoader;
 	protected static SQLiteDatabase db;
-	public static int createTagsDB = 0;
+	public static int createTagsDB = 1;
 	
 	
 	public DatabaseHandlerTagDB(Context context) {
@@ -91,7 +91,8 @@ public class DatabaseHandlerTagDB {
 		String[] relatedTagsArray = relatedTags.split(",");
 
 		for (int i = 0; i < relatedTagsArray.length; i++) {
-			tag.addRelatedTag(relatedTagsArray[i]);
+			if (!relatedTagsArray[i].equals(""))
+				tag.addRelatedTag(relatedTagsArray[i]);
 		}
 
 		return;
@@ -138,9 +139,9 @@ public class DatabaseHandlerTagDB {
 			
 			for (int j = 0; j < currentTags.length; j++) {
 				//currentTags[j] = currentTags[j].substring(1); // remove the '<'
-				
-				if (tagsHash.get(currentTags[j]) == null) { // tag hasn't been inserted before
-					tagsHash.put(currentTags[j], buildRelatedTags(currentTags, currentTags[j]));
+				String relatedTags = buildRelatedTags(currentTags, currentTags[j]);
+				if (tagsHash.get(currentTags[j]) == null && !(relatedTags.equals(""))) { // tag hasn't been inserted before
+					tagsHash.put(currentTags[j], relatedTags);
 
 					} else
 						dupTagsHash.put(currentTags[j], buildRelatedTags(currentTags, currentTags[j]));
@@ -173,26 +174,33 @@ public class DatabaseHandlerTagDB {
 					
 				db.execSQL("INSERT INTO imp VALUES (?,?,?)", new String[] {
 						tagss.getKey(), currentTags[j],  Integer.toString(weight)});
-				System.out.println("Inserted imp in db");
+			//	System.out.println("Inserted imp in db");
 				}
 
 			
 		}
 
-		
+		System.out.println("Size of tags hash after making weights: " + tagsHash.size());
+		System.out.println("Size of duplicate tags hash after weights: " + dupTagsHash.size());
+
 		
 
 		int j = 1;
 		for (Entry<String, String> tagss : tagsHash.entrySet()) {
 			// System.out.println("Tag: " + tagss.getKey() +
 			// " with related tags: " + tagss.getValue());
+			
+			//System.out.println("Inserting: " + tagss.getValue());
+			
+			
 			db.execSQL("INSERT INTO tags VALUES (?,?,?)", new String[] {
 					Integer.toString(j), tagss.getKey(), tagss.getValue() });
 			// t.close();
 			j++;
 		}
 
-
+		System.out.println("J is:" + j);
+//
 		 Cursor t = db.rawQuery("SELECT * from tags", null);
 		 System.out.println("Database tags size: " + t.getCount());
 		 t.close();
@@ -229,18 +237,33 @@ public class DatabaseHandlerTagDB {
 			total = array.length;
 	
 		
-		for (int i = 0; i < total; i++) {
+//		if (!array[0].equals(currentTag))
+//			relatedTags = relatedTags.concat(array[0]);
+//		
+		
+		for (int i = 1; i < total; i++) {
 			//array[i] = array[i].substring(1);
 		if (!array[i].equals(currentTag)) {
 			//array[i] = array[i].substring(1);
-			if (i != 0 ) {
+			if (i != 1 ) {
 				
 				relatedTags = relatedTags.concat(",");
 				relatedTags = relatedTags.concat(array[i]);
 			} else
 				relatedTags = relatedTags.concat(array[i]);
 		}
+		
+		
 		}
+		
+		
+		if (relatedTags.startsWith(",")) {
+			//
+			relatedTags = relatedTags.substring(1);
+			//System.out.println(relatedTags);
+		}
+		
+		
 		return relatedTags;
 	}
 }

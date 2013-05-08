@@ -18,7 +18,7 @@ public class DatabaseHandlerTagDB {
 	public static int loaded = 0;
 	protected static DatabaseLoaderTagDB dbLoader;
 	protected static SQLiteDatabase db;
-	public static int createTagsDB = 1;
+	public static int createTagsDB = 0;
 	
 	
 	public DatabaseHandlerTagDB(Context context) {

@@ -84,15 +84,16 @@ public class SearchableActivity extends ListActivity {
 	 * @param query The search query.
 	 * @param tag The tag
 	 */
-	private void searchQuestionByTags(String query, String tag) { 
+	private void searchQuestionByTags(String query, /*TODO fix proper ArrayList<Tag> argument*/String tag) { 
 		
 		if (query.equals("0"))
 			query = "";
 		
+		//TODO Remove this placeholder ArrayList with an ArrayList as an argument
 		ArrayList<Tag> LISTOMG = new ArrayList<Tag>();
 		LISTOMG.add(new Tag(1, tag));
 		
-		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag(query, /*tag*/ LISTOMG, 60);
+		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag(query, /*TODO Fix this list*/LISTOMG, 60);
 		//Creates a bundle and parce the the search result QuestionList
 		Bundle b = new Bundle();
         b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object

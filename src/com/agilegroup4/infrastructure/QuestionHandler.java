@@ -80,57 +80,29 @@ public class QuestionHandler extends DatabaseHandler {
 	 *								 "score,view_count,favorite_count,tags
 	 */
 	public static QuestionList searchForQuestionsByTag(String searchTerm, ArrayList<Tag> tagList, int numberOfQuestions) {
-		if(searchTerm.length() < 2)
-			return new QuestionList();
-		
+		// Create the query string that will be used in the rawQuery
+		// Add the first 'final' parts to the string
 		String rawQuery = "SELECT id, title, body, comment_count, creation_date,  score, view_count, favorite_count, tags " +
 				"FROM posts " +
 				"WHERE post_type_id = 1";
 		
-		
-		String searchTermLike = "%" + searchTerm + "%";
-		
-
+		// Add the free text part
+		String searchTermLike = "\"%" + searchTerm + "%\"";
 		rawQuery += " AND ( ( body LIKE " + searchTermLike +
 				" OR title LIKE " + searchTermLike + " ) ";
 		
+		// Add the tags part
 		String tagSearchTerm;
-		tagSearchTerm = "tags LIKE %" + tagList.get(0).getTagName() + "%";
+		tagSearchTerm = "tags LIKE \"%" + tagList.get(0).getTagName() + "%\"";
 		for(int i = 1; i < tagList.size(); i++)
-			tagSearchTerm += " AND tags LIKE %" + tagList.get(i).getTagName() + "%";
+			tagSearchTerm += " AND tags LIKE \"%" + tagList.get(i).getTagName() + "%\"";
+		rawQuery += " AND ( " + tagSearchTerm + " ) )";
 		
-		rawQuery += " AND ( " + tagSearchTerm + " ) ) " +
-				"ORDER BY title LIMIT " + Integer.toString(numberOfQuestions);
+		// Add the limit part
+		rawQuery += " ORDER BY title LIMIT " + Integer.toString(numberOfQuestions);
 		
-		System.out.println(rawQuery);
-
-
-		/*//COOOOOODE 11111111111
-		String[] queryValues = new String[7];
-		queryValues[0] = searchTermLike;
-		queryValues[1] = searchTermLike;
-		queryValues[6] = Integer.toString(numberOfQuestions);
-		// Start by emptying the tag spaces
-		queryValues[2] = "%%";
-		queryValues[3] = "%%";
-		queryValues[4] = "%%";
-		queryValues[5] = "%%";
-		// Fill the tag spaces for as many tags we are searching for
-		System.out.println(tagList.size());
-		for(int i = 0; i < tagList.size(); i++) {
-			queryValues[i+2] = "%" + tagList.get(i).getTagName() + "%";
-		}
-		*/
-		
-//		String rawQuery = "SELECT id, title, body, comment_count, creation_date,  score, view_count, favorite_count, tags " +
-//				"FROM posts " +
-//				"WHERE post_type_id = 1 " +
-//				"AND ( ( body LIKE ? " +
-//				"OR title LIKE ? ) " +
-//				"AND (tags LIKE ? AND tags LIKE ? AND tags LIKE ? AND tags LIKE ?) ) " +
-//				"ORDER BY title LIMIT ?";
-		Cursor cursorQuestions = db.rawQuery(rawQuery, new String[]{}/*queryValues/*
-				new String[] { searchTermLike, searchTermLike, Integer.toString(numberOfQuestions) }*/);
+		// Run the query
+		Cursor cursorQuestions = db.rawQuery(rawQuery, null);
 		return parseQuestions(cursorQuestions);
 	}
 

@@ -137,13 +137,11 @@ public class QuestionActivity extends Activity {
 		body.setText(StringUtility.convertHTMLtoString(question.getBody()));
 		title.setTypeface(null,Typeface.BOLD);
 		
-		if (hasComment(question)) {
-			int com = question.getCommentCount();
-			String buttontext = " comments";
-			if (com == 1)
-				buttontext = " comment";
-			commenttext.setText(com + buttontext);
-		}
+		int com = question.getCommentCount();
+		String buttontext = " comments";
+		if (com == 1)
+			buttontext = " comment";
+		commenttext.setText(com + buttontext);
 		
 		int ans = answers.size();
 		String answertext = " answers";

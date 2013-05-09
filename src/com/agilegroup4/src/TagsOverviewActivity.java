@@ -137,8 +137,8 @@ public class TagsOverviewActivity extends Activity {
 	 * @param tagName the tag that is to be added.
 	 */
 	private void addCombinedTag(String tagName){
-		mainTags.add(getTagByName(tagName));
-		updateButton(4,mainTags.toString());
+		if(mainTags.add(getTagByName(tagName)))
+			updateButton(4,mainTags.toString());
 	}
 	
 	/*

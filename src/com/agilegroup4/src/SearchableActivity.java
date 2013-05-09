@@ -18,7 +18,8 @@ import com.agilegroup4.model.Tag;
 public class SearchableActivity extends ListActivity {
 
 	public static SearchMode SearchMode;
-
+	public static final int NUMBER_OF_ALLOWED_QUESTIONS = 1000;
+	
 	/*
      * The "constructor" for this activity
      * @param instanceState The instance state.
@@ -68,7 +69,7 @@ public class SearchableActivity extends ListActivity {
 	 * @param query The search query.
 	 */
 	private void searchQuestionFreeText(String query) { 
-		QuestionList searchResultQuestions = QuestionHandler.searchForQuestions(query, 60);
+		QuestionList searchResultQuestions = QuestionHandler.searchForQuestions(query, NUMBER_OF_ALLOWED_QUESTIONS);
 		//Creates a bundle and parce the the search result QuestionList
 		Bundle b = new Bundle();
         b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object
@@ -89,11 +90,7 @@ public class SearchableActivity extends ListActivity {
 		if (query.equals("0"))
 			query = "";
 		
-		//TODO Remove this placeholder ArrayList with an ArrayList as an argument
-//		ArrayList<Tag> LISTOMG = new ArrayList<Tag>();
-//		LISTOMG.add(new Tag(1, tag));
-		
-		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag(query, tags, 60);
+		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag(query, tags, NUMBER_OF_ALLOWED_QUESTIONS);
 		//Creates a bundle and parce the the search result QuestionList
 		Bundle b = new Bundle();
         b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object

@@ -13,6 +13,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
+import com.agilegroup4.infrastructure.QuestionHandler;
+import com.agilegroup4.model.QuestionList;
 import com.agilegroup4.model.SearchMode;
 import com.agilegroup4.model.Tag;
 import com.agilegroup4.model.TagList;
@@ -81,6 +83,7 @@ public class TagsOverviewActivity extends Activity {
 		
 		buttonOne.setOnLongClickListener(longClickListener);
 		buttonTwo.setOnLongClickListener(longClickListener);
+		buttonFour.setOnLongClickListener(longClickListener);
 		buttonSix.setOnLongClickListener(longClickListener);
 		buttonSeven.setOnLongClickListener(longClickListener);
 		
@@ -117,6 +120,9 @@ public class TagsOverviewActivity extends Activity {
 		case R.id.button2:
 			if(!mainTags.contains(getTagByName(topRight))) 
 				addCombinedTag(topRight);
+			break;
+		case R.id.button4:
+			onSearchRequestedTagsOnly();
 			break;
 		case R.id.button6:
 			if(!mainTags.contains(getTagByName(bottomLeft))) 
@@ -414,6 +420,17 @@ public class TagsOverviewActivity extends Activity {
 		tagQuery = (String) buttonFour.getText();
 		SearchableActivity.SearchMode = SearchMode.QUESTION_WITHTAGS;
 	    return super.onSearchRequested();
+	}
+	
+	private void onSearchRequestedTagsOnly() {
+		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag("", mainTags, SearchableActivity.NUMBER_OF_ALLOWED_QUESTIONS);
+		//Creates a bundle and parce the the search result QuestionList
+		Bundle b = new Bundle();
+        b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object
+		Intent intent = new Intent(this, QuestionOverviewActivity.class);
+		//Includes the bundle and parced search result into the intent for search activity.
+		intent.putExtras(b);
+		startActivity(intent);
 	}
 	
 	/*

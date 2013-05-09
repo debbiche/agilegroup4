@@ -117,7 +117,16 @@ public class MainMenuActivity extends Activity {
 				.setNegativeButton("Cancel", dialogClickListener).show();
 	}
 	
-	/*
+	/**
+	 * The return button at this screen shall always close the application(non-Javadoc)
+	 * @see android.app.Activity#onBackPressed()
+	 */
+	@Override
+	public void onBackPressed(){
+		finish();
+	}
+	
+	/**
 	 * Returns the current main menu activity object.
 	 */
 	private MainMenuActivity getThis(){

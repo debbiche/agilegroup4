@@ -1,10 +1,8 @@
 package com.agilegroup4.infrastructure;
 
 import java.util.ArrayList;
-
 import android.content.Context;
 import android.database.Cursor;
-
 import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.Question;
 import com.agilegroup4.model.QuestionList;
@@ -17,22 +15,22 @@ import com.agilegroup4.src.DatabaseHandler;
 public class QuestionHandler extends DatabaseHandler {
 
 	//Holds the base query for relating questions and answers.
-	protected static String baseQuestionRawQuery = "SELECT R.id AS id, " +
-			"R.title AS title, " +
-			"R.body AS question, "  +
-			"D.body AS answer, " +
-			"R.answer_count, " +
-			"D.parent_id AS parentid, " +
-			"R.comment_count, " +
-			"D.id AS answer_id, " +
-			"D.comment_count, " +
-			"R.creation_date, " + 
-			"R.score, " +
-			"R.view_count, " +
-			"R.favorite_count, " +
-			"R.tags AS taggy " +
-			"FROM posts R INNER JOIN posts D ON " +
-			"D.parent_id = R.id";
+//	protected static String baseQuestionRawQuery = "SELECT R.id AS id, " +
+//			"R.title AS title, " +
+//			"R.body AS question, "  +
+//			"D.body AS answer, " +
+//			"R.answer_count, " +
+//			"D.parent_id AS parentid, " +
+//			"R.comment_count, " +
+//			"D.id AS answer_id, " +
+//			"D.comment_count, " +
+//			"R.creation_date, " + 
+//			"R.score, " +
+//			"R.view_count, " +
+//			"R.favorite_count, " +
+//			"R.tags AS taggy " +
+//			"FROM posts R INNER JOIN posts D ON " +
+//			"D.parent_id = R.id";
 			
 	
 	/*

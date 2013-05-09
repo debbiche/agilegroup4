@@ -1,5 +1,7 @@
 package com.agilegroup4.src;
 
+import java.util.ArrayList;
+
 import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import com.agilegroup4.infrastructure.QuestionHandler;
 import com.agilegroup4.model.QuestionList;
 import com.agilegroup4.model.SearchMode;
+import com.agilegroup4.model.Tag;
 
 /*
  * The searchable activity handles all the search bar searches in this application.
@@ -86,7 +89,10 @@ public class SearchableActivity extends ListActivity {
 		if (query.equals("0"))
 			query = "";
 		
-		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag(query, tag, 60);
+		ArrayList<Tag> LISTOMG = new ArrayList<Tag>();
+		LISTOMG.add(new Tag(1, tag));
+		
+		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag(query, /*tag*/ LISTOMG, 60);
 		//Creates a bundle and parce the the search result QuestionList
 		Bundle b = new Bundle();
         b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object

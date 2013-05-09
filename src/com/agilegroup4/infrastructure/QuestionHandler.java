@@ -91,9 +91,9 @@ public class QuestionHandler extends DatabaseHandler {
 		
 		// Add the tags part
 		String tagSearchTerm;
-		tagSearchTerm = "tags LIKE \"%" + tagList.get(0).getTagName() + "%\"";
+		tagSearchTerm = "tags LIKE \"%<" + tagList.get(0).getTagName() + ">%\"";
 		for(int i = 1; i < tagList.size(); i++)
-			tagSearchTerm += " AND tags LIKE \"%" + tagList.get(i).getTagName() + "%\"";
+			tagSearchTerm += " AND tags LIKE \"%<" + tagList.get(i).getTagName() + ">%\"";
 		rawQuery += " AND ( " + tagSearchTerm + " ) )";
 		
 		// Add the limit part

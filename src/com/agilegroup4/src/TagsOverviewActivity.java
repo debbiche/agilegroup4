@@ -23,6 +23,8 @@ public class TagsOverviewActivity extends Activity {
 
 	public static String tagQuery ="";
 	
+	public static TagList mainTags;
+	
 	// Containing all the tags
 	private ArrayList<Tag> tags;
 	
@@ -43,8 +45,6 @@ public class TagsOverviewActivity extends Activity {
 	private Button buttonFive;
 	private Button buttonSix;
 	private Button buttonSeven;
-	
-	private TagList mainTags;
 	
 	private OnLongClickListener longClickListener;
 

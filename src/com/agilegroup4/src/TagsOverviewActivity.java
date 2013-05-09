@@ -352,7 +352,7 @@ public class TagsOverviewActivity extends Activity {
         	buttonThree.setText(tagName);
             break;
         case 4:
-        	buttonFour.setText(tagName);
+        	buttonFour.setText(tagName);        	
             break;
         case 5:
         	buttonFive.setText(tagName);

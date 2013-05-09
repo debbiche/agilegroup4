@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -45,7 +46,7 @@ public class TagsOverviewActivity extends Activity {
 	
 	private TagList mainTags;
 	
-	public static final int DURATION = 250;
+	private OnLongClickListener longClickListener;
 
 	/*
      * The "constructor" for this activity
@@ -67,23 +68,77 @@ public class TagsOverviewActivity extends Activity {
 		buttonSix = (Button) findViewById(R.id.button6);
 		buttonSeven = (Button) findViewById(R.id.button7);
 		
+		longClickListener = new OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View v) {
+				
+				handleTagOnLongClick(v);
+				
+				return true;
+			}
+		};
+		
+		buttonOne.setOnLongClickListener(longClickListener);
+		buttonTwo.setOnLongClickListener(longClickListener);
+		buttonSix.setOnLongClickListener(longClickListener);
+		buttonSeven.setOnLongClickListener(longClickListener);
+		
 		//tags = createTestTags();
 		tags = DatabaseHandlerTagDB.queryTags(680);
-				
-		//mainTags.add(tags.get(0));
+		
+		mainTags = new TagList(tags);
 		
 		if (tags.size() > 0) {
 			center = tags.get(0).getTagName();
 			updateButton(4,center);
+			mainTags.add(tags.get(0));
 			if (tags.size() > 1) {
 				right = tags.get(1).getTagName();
 				updateButton(5,right);
 			}
 		}
-				
+		
 		updateRelatedTags();
 		updateNextPrevTag();
 		
+	}
+	
+	/**
+	 * Invoked when long clicking a tag
+	 * @param view The view objekt invoking
+	 */
+	public void handleTagOnLongClick(View view){
+		switch (view.getId()) {
+		case R.id.button1:
+			if(!mainTags.contains(getTagByName(topLeft))) 
+				addCombinedTag(topLeft);
+			break;
+		case R.id.button2:
+			if(!mainTags.contains(getTagByName(topRight))) 
+				addCombinedTag(topRight);
+			break;
+		case R.id.button6:
+			if(!mainTags.contains(getTagByName(bottomLeft))) 
+				addCombinedTag(bottomLeft);
+			break;
+		case R.id.button7:
+			if(!mainTags.contains(getTagByName(bottomRight))) 
+				addCombinedTag(bottomRight);
+			break;
+		default:
+			break;
+		}
+		updateRelatedTags();
+	}
+	
+	/**
+	 * Invoked when tags should be combined
+	 * @param tagName the tag that is to be added.
+	 */
+	private void addCombinedTag(String tagName){
+		mainTags.add(getTagByName(tagName));
+		updateButton(4,mainTags.toString());
 	}
 	
 	/*
@@ -99,6 +154,7 @@ public class TagsOverviewActivity extends Activity {
 			
 			anim = AnimationUtils.loadAnimation(this, R.anim.button_one_anim);
 			buttonOne.startAnimation(anim);
+			clearMainTags(topLeft);
 			center = topLeft;
 			break;
 		case R.id.button2:
@@ -107,6 +163,7 @@ public class TagsOverviewActivity extends Activity {
 			
 			anim = AnimationUtils.loadAnimation(this, R.anim.button_two_anim);
 			buttonTwo.startAnimation(anim);
+			clearMainTags(topRight);
 			center = topRight;
 			break;
 		case R.id.button3:
@@ -117,6 +174,7 @@ public class TagsOverviewActivity extends Activity {
 			buttonThree.startAnimation(anim);
 			buttonFour.startAnimation(anim);
 			buttonFive.startAnimation(anim);
+			clearMainTags(left);
 			center = left;
 			break;
 		case R.id.button4:
@@ -130,6 +188,7 @@ public class TagsOverviewActivity extends Activity {
 			buttonThree.startAnimation(anim);
 			buttonFour.startAnimation(anim);
 			buttonFive.startAnimation(anim);
+			clearMainTags(right);
 			center = right;
 			break;
 		case R.id.button6:
@@ -138,6 +197,7 @@ public class TagsOverviewActivity extends Activity {
 			
 			anim = AnimationUtils.loadAnimation(this, R.anim.button_six_anim);
 			buttonSix.startAnimation(anim);
+			clearMainTags(bottomLeft);
 			center = bottomLeft;
 			break;
 		case R.id.button7:
@@ -146,6 +206,7 @@ public class TagsOverviewActivity extends Activity {
 			
 			anim = AnimationUtils.loadAnimation(this, R.anim.button_seven_anim);
 			buttonSeven.startAnimation(anim);
+			clearMainTags(bottomRight);
 			center = bottomRight;
 			break;
 		}
@@ -155,29 +216,40 @@ public class TagsOverviewActivity extends Activity {
 		updateRelatedTags();
 	}
 	
+	/**
+	 * A tag has been clicked, clear and redraw main tags
+	 * @param newMainTag the new tag that are to be displayed in the middle
+	 */
+	private void clearMainTags(String newMainTag){
+		mainTags.clear();
+		mainTags.add(getTagByName(newMainTag));
+	}
+	
 	
 	private void updateNextPrevTag(){
-		int index = tags.indexOf(getTagByName(center));
-		int tagsSize = tags.size();
+		Tag next = mainTags.getNext();
+		Tag previous = mainTags.getPrevious();
 		
-		if (index == 0){
+		if(previous == null){
 			buttonThree.setVisibility(View.INVISIBLE);
-			if (tagsSize == 1){
+			if (tags.size() == 1){
 				buttonFive.setVisibility(View.INVISIBLE);
 			}
 			else {
-				right = tags.get(index+1).getTagName();
+				right = next.getTagName();
 				updateButton(5,right);
 				buttonFive.setVisibility(View.VISIBLE);
 			}
-		} else if (index == tags.size()-1){
-			left = tags.get(index-1).getTagName();
+		}
+		else if (next == null){
+			left = previous.getTagName();
 			updateButton(3,left);
 			buttonThree.setVisibility(View.VISIBLE);
 			buttonFive.setVisibility(View.INVISIBLE);
-		} else {
-			left = tags.get(index-1).getTagName();
-			right = tags.get(index+1).getTagName();
+		}
+		else{
+			left = previous.getTagName();
+			right = next.getTagName();
 			updateButton(3,left);
 			updateButton(5,right);
 			buttonThree.setVisibility(View.VISIBLE);
@@ -186,10 +258,10 @@ public class TagsOverviewActivity extends Activity {
 	}
 	
 	private void updateRelatedTags(){
-		Tag centerTag = getTagByName(center);
-		int relatedSize = centerTag.getRelatedTags().size();
+		ArrayList<String> relTags = mainTags.getRelatedTags();
+		Tag centerTag = mainTags.get(0);
 		
-	    switch (relatedSize) {
+	    switch (relTags.size()) {
         case 0:
         	buttonOne.setVisibility(View.INVISIBLE);
         	buttonTwo.setVisibility(View.INVISIBLE);
@@ -197,7 +269,7 @@ public class TagsOverviewActivity extends Activity {
         	buttonSeven.setVisibility(View.INVISIBLE);
         	break;
         case 1:
-        	topLeft = centerTag.getRelatedTags().get(0);
+        	topLeft = relTags.get(0);
         	updateButton(1, topLeft);
         	
         	buttonOne.setVisibility(View.VISIBLE);
@@ -208,8 +280,8 @@ public class TagsOverviewActivity extends Activity {
 
             break;
         case 2:
-        	topLeft = centerTag.getRelatedTags().get(0);
-        	topRight = centerTag.getRelatedTags().get(1);
+        	topLeft = relTags.get(0);
+        	topRight = relTags.get(1);
         	
         	updateButton(1, topLeft);
         	updateButton(2, topRight);
@@ -221,9 +293,9 @@ public class TagsOverviewActivity extends Activity {
 
             break;
         case 3:
-        	topLeft = centerTag.getRelatedTags().get(0);
-        	topRight = centerTag.getRelatedTags().get(1);
-        	bottomLeft = centerTag.getRelatedTags().get(2);
+        	topLeft = relTags.get(0);
+        	topRight = relTags.get(1);
+        	bottomLeft = relTags.get(2);
         	
         	updateButton(1, topLeft);
         	updateButton(2,topRight);
@@ -238,11 +310,11 @@ public class TagsOverviewActivity extends Activity {
         default:
             break;
 	    }
-	    if (relatedSize > 3) {
-        	topLeft = centerTag.getRelatedTags().get(0);
-        	topRight = centerTag.getRelatedTags().get(1);
-        	bottomLeft = centerTag.getRelatedTags().get(2);
-        	bottomRight = centerTag.getRelatedTags().get(3);
+	    if (relTags.size() > 3) {
+        	topLeft = relTags.get(0);
+        	topRight = relTags.get(1);
+        	bottomLeft = relTags.get(2);
+        	bottomRight = relTags.get(3);
 	    	
 	    	updateButton(1, topLeft);
 	    	updateButton(2, topRight);

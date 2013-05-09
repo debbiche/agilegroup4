@@ -66,8 +66,11 @@ public class Tag {
 	 * @returns Related tags.
 	 */
 	public ArrayList<String> getRelatedTags(int n) {
-		int nrToFetch = n < relatedTags.size() ? relatedTags.size() : n;
-		return (ArrayList<String>) relatedTags.subList(0, nrToFetch-1);
+		int nrToFetch = n < relatedTags.size() ? n : relatedTags.size();
+		ArrayList<String> ret = new ArrayList<String>();
+		for (int i = 0; i < nrToFetch; i++)
+			ret.add(relatedTags.get(i));
+		return ret;
 	}
 	
 	/*

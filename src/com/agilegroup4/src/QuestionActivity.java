@@ -43,10 +43,6 @@ public class QuestionActivity extends Activity {
 	// Current answers for the question
 	private ArrayList<Answer> answers;
 	
-	// The max lines of the questionbody
-	public final static int MAX_LINES_WITH_COMMENTS = 10;
-	public final static int MAX_LINES_WITHOUT_COMMENTS = 20;
-	
     static final String KEY_ANSWER = "answer"; // parent node
     static final String KEY_NR_OF_COMMENTS = "nr_of_comments";
     private static LayoutInflater inflater=null;
@@ -142,7 +138,6 @@ public class QuestionActivity extends Activity {
 		title.setTypeface(null,Typeface.BOLD);
 		
 		if (hasComment(question)) {
-			commenttext.setVisibility(View.VISIBLE);
 			int com = question.getCommentCount();
 			String buttontext = " comments";
 			if (com == 1)

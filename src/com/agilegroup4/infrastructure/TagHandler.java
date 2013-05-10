@@ -30,6 +30,6 @@ public class TagHandler extends DatabaseHandlerTagDB {
 		}
 		tagsImportance.close();
 		return relatedTags;
-	}
+	} 
 
 }

@@ -62,7 +62,7 @@ public class Tag implements Comparable<Tag> {
 		if(relatedTags == null)
 			relatedTags = TagHandler.getRelatedTags(this);
 		return relatedTags;
-	}
+	} 
 	
 	/*
 	 * Gets the related tags.

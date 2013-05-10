@@ -1,6 +1,7 @@
 package com.agilegroup4.model;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import com.agilegroup4.infrastructure.TagHandler;
 
@@ -83,14 +84,14 @@ public class Tag implements Comparable<Tag> {
 	 * @returns Related tags.
 	 */
 	public ArrayList<Tag> getRelatedTags(int n, ArrayList<Tag> exceptTags) {
-		int nrToFetch = n < getRelatedTags().size() ? n : getRelatedTags().size();
+		TreeSet relatedTagsTreeSet = new TreeSet(getRelatedTags());
+		ArrayList<Tag> relatedTagsWithoutDuplicate = new ArrayList<Tag>(relatedTagsTreeSet);
+		
+		int nrToFetch = n < relatedTagsWithoutDuplicate.size() ? n : relatedTagsWithoutDuplicate.size();
+		
 		ArrayList<Tag> ret = new ArrayList<Tag>();
-		@SuppressWarnings("unchecked")
-		ArrayList<Tag> relatedTagsWithoutExcept = new ArrayList<Tag>();
-		relatedTagsWithoutExcept.addAll(getRelatedTags());
-		relatedTagsWithoutExcept.removeAll(exceptTags);
 		for (int i = 0; i < nrToFetch; i++)
-			ret.add(relatedTagsWithoutExcept.get(i));
+			ret.add(relatedTagsWithoutDuplicate.get(i));
 		return ret;
 	}
 	

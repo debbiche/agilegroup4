@@ -2,6 +2,8 @@ package com.agilegroup4.model;
 
 import java.util.ArrayList;
 
+import com.agilegroup4.infrastructure.TagHandler;
+
 /*
  * Represents a tag in the database.
  */
@@ -57,6 +59,8 @@ public class Tag implements Comparable<Tag> {
 	 * @returns Related tags.
 	 */
 	public ArrayList<Tag> getRelatedTags() {
+		if(relatedTags == null)
+			relatedTags = TagHandler.getRelatedTags(this);
 		return relatedTags;
 	}
 	

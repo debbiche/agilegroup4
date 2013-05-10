@@ -68,32 +68,11 @@ public class DatabaseHandlerTagDB {
 			tag = new Tag(cursor.getInt(0), cursor.getString(1));
 			relatedTags = cursor.getString(2);
 
-			addRelatedTags(tag, relatedTags);
-
 			tags.add(tag);
 			cursor.moveToNext();
 		}
 
 		return tags;
-	}
-
-	/**
-	 * TODO: error handling
-	 * 
-	 */
-	private static void addRelatedTags(Tag tag, String relatedTags) {
-		if (relatedTags == null) {
-			return;
-		}
-			Cursor tagsImportance = db.rawQuery("SELECT * FROM imp INNER JOIN tags ON imp.tag = tags.tag WHERE imp.tag = ? ORDER BY weight DESC",
-						new String[]{tag.getTagName()});
-			
-			tagsImportance.moveToFirst();
-			while (!tagsImportance.isAfterLast()) {
-				tag.addRelatedTag(new Tag(tagsImportance.getInt(3), tagsImportance.getString(1)));
-				tagsImportance.moveToNext();
-			}
-			tagsImportance.close();
 	}
 
 	/*

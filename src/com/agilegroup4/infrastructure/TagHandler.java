@@ -18,14 +18,14 @@ public class TagHandler extends DatabaseHandlerTagDB {
 	 * TODO: error handling
 	 * 
 	 */
-	public static ArrayList<Tag> getRelatedTags(Tag tag) {
+	public static ArrayList<Tag> getRelatedTags(String tagName) {
 		ArrayList<Tag> relatedTags = new ArrayList<Tag>();
 		Cursor tagsImportance = db.rawQuery("SELECT * FROM imp INNER JOIN tags ON imp.tag = tags.tag WHERE imp.tag = ? ORDER BY weight DESC",
-				new String[]{tag.getTagName()});
+				new String[]{tagName});
 				
 		tagsImportance.moveToFirst();
 		while (!tagsImportance.isAfterLast()) {
-			tag.addRelatedTag(new Tag(tagsImportance.getInt(3), tagsImportance.getString(1)));
+			relatedTags.add(new Tag(tagsImportance.getInt(3), tagsImportance.getString(1)));
 			tagsImportance.moveToNext();
 		}
 		tagsImportance.close();

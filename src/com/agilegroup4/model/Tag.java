@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /*
  * Represents a tag in the database.
  */
-public class Tag {
+public class Tag implements Comparable<Tag> {
 
 	private int tagId;
 	private String tagName;
@@ -79,11 +79,12 @@ public class Tag {
 	 * @param exceptTags Return a list without provided tags.
 	 * @returns Related tags.
 	 */
-	public ArrayList<String> getRelatedTags(int n, ArrayList<Tag> exceptTags) {
+	public ArrayList<Tag> getRelatedTags(int n, ArrayList<Tag> exceptTags) {
 		int nrToFetch = n < relatedTags.size() ? n : relatedTags.size();
-		ArrayList<String> ret = new ArrayList<String>();
+		ArrayList<Tag> ret = new ArrayList<Tag>();
 		@SuppressWarnings("unchecked")
-		ArrayList<String> relatedTagsWithoutExcept = (ArrayList<String>) relatedTags.clone();
+		ArrayList<Tag> relatedTagsWithoutExcept = new ArrayList<Tag>();
+		relatedTagsWithoutExcept.addAll(relatedTags);
 		relatedTagsWithoutExcept.removeAll(exceptTags);
 		for (int i = 0; i < nrToFetch; i++)
 			ret.add(relatedTagsWithoutExcept.get(i));
@@ -108,6 +109,13 @@ public class Tag {
 				this.relatedTags.remove(currentTag);
 		}
 	}
+
+	public int compareTo(Tag anotherTag) throws ClassCastException {
+	    if (!(anotherTag instanceof Tag))
+	      throw new ClassCastException("A Tag object expected.");
+	    String anotherTagName = ((Tag) anotherTag).getTagName();  
+	    return this.getTagName().compareTo(anotherTagName);    
+	  }
 
 }
 

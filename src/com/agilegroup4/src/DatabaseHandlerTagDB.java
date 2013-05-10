@@ -85,12 +85,12 @@ public class DatabaseHandlerTagDB {
 		if (relatedTags == null) {
 			return;
 		}
-			Cursor tagsImportance = db.rawQuery("SELECT * FROM imp WHERE tag = ? ORDER BY weight DESC",
+			Cursor tagsImportance = db.rawQuery("SELECT * FROM imp INNER JOIN tags ON imp.tag = tags.tag WHERE imp.tag = ? ORDER BY weight DESC",
 						new String[]{tag.getTagName()});
 			
 			tagsImportance.moveToFirst();
 			while (!tagsImportance.isAfterLast()) {
-				tag.addRelatedTag(tagsImportance.getString(1));
+				tag.addRelatedTag(new Tag(tagsImportance.getInt(3), tagsImportance.getString(1)));
 				tagsImportance.moveToNext();
 			}
 			tagsImportance.close();

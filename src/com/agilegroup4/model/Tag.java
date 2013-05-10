@@ -9,7 +9,7 @@ public class Tag {
 
 	private int tagId;
 	private String tagName;
-	private ArrayList<String> relatedTags;
+	private ArrayList<Tag> relatedTags;
 
 	/*
 	 * Creates a new Tag
@@ -20,7 +20,7 @@ public class Tag {
 		super();
 		this.tagId = tagId;
 		this.tagName = tagName;
-		relatedTags = new ArrayList<String>();
+		relatedTags = new ArrayList<Tag>();
 	}
 
 	/*
@@ -56,7 +56,7 @@ public class Tag {
 	 * Gets the related tags.
 	 * @returns Related tags.
 	 */
-	public ArrayList<String> getRelatedTags() {
+	public ArrayList<Tag> getRelatedTags() {
 		return relatedTags;
 	}
 	
@@ -74,10 +74,27 @@ public class Tag {
 	}
 	
 	/*
+	 * Gets the related tags.
+	 * @param n the max number of tags returned
+	 * @param exceptTags Return a list without provided tags.
+	 * @returns Related tags.
+	 */
+	public ArrayList<String> getRelatedTags(int n, ArrayList<Tag> exceptTags) {
+		int nrToFetch = n < relatedTags.size() ? n : relatedTags.size();
+		ArrayList<String> ret = new ArrayList<String>();
+		@SuppressWarnings("unchecked")
+		ArrayList<String> relatedTagsWithoutExcept = (ArrayList<String>) relatedTags.clone();
+		relatedTagsWithoutExcept.removeAll(exceptTags);
+		for (int i = 0; i < nrToFetch; i++)
+			ret.add(relatedTagsWithoutExcept.get(i));
+		return ret;
+	}
+	
+	/*
 	 * Adds related tags.
 	 * @param tag Related tag.
 	 */
-	public void addRelatedTag(String tag) {
+	public void addRelatedTag(Tag tag) {
 		this.relatedTags.add(tag);
 	}
 	/*
@@ -85,9 +102,9 @@ public class Tag {
 	 * @param tag Related tag to remove.
 	 */
 	public void removeRelatedTag(String tag) {
-		for(int i = 0; i < this.relatedTags.size(); i++){
-			if(tag.equals(this.relatedTags.get(i)))
-				this.relatedTags.remove(i);
+		for(Tag currentTag : relatedTags){
+			if(tag.equals(currentTag.getTagName()))
+				this.relatedTags.remove(currentTag);
 		}
 	}
 

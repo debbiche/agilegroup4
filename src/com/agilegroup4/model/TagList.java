@@ -64,7 +64,7 @@ public class TagList extends ArrayList<Tag> {
 			return new ArrayList<String>();
 		ArrayList<String> tags = new ArrayList<String>();
 		for (Tag tag : this)
-			tags.addAll(tag.getRelatedTags(MAX_NR_OF_COMBINATIONS/this.size()));
+			tags.addAll(tag.getRelatedTags(MAX_NR_OF_COMBINATIONS/this.size(), this));
 		return tags;
 	}
 }

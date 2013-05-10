@@ -109,28 +109,24 @@ public class TagsOverviewActivity extends Activity {
 	
 	/**
 	 * Invoked when long clicking a tag
-	 * @param view The view objekt invoking
+	 * @param view The view object invoking
 	 */
 	public void handleTagOnLongClick(View view){
 		switch (view.getId()) {
-		case R.id.button1:
-			if(!mainTags.contains(getTagByName(topLeft))) 
-				addCombinedTag(topLeft);
+		case R.id.button1: 
+			addCombinedTag(topLeft);
 			break;
 		case R.id.button2:
-			if(!mainTags.contains(getTagByName(topRight))) 
-				addCombinedTag(topRight);
+			addCombinedTag(topRight);
 			break;
 		case R.id.button4:
 			onSearchRequestedTagsOnly();
 			break;
 		case R.id.button6:
-			if(!mainTags.contains(getTagByName(bottomLeft))) 
-				addCombinedTag(bottomLeft);
+			addCombinedTag(bottomLeft);
 			break;
 		case R.id.button7:
-			if(!mainTags.contains(getTagByName(bottomRight))) 
-				addCombinedTag(bottomRight);
+			addCombinedTag(bottomRight);
 			break;
 		default:
 			break;

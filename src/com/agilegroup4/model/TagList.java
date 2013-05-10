@@ -51,7 +51,7 @@ public class TagList extends ArrayList<Tag> {
 	 */
 	@Override
 	public boolean add(Tag tag){
-		if (this.size() > MAX_NR_OF_COMBINATIONS)
+		if (this.size() >= MAX_NR_OF_COMBINATIONS || this.contains(tag))
 			return false;
 		return super.add(tag);
 	}

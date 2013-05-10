@@ -109,23 +109,22 @@ public class QuestionOverviewActivity extends Activity {
 
 	public void displayQuestions() {
 	
-		DatabaseHandler.queryQuestions(60);
+		DatabaseHandler.queryQuestions(SearchableActivity.NUMBER_OF_ALLOWED_QUESTIONS);
 		//If questions has been instanced before dont do it again.
 		if(questions == null)
 			questions = DatabaseHandler.getQuestions();
 		
 		ArrayList<HashMap<String, String>> qsList = new ArrayList<HashMap<String, String>>();
 		
+		// Make sure that we are expecting too many questions
+		int nrOfPosts = NR_OF_POSTS;
+		if(questions.size() <= nrOfPosts)
+			nrOfPosts = questions.size();
+		
 		// HashMap for connecting question id with position in the list for the question
 		final HashMap<Integer,Question> ids = new HashMap<Integer,Question>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
-		int questionCount = NR_OF_POSTS;
-		
-		if (questions.size() < NR_OF_POSTS){
-			questionCount = questions.size();
-		}
-		
-		for (int i = 0; i < questionCount; i++) {
+		for (int i = 0; i < nrOfPosts; i++) {
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put(KEY_TITLE, questions.get(i).getTitle());
             map.put(KEY_TAGS, "Tags: " + questions.get(i).getTags());

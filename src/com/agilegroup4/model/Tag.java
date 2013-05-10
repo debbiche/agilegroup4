@@ -65,9 +65,9 @@ public class Tag {
 	 * @param n the max number of tags returned
 	 * @returns Related tags.
 	 */
-	public ArrayList<String> getRelatedTags(int n) {
+	public ArrayList<Tag> getRelatedTags(int n) {
 		int nrToFetch = n < relatedTags.size() ? n : relatedTags.size();
-		ArrayList<String> ret = new ArrayList<String>();
+		ArrayList<Tag> ret = new ArrayList<Tag>();
 		for (int i = 0; i < nrToFetch; i++)
 			ret.add(relatedTags.get(i));
 		return ret;
@@ -97,6 +97,7 @@ public class Tag {
 	public void addRelatedTag(Tag tag) {
 		this.relatedTags.add(tag);
 	}
+	
 	/*
 	 * Removed a related tag.
 	 * @param tag Related tag to remove.

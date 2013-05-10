@@ -18,7 +18,9 @@ import com.agilegroup4.model.Tag;
 public class SearchableActivity extends ListActivity {
 
 	public static SearchMode SearchMode;
-	public static final int NUMBER_OF_ALLOWED_QUESTIONS = 1000;
+	public static final int NUMBER_OF_ALLOWED_QUESTIONS = 100;
+	// TODO MAYBE: Setting NUMBER_OF_ALLOWED_QUESTIONS to 200 or 210 (maybe other values as well of course,
+	// will on a search for "help" return you to the main menu, and not execute the search... Really weird.
 	
 	/*
      * The "constructor" for this activity

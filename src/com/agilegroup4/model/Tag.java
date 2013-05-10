@@ -84,14 +84,14 @@ public class Tag implements Comparable<Tag> {
 	 * @returns Related tags.
 	 */
 	public ArrayList<Tag> getRelatedTags(int n, ArrayList<Tag> exceptTags) {
-		TreeSet relatedTagsTreeSet = new TreeSet(getRelatedTags());
-		ArrayList<Tag> relatedTagsWithoutDuplicate = new ArrayList<Tag>(relatedTagsTreeSet);
+		ArrayList<Tag> relatedTagsWithoutExcept = new ArrayList<Tag>(getRelatedTags());
+		relatedTagsWithoutExcept.removeAll(exceptTags);
 		
-		int nrToFetch = n < relatedTagsWithoutDuplicate.size() ? n : relatedTagsWithoutDuplicate.size();
+		int nrToFetch = n < relatedTagsWithoutExcept.size() ? n : relatedTagsWithoutExcept.size();
 		
 		ArrayList<Tag> ret = new ArrayList<Tag>();
 		for (int i = 0; i < nrToFetch; i++)
-			ret.add(relatedTagsWithoutDuplicate.get(i));
+			ret.add(relatedTagsWithoutExcept.get(i));
 		return ret;
 	}
 	

@@ -45,7 +45,7 @@ public class DatabaseHandlerTagDB {
 	 *            limits the resulting query
 	 * @return ArrayList
 	 */
-	public static ArrayList<Tag> queryTags(int numberOfQuestions) {
+	public static ArrayList<Tag> queryTags() {
 
 		String rawQuery = "SELECT * FROM tags " + "ORDER BY tag";
 		Cursor cursorQuestions = db.rawQuery(rawQuery, null);

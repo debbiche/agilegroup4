@@ -27,6 +27,8 @@ public class TagsOverviewActivity extends Activity {
 
 	public static String tagQuery = "";
 
+	
+	// Contains the combined tags in the center button
 	public static TagList mainTags;
 
 	ProgressDialog progress;
@@ -44,6 +46,8 @@ public class TagsOverviewActivity extends Activity {
 	private String bottomRight;
 
 	// The current buttons
+	
+	// The current buttons (1-7 = topLeft - bottomRight)
 	private Button buttonOne;
 	private Button buttonTwo;
 	private Button buttonThree;
@@ -93,7 +97,6 @@ public class TagsOverviewActivity extends Activity {
 		buttonSix.setOnLongClickListener(longClickListener);
 		buttonSeven.setOnLongClickListener(longClickListener);
 
-		// tags = createTestTags();
 		queryTags();
 
 	}
@@ -233,7 +236,10 @@ public class TagsOverviewActivity extends Activity {
 		mainTags.add(getTagByName(newMainTag));
 	}
 
-	private void updateNextPrevTag() {
+	/**
+	 * Updates the tags to the left and right of the center.
+	 */
+	private void updateNextPrevTag(){
 		Tag next = mainTags.getNext();
 		Tag previous = mainTags.getPrevious();
 
@@ -260,8 +266,11 @@ public class TagsOverviewActivity extends Activity {
 			buttonFive.setVisibility(View.VISIBLE);
 		}
 	}
-
-	private void updateRelatedTags() {
+	
+	/**
+	 * Updates the (maximum four) related tags for the center tag(s)
+	 */
+	private void updateRelatedTags(){
 		ArrayList<String> relTags = mainTags.getRelatedTags();
 		Tag centerTag = mainTags.get(0);
 

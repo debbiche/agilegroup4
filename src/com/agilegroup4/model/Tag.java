@@ -11,7 +11,7 @@ public class Tag implements Comparable<Tag> {
 
 	private int tagId;
 	private String tagName;
-	private ArrayList<Tag> relatedTags;
+	private ArrayList<Tag> relatedTags = new ArrayList<Tag>();
 
 	/*
 	 * Creates a new Tag
@@ -58,7 +58,7 @@ public class Tag implements Comparable<Tag> {
 	 * @returns Related tags.
 	 */
 	private ArrayList<Tag> getRelatedTags() {
-		if(relatedTags == null)
+		if(relatedTags == null || relatedTags.size() == 0)
 			relatedTags = TagHandler.getRelatedTags(this);
 		return relatedTags;
 	} 

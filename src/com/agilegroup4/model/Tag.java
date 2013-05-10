@@ -22,7 +22,6 @@ public class Tag implements Comparable<Tag> {
 		super();
 		this.tagId = tagId;
 		this.tagName = tagName;
-		relatedTags = new ArrayList<Tag>();
 	}
 
 	/*

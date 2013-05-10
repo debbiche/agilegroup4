@@ -19,6 +19,9 @@ public class DatabaseHandlerTagDB {
 	protected static DatabaseLoaderTagDB dbLoader;
 	protected static SQLiteDatabase db;
 	public static int createTagsDB = 0; // DO NOT CHANGE THIS OR A KITTY WILL DIE!!
+	public static int loadedTags = 0;
+	public static ArrayList<Tag> tags = new ArrayList<Tag>();
+
 
 	public DatabaseHandlerTagDB(Context context) {
 

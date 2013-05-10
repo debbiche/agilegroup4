@@ -42,7 +42,6 @@ public class TagList_NavigatingTags_PrevAndNext_ExpectAlphabetical extends
 		assertEquals(expectedBeta, _beta);
 		assertEquals(expectedAlpha, _alpha);
 		assertEquals(expectedCharlie, _charlie);
-		
 	}
 
 }

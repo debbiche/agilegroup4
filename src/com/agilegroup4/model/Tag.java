@@ -117,12 +117,21 @@ public class Tag implements Comparable<Tag> {
 		}
 	}
 
+	@Override
 	public int compareTo(Tag anotherTag) throws ClassCastException {
 	    if (!(anotherTag instanceof Tag))
 	      throw new ClassCastException("A Tag object expected.");
 	    String anotherTagName = ((Tag) anotherTag).getTagName();  
 	    return this.getTagName().compareTo(anotherTagName);    
-	  }
+	}
+	
+	@Override
+	public boolean equals(Object anotherTag) throws ClassCastException {
+	    if (!(anotherTag instanceof Tag))
+	      throw new ClassCastException("A Tag object expected.");
+	    String anotherTagName = ((Tag) anotherTag).getTagName();  
+	    return this.getTagName().equals(anotherTagName);    
+	}
 
 }
 

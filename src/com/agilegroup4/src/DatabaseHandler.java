@@ -123,8 +123,9 @@ public class DatabaseHandler {
 	 */
 	public static void queryQuestions(int numberOfQuestions) {
 		
-		if (DatabaseHandlerTagDB.createTagsDB == 1)
+		if (DatabaseHandlerTagDB.createTagsDB == 1) {
 			DatabaseHandlerTagDB.createTagsDB();
+		}
 
 		if (queriedQuestions == 0) {
 			Cursor questionsCursor = db

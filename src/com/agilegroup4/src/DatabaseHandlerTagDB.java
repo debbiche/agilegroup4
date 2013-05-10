@@ -2,7 +2,10 @@ package com.agilegroup4.src;
 
 import java.util.ArrayList;
 import com.agilegroup4.model.Tag;
+
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,7 +18,7 @@ public class DatabaseHandlerTagDB {
 	public static int loaded = 0;
 	protected static DatabaseLoaderTagDB dbLoader;
 	protected static SQLiteDatabase db;
-	public static int createTagsDB = 0;
+	public static int createTagsDB = 0; // DO NOT CHANGE THIS OR A KITTY WILL DIE!!
 
 	public DatabaseHandlerTagDB(Context context) {
 
@@ -82,22 +85,21 @@ public class DatabaseHandlerTagDB {
 		if (relatedTags == null) {
 			return;
 		}
-
-		String[] relatedTagsArray = relatedTags.split(",");
-
-		for (int i = 0; i < relatedTagsArray.length; i++) {
-			if (!relatedTagsArray[i].equals(""))
-				tag.addRelatedTag(relatedTagsArray[i]);
-		}
-
-		return;
+			Cursor tagsImportance = db.rawQuery("SELECT * FROM imp WHERE tag = ? ORDER BY weight DESC",
+						new String[]{tag.getTagName()});
+			
+			tagsImportance.moveToFirst();
+			while (!tagsImportance.isAfterLast()) {
+				tag.addRelatedTag(tagsImportance.getString(1));
+				tagsImportance.moveToNext();
+			}
+			tagsImportance.close();
 	}
 
 	/*
 	 * Only used when we need to recreate the tags db
 	 */
 	public static void createTagsDB() {
-		// to be deleted after tags are extracted from DB
 		HashMap<String, String> tagsHash = new HashMap<String, String>();
 
 		ArrayList<String> listOfTags = new ArrayList<String>();
@@ -114,12 +116,20 @@ public class DatabaseHandlerTagDB {
 		HashMap<String, String> dupTagsHash = new HashMap<String, String>();
 
 		// Loop through tags and populate the hashmap for the tags
+		int l = 0;
 		for (int i = 0; i < listOfTags.size(); i++) { // Main loop
 			String[] currentTags = listOfTags.get(i).split(">"); // split tags
 
+			
+			//String[] extraOnes = getOthers(currentTags, listOfTags);
+			//System.out.println("Did an extra one number: " + l);
+			//l++;
+			
 			for (int k = 0; k < currentTags.length; k++) { // remove the "<"
+				
 				currentTags[k] = currentTags[k].substring(1);
 			}
+			
 			for (int j = 0; j < currentTags.length; j++) {
 				String relatedTags = buildRelatedTags(currentTags,
 						currentTags[j]);
@@ -133,6 +143,42 @@ public class DatabaseHandlerTagDB {
 							buildRelatedTags(currentTags, currentTags[j]));
 			}
 		} // end main loop
+		
+		
+		
+		// Fix the duplicate tags
+//		for (Entry<String, String> dup : dupTagsHash.entrySet()) {
+//			if (tagsHash.get(dup.getKey()) != null) { // tag already exists in tag hash (should always be the case)
+//				String[] tags = dup.getValue().split(","); // dups to insert
+//				
+//				for (int j = 0; j < tags.length; j++) {
+//					String concernedTag = tagsHash.get(dup.getKey());
+//					String newRelatedTags = concernedTag.concat(",");
+//					newRelatedTags = newRelatedTags.concat(dup.getValue());
+//
+//					String[] newRelated = newRelatedTags.split(",");
+//					
+//					for (int k = 0; k < newRelated.length; k++) {
+//						String relatedTags = buildRelatedTags(newRelated,
+//								newRelated[j]);
+//						tagsHash.remove(newRelated[j]);
+//						if (tagsHash.get(newRelated[j]) == null
+//								&& !(relatedTags.equals(""))) { // tag hasn't been
+//																// inserted before
+//							tagsHash.put(newRelated[j], relatedTags);
+//
+//						}
+//					
+//					
+//					
+//					//String currentRelatedTags = tagsHash.get(dup.)
+//				}
+//				
+//				
+//			}
+//			}
+		
+		
 
 		// Set the weights for each tag pair
 		for (Entry<String, String> tagss : tagsHash.entrySet()) {
@@ -156,6 +202,30 @@ public class DatabaseHandlerTagDB {
 			j++;
 		}
 		// db.close();
+	}
+	
+
+	private static String[] getOthers(String[] currentTags, ArrayList<String> tagsList) {
+		
+		String  finalArray[] = {""};
+		for (int i = 0; i < tagsList.size(); i++) {
+			String temp[] = tagsList.get(i).split(">");
+			
+			if (temp[0].equals(currentTags[0])) 
+				finalArray = f(finalArray, temp);
+		}
+		
+		
+		return finalArray;
+		
+	}
+	
+	
+	private static	String[] f(String[] first, String[] second) {
+	    List<String> both = new ArrayList<String>(first.length + second.length);
+	    Collections.addAll(both, first);
+	    Collections.addAll(both, second);
+	    return both.toArray(new String[both.size()]);
 	}
 
 	private static int getWeight(String currentTag, String relatedTag,

@@ -34,7 +34,6 @@ public class TagsOverviewActivity extends Activity {
 	ProgressDialog progress;
 
 	// Containing all the tags
-	private ArrayList<Tag> tags;
 
 	// The currently displayed tags
 	private String topLeft;
@@ -102,10 +101,27 @@ public class TagsOverviewActivity extends Activity {
 	}
 
 	private void queryTags() {
-		progress.setTitle("Please Wait");
-		progress.setMessage("Tags are loading...");
-		progress.show();
-		new queryTags().execute();
+		if (DatabaseHandlerTagDB.loadedTags == 0) {
+			progress.setTitle("Please Wait");
+			progress.setMessage("Tags are loading...");
+			progress.show();
+			new queryTags().execute();
+			DatabaseHandlerTagDB.loadedTags = 1;
+		} else {
+			mainTags = new TagList(DatabaseHandlerTagDB.tags);
+
+			if (DatabaseHandlerTagDB.tags.size() > 0) {
+				center = DatabaseHandlerTagDB.tags.get(0).getTagName();
+				updateButton(4, center);
+				mainTags.add(DatabaseHandlerTagDB.tags.get(0));
+				if (DatabaseHandlerTagDB.tags.size() > 1) {
+					right = DatabaseHandlerTagDB.tags.get(1).getTagName();
+					updateButton(5, right);
+					updateRelatedTags();
+					updateNextPrevTag();
+				}
+			}
+		}
 
 	}
 
@@ -245,7 +261,7 @@ public class TagsOverviewActivity extends Activity {
 
 		if (previous == null) {
 			buttonThree.setVisibility(View.INVISIBLE);
-			if (tags.size() == 1) {
+			if (DatabaseHandlerTagDB.tags.size() == 1) {
 				buttonFive.setVisibility(View.INVISIBLE);
 			} else {
 				right = next.getTagName();
@@ -475,9 +491,9 @@ public class TagsOverviewActivity extends Activity {
 	 * was found
 	 */
 	private Tag getTagByName(String name) {
-		for (int i = 0; i < this.tags.size(); i++) {
-			if (this.tags.get(i).getTagName().equals(name)) {
-				return this.tags.get(i);
+		for (int i = 0; i < DatabaseHandlerTagDB.tags.size(); i++) {
+			if (DatabaseHandlerTagDB.tags.get(i).getTagName().equals(name)) {
+				return DatabaseHandlerTagDB.tags.get(i);
 			}
 		}
 
@@ -491,21 +507,21 @@ public class TagsOverviewActivity extends Activity {
 
 		@Override
 		protected Object doInBackground(Object... params) {
-			tags = DatabaseHandlerTagDB.queryTags();
+			DatabaseHandlerTagDB.tags = DatabaseHandlerTagDB.queryTags();
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Object params) {
 			progress.dismiss();
-			mainTags = new TagList(tags);
+			mainTags = new TagList(DatabaseHandlerTagDB.tags);
 
-			if (tags.size() > 0) {
-				center = tags.get(0).getTagName();
+			if (DatabaseHandlerTagDB.tags.size() > 0) {
+				center = DatabaseHandlerTagDB.tags.get(0).getTagName();
 				updateButton(4, center);
-				mainTags.add(tags.get(0));
-				if (tags.size() > 1) {
-					right = tags.get(1).getTagName();
+				mainTags.add(DatabaseHandlerTagDB.tags.get(0));
+				if (DatabaseHandlerTagDB.tags.size() > 1) {
+					right = DatabaseHandlerTagDB.tags.get(1).getTagName();
 					updateButton(5, right);
 					updateRelatedTags();
 					updateNextPrevTag();

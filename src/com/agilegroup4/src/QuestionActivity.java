@@ -115,13 +115,12 @@ public class QuestionActivity extends Activity {
 		final HashMap<Integer,Integer> ids = new HashMap<Integer,Integer>();
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		
-		//Displays the header, which is the question
+		//Display the header, which is the question details
 		ViewGroup header = (ViewGroup)getLayoutInflater().inflate(R.layout.question_header, listview, false);
 		boolean isSelectable = false;
 		if(hasComment(question))
 			isSelectable = true;
 		listview.addHeaderView(header, null, isSelectable);
-		
 		int tID = getIdAssignedByR(this, "question_title");
 		int bID = getIdAssignedByR(this, "question_body");
 		int cID = getIdAssignedByR(this, "comments");
@@ -147,6 +146,7 @@ public class QuestionActivity extends Activity {
 		answ.setText(ans + answertext);
 		answ.setTypeface(null,Typeface.BOLD);
 		
+		// Display the answers for the question
 		for (int i = 0; i < answers.size(); i++) {
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put(KEY_ANSWER, StringUtility.convertHTMLtoString(answers.get(i).getBody()));
@@ -167,14 +167,14 @@ public class QuestionActivity extends Activity {
 			int headerid = (int) id;                
 			if(headerid == -1) {
 					Intent intent = new Intent(getThis(), CommentsActivity.class);
-					// Send along answer id to CommentsActivity
+					// Display comments for the question
 					intent.putExtra("id", question.getId());
 					startActivity(intent);
 				}
 			
 				else if(hasComment(answers.get((int) id))){
 					Intent intent = new Intent(getThis(), CommentsActivity.class);
-					// Send along answer id to CommentsActivity
+					// Display comments for a particular answer
 					intent.putExtra("id", ids.get((int) id));
 					startActivity(intent);
 				}
@@ -182,6 +182,9 @@ public class QuestionActivity extends Activity {
 		});
 	}
 	
+	/**
+	 * Used for getting the id's from the header
+	 */
 	public int getIdAssignedByR(Context pContext, String pIdString)
 	{
 	    // Get the Context's Resources and Package Name

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -113,6 +114,17 @@ public class QuestionOverviewActivity extends Activity {
 		//If questions has been instanced before dont do it again.
 		if(questions == null)
 			questions = DatabaseHandler.getQuestions();
+		
+		if(questions.size() == 0) {
+			// create toast for sorting info (see CR02)
+			Context context = getApplicationContext();
+			CharSequence text = "Your search did not return any results, please try something else.";
+			int duration = Toast.LENGTH_LONG;
+
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();
+		}
 		
 		ArrayList<HashMap<String, String>> qsList = new ArrayList<HashMap<String, String>>();
 		

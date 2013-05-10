@@ -287,7 +287,7 @@ public class TagsOverviewActivity extends Activity {
 	 * Updates the (maximum four) related tags for the center tag(s)
 	 */
 	private void updateRelatedTags(){
-		ArrayList<String> relTags = mainTags.getRelatedTags();
+		ArrayList<Tag> relTags = mainTags.getRelatedTags();
 		Tag centerTag = mainTags.get(0);
 
 		switch (relTags.size()) {
@@ -298,7 +298,7 @@ public class TagsOverviewActivity extends Activity {
 			buttonSeven.setVisibility(View.INVISIBLE);
 			break;
 		case 1:
-			topLeft = relTags.get(0);
+			topLeft = relTags.get(0).getTagName();
 			updateButton(1, topLeft);
 
 			buttonOne.setVisibility(View.VISIBLE);
@@ -308,8 +308,8 @@ public class TagsOverviewActivity extends Activity {
 
 			break;
 		case 2:
-			topLeft = relTags.get(0);
-			topRight = relTags.get(1);
+			topLeft = relTags.get(0).getTagName();
+			topRight = relTags.get(1).getTagName();
 
 			updateButton(1, topLeft);
 			updateButton(2, topRight);
@@ -321,9 +321,9 @@ public class TagsOverviewActivity extends Activity {
 
 			break;
 		case 3:
-			topLeft = relTags.get(0);
-			topRight = relTags.get(1);
-			bottomLeft = relTags.get(2);
+			topLeft = relTags.get(0).getTagName();
+			topRight = relTags.get(1).getTagName();
+			bottomLeft = relTags.get(2).getTagName();
 
 			updateButton(1, topLeft);
 			updateButton(2, topRight);
@@ -339,10 +339,10 @@ public class TagsOverviewActivity extends Activity {
 			break;
 		}
 		if (relTags.size() > 3) {
-			topLeft = relTags.get(0);
-			topRight = relTags.get(1);
-			bottomLeft = relTags.get(2);
-			bottomRight = relTags.get(3);
+			topLeft = relTags.get(0).getTagName();
+			topRight = relTags.get(1).getTagName();
+			bottomLeft = relTags.get(2).getTagName();
+			bottomRight = relTags.get(3).getTagName();
 
 			updateButton(1, topLeft);
 			updateButton(2, topRight);
@@ -386,41 +386,6 @@ public class TagsOverviewActivity extends Activity {
 		default:
 			break;
 		}
-	}
-
-	/*
-	 * Used for test purpose only, statically assign related tags
-	 */
-	private ArrayList<Tag> createTestTags() {
-		Tag t1 = new Tag(1, "java");
-		Tag t2 = new Tag(2, "android");
-		Tag t3 = new Tag(3, "html");
-		Tag t4 = new Tag(4, "javascript");
-		Tag t5 = new Tag(5, "css");
-		Tag t6 = new Tag(6, "xml");
-		Tag t7 = new Tag(7, "c++");
-		Tag t8 = new Tag(8, "python");
-		Tag t9 = new Tag(9, "ios");
-
-		t1.addRelatedTag("android");
-		t1.addRelatedTag("html");
-		t1.addRelatedTag("javascript");
-		t1.addRelatedTag("css");
-		t2.addRelatedTag("xml");
-		// html is not related to java
-
-		ArrayList<Tag> ret = new ArrayList<Tag>();
-		ret.add(t1);
-		ret.add(t2);
-		ret.add(t3);
-		ret.add(t4);
-		ret.add(t5);
-		ret.add(t6);
-		ret.add(t7);
-		ret.add(t8);
-		ret.add(t9);
-
-		return ret;
 	}
 
 	/*

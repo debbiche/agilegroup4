@@ -60,12 +60,12 @@ public class TagList extends ArrayList<Tag> {
 	/**
 	 * @return the related names of the tags.
 	 */
-	public ArrayList<String> getRelatedTags(){
+	public ArrayList<Tag> getRelatedTags(){
 		if(this.size() > MAX_NR_OF_COMBINATIONS || this.size() == 0)
-			return new ArrayList<String>();
-		ArrayList<String> tags = new ArrayList<String>();
+			return new ArrayList<Tag>();
+		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (Tag tag : this)
-			tags.addAll(tag.getRelatedTags(MAX_NR_OF_COMBINATIONS/this.size()));
+			tags.addAll(tag.getRelatedTags(MAX_NR_OF_COMBINATIONS/this.size(), this));
 		return tags;
 	}
 }

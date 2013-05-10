@@ -64,8 +64,9 @@ public class TagList extends ArrayList<Tag> {
 		if(this.size() > MAX_NR_OF_COMBINATIONS || this.size() == 0)
 			return new ArrayList<Tag>();
 		ArrayList<Tag> tags = new ArrayList<Tag>();
+		ArrayList<Tag> exceptTags = new ArrayList<Tag>(this);
 		for (Tag tag : this)
-			tags.addAll(tag.getRelatedTags(MAX_NR_OF_COMBINATIONS/this.size(), this));
+			tags.addAll(tag.getRelatedTags(MAX_NR_OF_COMBINATIONS/this.size(), exceptTags.addAll(tags)));
 		return tags;
 	}
 }

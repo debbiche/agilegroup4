@@ -84,10 +84,10 @@ public class Tag implements Comparable<Tag> {
 	 */
 	public ArrayList<Tag> getRelatedTags(int n, ArrayList<Tag> exceptTags) {
 		//Java removeAll contains a bug so we have to do this our self by for each.
-		ArrayList<Tag> relatedTagsWithoutExcept = new ArrayList<Tag>(getRelatedTags());
-		for(Tag currentTag : relatedTagsWithoutExcept) {
-			if(exceptTags.contains(currentTag))
-				relatedTagsWithoutExcept.remove(currentTag);
+		ArrayList<Tag> relatedTagsWithoutExcept = new ArrayList<Tag>();
+		for(Tag currentTag : getRelatedTags()) {
+			if(!exceptTags.contains(currentTag))
+				relatedTagsWithoutExcept.add(currentTag);
 		}
 		
 		int nrToFetch = n < relatedTagsWithoutExcept.size() ? n : relatedTagsWithoutExcept.size();

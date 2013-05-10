@@ -60,7 +60,7 @@ public class Tag implements Comparable<Tag> {
 	 */
 	private ArrayList<Tag> getRelatedTags() {
 		if(relatedTags == null || relatedTags.size() == 0)
-			relatedTags = TagHandler.getRelatedTags(this);
+			relatedTags = TagHandler.getRelatedTags(this.getTagName());
 		return relatedTags;
 	} 
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class TagList extends ArrayList<Tag> {
 	
+	// Maximum number of combined tags
 	private int MAX_NR_OF_COMBINATIONS = 4;
 	private ArrayList<Tag> _allTags;
 	

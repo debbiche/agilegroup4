@@ -25,6 +25,7 @@ public class TagsOverviewActivity extends Activity {
 
 	public static String tagQuery ="";
 	
+	// Contains the combined tags in the center button
 	public static TagList mainTags;
 	
 	// Containing all the tags
@@ -39,7 +40,7 @@ public class TagsOverviewActivity extends Activity {
 	private String bottomLeft;
 	private String bottomRight;
 	
-	// The current buttons
+	// The current buttons (1-7 = topLeft - bottomRight)
 	private Button buttonOne;
 	private Button buttonTwo;
 	private Button buttonThree;
@@ -55,10 +56,7 @@ public class TagsOverviewActivity extends Activity {
      * @param instanceState The instance state.
      */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		//super.setHeader(R.string.title_activity_settings);
-		//super.setContentResourceID(R.layout.activity_tags_overview);
-		
+	protected void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tags_overview);
 		
@@ -71,7 +69,6 @@ public class TagsOverviewActivity extends Activity {
 		buttonSeven = (Button) findViewById(R.id.button7);
 		
 		longClickListener = new OnLongClickListener() {
-			
 			@Override
 			public boolean onLongClick(View v) {
 				
@@ -86,12 +83,12 @@ public class TagsOverviewActivity extends Activity {
 		buttonFour.setOnLongClickListener(longClickListener);
 		buttonSix.setOnLongClickListener(longClickListener);
 		buttonSeven.setOnLongClickListener(longClickListener);
-		
-		//tags = createTestTags();
+
 		tags = DatabaseHandlerTagDB.queryTags(680);
 		
 		mainTags = new TagList(tags);
 		
+		// Draw the first tags
 		if (tags.size() > 0) {
 			center = tags.get(0).getTagName();
 			updateButton(4,center);
@@ -228,6 +225,9 @@ public class TagsOverviewActivity extends Activity {
 	}
 	
 	
+	/**
+	 * Updates the tags to the left and right of the center.
+	 */
 	private void updateNextPrevTag(){
 		Tag next = mainTags.getNext();
 		Tag previous = mainTags.getPrevious();
@@ -259,6 +259,9 @@ public class TagsOverviewActivity extends Activity {
 		}
 	}
 	
+	/**
+	 * Updates the (maximum four) related tags for the center tag(s)
+	 */
 	private void updateRelatedTags(){
 		ArrayList<String> relTags = mainTags.getRelatedTags();
 		Tag centerTag = mainTags.get(0);

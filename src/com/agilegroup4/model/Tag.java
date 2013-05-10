@@ -58,7 +58,7 @@ public class Tag implements Comparable<Tag> {
 	 * Gets the related tags.
 	 * @returns Related tags.
 	 */
-	public ArrayList<Tag> getRelatedTags() {
+	private ArrayList<Tag> getRelatedTags() {
 		if(relatedTags == null)
 			relatedTags = TagHandler.getRelatedTags(this);
 		return relatedTags;
@@ -69,11 +69,11 @@ public class Tag implements Comparable<Tag> {
 	 * @param n the max number of tags returned
 	 * @returns Related tags.
 	 */
-	public ArrayList<Tag> getRelatedTags(int n) {
-		int nrToFetch = n < relatedTags.size() ? n : relatedTags.size();
+	private ArrayList<Tag> getRelatedTags(int n) {
+		int nrToFetch = n < getRelatedTags().size() ? n : getRelatedTags().size();
 		ArrayList<Tag> ret = new ArrayList<Tag>();
 		for (int i = 0; i < nrToFetch; i++)
-			ret.add(relatedTags.get(i));
+			ret.add(getRelatedTags().get(i));
 		return ret;
 	}
 	
@@ -84,11 +84,11 @@ public class Tag implements Comparable<Tag> {
 	 * @returns Related tags.
 	 */
 	public ArrayList<Tag> getRelatedTags(int n, ArrayList<Tag> exceptTags) {
-		int nrToFetch = n < relatedTags.size() ? n : relatedTags.size();
+		int nrToFetch = n < getRelatedTags().size() ? n : getRelatedTags().size();
 		ArrayList<Tag> ret = new ArrayList<Tag>();
 		@SuppressWarnings("unchecked")
 		ArrayList<Tag> relatedTagsWithoutExcept = new ArrayList<Tag>();
-		relatedTagsWithoutExcept.addAll(relatedTags);
+		relatedTagsWithoutExcept.addAll(getRelatedTags());
 		relatedTagsWithoutExcept.removeAll(exceptTags);
 		for (int i = 0; i < nrToFetch; i++)
 			ret.add(relatedTagsWithoutExcept.get(i));

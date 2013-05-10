@@ -171,8 +171,9 @@ public class LoginActivity extends Activity {
 	 * The return button at this screen shall always close the application(non-Javadoc)
 	 * @see android.app.Activity#onBackPressed()
 	 */
+	@Override
 	public void onBackPressed(){
-		System.exit(0);
+		moveTaskToBack (true);
 	}
 	
 	/**

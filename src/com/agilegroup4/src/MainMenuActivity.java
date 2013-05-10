@@ -1,5 +1,6 @@
 package com.agilegroup4.src;
 
+import com.agilegroup4.model.SearchMode;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -44,6 +45,7 @@ public class MainMenuActivity extends Activity {
 	@Override 
 	public boolean onSearchRequested() {
 	    System.out.println("search pressed");
+	    SearchableActivity.SearchMode = SearchMode.QUESTION_FREETEXT;
 	    return super.onSearchRequested();
 	}
 
@@ -117,7 +119,7 @@ public class MainMenuActivity extends Activity {
 				.setNegativeButton("Cancel", dialogClickListener).show();
 	}
 	
-	/*
+	/**
 	 * Returns the current main menu activity object.
 	 */
 	private MainMenuActivity getThis(){

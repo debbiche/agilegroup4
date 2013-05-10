@@ -1,5 +1,7 @@
 package com.agilegroup4.src;
 
+import java.util.ArrayList;
+
 import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import com.agilegroup4.infrastructure.QuestionHandler;
 import com.agilegroup4.model.QuestionList;
 import com.agilegroup4.model.SearchMode;
+import com.agilegroup4.model.Tag;
 
 /*
  * The searchable activity handles all the search bar searches in this application.
@@ -15,7 +18,8 @@ import com.agilegroup4.model.SearchMode;
 public class SearchableActivity extends ListActivity {
 
 	public static SearchMode SearchMode;
-
+	public static final int NUMBER_OF_ALLOWED_QUESTIONS = 1000;
+	
 	/*
      * The "constructor" for this activity
      * @param instanceState The instance state.
@@ -51,7 +55,7 @@ public class SearchableActivity extends ListActivity {
 				searchQuestionFreeText(query);
 				break;
 			case QUESTION_WITHTAGS:
-				searchQuestionByTags(query, TagsOverviewActivity.tagQuery); //provide tag query when middle tag button pressed
+				searchQuestionByTags(query, TagsOverviewActivity.mainTags); //provide tag query when middle tag button pressed
 				break;
 			default:
 				searchQuestionFreeText(query);
@@ -65,7 +69,7 @@ public class SearchableActivity extends ListActivity {
 	 * @param query The search query.
 	 */
 	private void searchQuestionFreeText(String query) { 
-		QuestionList searchResultQuestions = QuestionHandler.searchForQuestions(query, 60);
+		QuestionList searchResultQuestions = QuestionHandler.searchForQuestions(query, NUMBER_OF_ALLOWED_QUESTIONS);
 		//Creates a bundle and parce the the search result QuestionList
 		Bundle b = new Bundle();
         b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object
@@ -81,12 +85,12 @@ public class SearchableActivity extends ListActivity {
 	 * @param query The search query.
 	 * @param tag The tag
 	 */
-	private void searchQuestionByTags(String query, String tag) { 
+	private void searchQuestionByTags(String query, ArrayList<Tag> tags) { 
 		
 		if (query.equals("0"))
 			query = "";
 		
-		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag(query, tag, 60);
+		QuestionList searchResultQuestions = QuestionHandler.searchForQuestionsByTag(query, tags, NUMBER_OF_ALLOWED_QUESTIONS);
 		//Creates a bundle and parce the the search result QuestionList
 		Bundle b = new Bundle();
         b.putParcelable("questionsData", searchResultQuestions); //Insert list in a Bundle object

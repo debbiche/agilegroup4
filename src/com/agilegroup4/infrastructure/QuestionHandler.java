@@ -1,12 +1,12 @@
 package com.agilegroup4.infrastructure;
 
+import java.util.ArrayList;
 import android.content.Context;
 import android.database.Cursor;
-
 import com.agilegroup4.helpers.StringUtility;
-import com.agilegroup4.model.Answer;
 import com.agilegroup4.model.Question;
 import com.agilegroup4.model.QuestionList;
+import com.agilegroup4.model.Tag;
 import com.agilegroup4.src.DatabaseHandler;
 
 /*
@@ -15,22 +15,22 @@ import com.agilegroup4.src.DatabaseHandler;
 public class QuestionHandler extends DatabaseHandler {
 
 	//Holds the base query for relating questions and answers.
-	protected static String baseQuestionRawQuery = "SELECT R.id AS id, " +
-			"R.title AS title, " +
-			"R.body AS question, "  +
-			"D.body AS answer, " +
-			"R.answer_count, " +
-			"D.parent_id AS parentid, " +
-			"R.comment_count, " +
-			"D.id AS answer_id, " +
-			"D.comment_count, " +
-			"R.creation_date, " + 
-			"R.score, " +
-			"R.view_count, " +
-			"R.favorite_count, " +
-			"R.tags AS taggy " +
-			"FROM posts R INNER JOIN posts D ON " +
-			"D.parent_id = R.id";
+//	protected static String baseQuestionRawQuery = "SELECT R.id AS id, " +
+//			"R.title AS title, " +
+//			"R.body AS question, "  +
+//			"D.body AS answer, " +
+//			"R.answer_count, " +
+//			"D.parent_id AS parentid, " +
+//			"R.comment_count, " +
+//			"D.id AS answer_id, " +
+//			"D.comment_count, " +
+//			"R.creation_date, " + 
+//			"R.score, " +
+//			"R.view_count, " +
+//			"R.favorite_count, " +
+//			"R.tags AS taggy " +
+//			"FROM posts R INNER JOIN posts D ON " +
+//			"D.parent_id = R.id";
 			
 	
 	/*
@@ -54,12 +54,14 @@ public class QuestionHandler extends DatabaseHandler {
 			return new QuestionList();
 			
 		String searchTermLike = "%" + searchTerm + "%";
-		String rawQuery = baseQuestionRawQuery + " WHERE question LIKE ? " +
-				"OR answer LIKE ? " +
-				"OR R.title LIKE ? " + 
-				"ORDER BY R.title LIMIT ?";
+		String rawQuery = "SELECT id, title, body, comment_count, creation_date,  score, view_count, favorite_count, tags " +
+				"FROM posts " +
+				"WHERE post_type_id = 1 " +
+				"AND ( body LIKE ? " +
+				"OR title LIKE ? ) " +
+				"ORDER BY title LIMIT ?";
 		Cursor cursorQuestions = db.rawQuery(rawQuery,
-				new String[] { searchTermLike, searchTermLike, searchTermLike, Integer.toString(numberOfQuestions) });
+				new String[] { searchTermLike, searchTermLike, Integer.toString(numberOfQuestions) });
 		return parseQuestions(cursorQuestions);
 	}
 	
@@ -75,21 +77,30 @@ public class QuestionHandler extends DatabaseHandler {
 	 * id,title,body,comment_count,creation_date," +
 	 *								 "score,view_count,favorite_count,tags
 	 */
-	public static QuestionList searchForQuestionsByTag(String searchTerm, String tag, int numberOfQuestions) {
-		if(searchTerm.length() < 2)
-			return new QuestionList();
-			
-		String searchTermLike = "%" + searchTerm + "%";
-		tag = "%" + tag + "%";
+	public static QuestionList searchForQuestionsByTag(String searchTerm, ArrayList<Tag> tagList, int numberOfQuestions) {
+		// Create the query string that will be used in the rawQuery
+		// Add the first 'final' parts to the string
 		String rawQuery = "SELECT id, title, body, comment_count, creation_date,  score, view_count, favorite_count, tags " +
 				"FROM posts " +
-				"WHERE post_type_id = 1 " +
-				"AND ( ( body LIKE ? " +
-				"OR title LIKE ? ) " +
-				"AND tags LIKE ? ) " +
-				"ORDER BY title LIMIT ?";
-		Cursor cursorQuestions = db.rawQuery(rawQuery,
-				new String[] { searchTermLike, searchTermLike, tag, Integer.toString(numberOfQuestions) });
+				"WHERE post_type_id = 1";
+		
+		// Add the free text part
+		String searchTermLike = "\"%" + searchTerm + "%\"";
+		rawQuery += " AND ( ( body LIKE " + searchTermLike +
+				" OR title LIKE " + searchTermLike + " ) ";
+		
+		// Add the tags part
+		String tagSearchTerm;
+		tagSearchTerm = "tags LIKE \"%<" + tagList.get(0).getTagName() + ">%\"";
+		for(int i = 1; i < tagList.size(); i++)
+			tagSearchTerm += " AND tags LIKE \"%<" + tagList.get(i).getTagName() + ">%\"";
+		rawQuery += " AND ( " + tagSearchTerm + " ) )";
+		
+		// Add the limit part
+		rawQuery += " ORDER BY title LIMIT " + Integer.toString(numberOfQuestions);
+		
+		// Run the query
+		Cursor cursorQuestions = db.rawQuery(rawQuery, null);
 		return parseQuestions(cursorQuestions);
 	}
 

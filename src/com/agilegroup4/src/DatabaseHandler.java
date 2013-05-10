@@ -160,7 +160,7 @@ public class DatabaseHandler {
 						new String[] { Integer.toString(question.getId()) });
 		answersCursor.moveToFirst();
 		while (answersCursor.isAfterLast() == false) {
-			question.getAnswers().add(new Answer(answersCursor.getInt(0), answersCursor.getString(1), answersCursor.getInt(1)));
+			question.getAnswers().add(new Answer(answersCursor.getInt(0), answersCursor.getString(1), answersCursor.getInt(2)));
 			answersCursor.moveToNext();
 		}
 		answersCursor.close();

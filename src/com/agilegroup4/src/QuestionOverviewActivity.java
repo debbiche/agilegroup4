@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Gravity;
@@ -42,10 +43,19 @@ public class QuestionOverviewActivity extends Activity {
 	// Containing the questions in the question overview
 	ArrayList<Question> questions;
 	
-    static final String KEY_QUESTION = "question"; // parent node
+	// True if heat mode = ON
+	public static boolean HEAT = true;
+	public static String RED = "#FF0000";
+	public static String YELLOW = "#FFFF00";
+	public static String GREEN = "#00FF00";
+	public static int GREENSCORE = 300;
+	public static int YELLOWSCORE = 1000;
+	
+    static final String KEY_QUESTION = "question";
     static final String KEY_TITLE = "title";
     static final String KEY_TAGS = "answers";
     static final String KEY_SCORE = "score";
+    static final String KEY_COLOUR = "colour";
     private static LayoutInflater inflater=null;
     public ArrayList<HashMap<String,String>> data;
     
@@ -141,6 +151,7 @@ public class QuestionOverviewActivity extends Activity {
 			map.put(KEY_TITLE, questions.get(i).getTitle());
             map.put(KEY_TAGS, "Tags: " + questions.get(i).getTags());
             map.put(KEY_SCORE, "Score: " + Integer.toString(questions.get(i).getScore()));
+            map.put(KEY_COLOUR, calculateColour(questions.get(i)));
 			ids.put(i,questions.get(i));
 			qsList.add(map);
 		}
@@ -237,6 +248,19 @@ public class QuestionOverviewActivity extends Activity {
 	        tags.setText(q.get(QuestionOverviewActivity.KEY_TAGS));
 	        score.setText(q.get(QuestionOverviewActivity.KEY_SCORE));
 	        
+	        if(HEAT){
+	        	String col = q.get(QuestionOverviewActivity.KEY_COLOUR);
+	        	if(col.equals(RED)){
+	        		vi.setBackgroundColor(Color.RED);
+	        	}
+	        	else if(col.equals(YELLOW)){
+	        		vi.setBackgroundColor(Color.YELLOW);
+	        	}
+	        	else{
+	        		vi.setBackgroundColor(Color.GREEN);
+	        	}
+	        }
+	        
 	        return vi;
 	    }
 
@@ -300,6 +324,41 @@ public class QuestionOverviewActivity extends Activity {
 		
 		// refresh list
 		displayQuestions();
+	}
+	
+	/**
+	 * Turns the heat feature on/off.
+	 * @param view The view invoking this method.
+	 */
+	public void handleHeatOnClick(View view){
+		if(HEAT){
+			HEAT = false;
+			displayQuestions();
+		}
+		else{
+			HEAT = true;
+			displayQuestions();
+		}
+	}
+	
+	/**
+	 * Calculates the colour corresponding to score for a question
+	 * @param q the question
+	 * @return the score
+	 */
+	private String calculateColour(Question q){
+		int score = 0;
+		String colour = RED;
+		score = q.getViewCount();
+		score += (q.getScore() * 50);
+		score += (q.getFavoriteCount() * 100);
+		if(score<GREENSCORE)
+			colour = GREEN;
+		else if(score<YELLOWSCORE)
+			colour = YELLOW;
+		else
+			colour = RED;
+		return colour;
 	}
 	
 	/*

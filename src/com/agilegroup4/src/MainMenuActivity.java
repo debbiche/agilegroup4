@@ -55,8 +55,11 @@ public class MainMenuActivity extends Activity {
 	public void handleMenuItemOnClick(View view) {
 		Intent intent;
 		switch (view.getId()) {
-		case R.id.button_profile:
+		case R.id.button_profile:	
+			//send id of current logged in user to UserProfileActivity
+			SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
 			intent = new Intent(this, UserProfileActivity.class);
+			intent.putExtra("loggedInUser", Integer.toString(settings.getInt("userID", 0)));
 			startActivity(intent);
 			break;
 		case R.id.button_questions:

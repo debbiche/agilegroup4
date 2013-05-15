@@ -80,7 +80,7 @@ public class QuestionHandler extends DatabaseHandler {
 	public static QuestionList searchForQuestionsByTag(String searchTerm, ArrayList<Tag> tagList, int numberOfQuestions) {
 		// Create the query string that will be used in the rawQuery
 		// Add the first 'final' parts to the string
-		String rawQuery = "SELECT id, title, body, comment_count, creation_date,  score, view_count, favorite_count, tags, owner_user_id" +
+		String rawQuery = "SELECT id, title, body, comment_count, creation_date,  score, view_count, favorite_count, tags, owner_user_id " +
 				"FROM posts " +
 				"WHERE post_type_id = 1";
 		

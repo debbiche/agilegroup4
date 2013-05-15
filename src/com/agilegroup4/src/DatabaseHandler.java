@@ -154,7 +154,7 @@ public class DatabaseHandler {
 		}
 		
 	}
-	
+	//TODO: get user id
 	public static ArrayList<Answer> getAnswers(Question question){
 		Cursor answersCursor = db
 				.rawQuery("SELECT id,body,comment_count FROM posts WHERE post_type_id = 2 AND parent_id = ?",
@@ -168,7 +168,7 @@ public class DatabaseHandler {
 		return question.getAnswers();
 	}
 	
-	
+	//TODO: get user id
 	public static ArrayList<Comment> getComments(int id){
 		ArrayList<Comment> comments = new ArrayList<Comment>();
 		

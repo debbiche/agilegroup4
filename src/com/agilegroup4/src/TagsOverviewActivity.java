@@ -14,6 +14,7 @@ import android.view.View.OnLongClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.graphics.*;
 
 import com.agilegroup4.infrastructure.QuestionHandler;
 import com.agilegroup4.model.QuestionList;
@@ -78,6 +79,14 @@ public class TagsOverviewActivity extends Activity {
 		buttonFive = (Button) findViewById(R.id.button5);
 		buttonSix = (Button) findViewById(R.id.button6);
 		buttonSeven = (Button) findViewById(R.id.button7);
+		
+		buttonOne.getBackground().setColorFilter(Color.CYAN,PorterDuff.Mode.MULTIPLY);
+		buttonTwo.getBackground().setColorFilter(Color.BLUE,PorterDuff.Mode.MULTIPLY);
+		buttonThree.getBackground().setColorFilter(Color.GREEN,PorterDuff.Mode.MULTIPLY);
+		buttonFour.getBackground().setColorFilter(Color.RED,PorterDuff.Mode.MULTIPLY);
+		buttonFive.getBackground().setColorFilter(Color.MAGENTA,PorterDuff.Mode.MULTIPLY);
+		buttonSix.getBackground().setColorFilter(Color.TRANSPARENT,PorterDuff.Mode.MULTIPLY);
+		buttonSeven.getBackground().setColorFilter(Color.YELLOW,PorterDuff.Mode.MULTIPLY);
 
 		longClickListener = new OnLongClickListener() {
 

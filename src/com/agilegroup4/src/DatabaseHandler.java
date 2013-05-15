@@ -130,7 +130,7 @@ public class DatabaseHandler {
 		if (queriedQuestions == 0) {
 			Cursor questionsCursor = db
 					.rawQuery("SELECT id,title,body,comment_count,creation_date, " +
-									 "score, view_count, favorite_count, tags FROM posts " +
+									 "score, view_count, favorite_count, tags, owner_user_id FROM posts " +
 									 "WHERE post_type_id = 1 LIMIT ?",
 							new String[] { Integer.toString(numberOfQuestions) });
 
@@ -145,7 +145,8 @@ public class DatabaseHandler {
 										   questionsCursor.getInt(5), // score
 										   questionsCursor.getInt(6), // view count
 										   questionsCursor.getInt(7),
-										   questionsCursor.getString(8))); // tag
+										   questionsCursor.getString(8), // tag
+										   questionsCursor.getInt(9)));// get owner_user_id
 				questionsCursor.moveToNext();
 			}	
 			questionsCursor.close();

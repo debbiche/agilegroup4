@@ -87,7 +87,6 @@ public class CommentsActivity extends Activity {
      */
 	@Override
 	public boolean onSearchRequested() {
-	    System.out.println("search pressed");
 	    return super.onSearchRequested();
 	}
 	

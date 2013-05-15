@@ -5,4 +5,10 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/menuitem_mainmenu"/>
+     
+     <item
+        android:id="@+id/menuitem_user_profile"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/menuitem_user_profile"/>
 </menu>

@@ -318,7 +318,6 @@ public class QuestionOverviewActivity extends Activity {
 	 */
 	@Override //invoked when Searchbutton pressed, just for testing
 	public boolean onSearchRequested() {
-	    System.out.println("search pressed");
 	    return super.onSearchRequested();
 	}
 

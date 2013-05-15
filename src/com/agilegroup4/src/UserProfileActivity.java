@@ -5,9 +5,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class UserProfileActivity extends Activity {
 
+	private int userId;
+	
 	/*
      * The "constructor" for this activity
      * @param instanceState The instance state.
@@ -19,6 +22,17 @@ public class UserProfileActivity extends Activity {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_profile);
+		
+		//get ownerId from activity that called UserProfileActivity and convert to int
+		userId = Integer.parseInt(this.getIntent().getStringExtra("ownerId"));
+		
+		//TODO: query database with user id and present in some pretty way
+		System.out.println("profile of owner id: " + userId);
+	
+		//Temporary set top text view in activity to user id
+        TextView userIdText = (TextView) findViewById(R.id.userIdTitle); 
+        userIdText.setText(Integer.toString(userId));
+
 	}
 
 	/*

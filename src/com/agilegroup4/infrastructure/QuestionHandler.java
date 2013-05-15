@@ -54,7 +54,7 @@ public class QuestionHandler extends DatabaseHandler {
 			return new QuestionList();
 			
 		String searchTermLike = "%" + searchTerm + "%";
-		String rawQuery = "SELECT id, title, body, comment_count, creation_date,  score, view_count, favorite_count, tags " +
+		String rawQuery = "SELECT id, title, body, comment_count, creation_date,  score, view_count, favorite_count, tags, owner_user_id " +
 				"FROM posts " +
 				"WHERE post_type_id = 1 " +
 				"AND ( body LIKE ? " +
@@ -80,7 +80,7 @@ public class QuestionHandler extends DatabaseHandler {
 	public static QuestionList searchForQuestionsByTag(String searchTerm, ArrayList<Tag> tagList, int numberOfQuestions) {
 		// Create the query string that will be used in the rawQuery
 		// Add the first 'final' parts to the string
-		String rawQuery = "SELECT id, title, body, comment_count, creation_date,  score, view_count, favorite_count, tags " +
+		String rawQuery = "SELECT id, title, body, comment_count, creation_date,  score, view_count, favorite_count, tags, owner_user_id" +
 				"FROM posts " +
 				"WHERE post_type_id = 1";
 		
@@ -123,7 +123,8 @@ public class QuestionHandler extends DatabaseHandler {
 									   cursor.getInt(5), 	// score
 									   cursor.getInt(6), 	// view count
 									   cursor.getInt(7),	// favorite count
- 									   cursor.getString(8))); //get tags
+ 									   cursor.getString(8), //get tags
+									   cursor.getInt(9)));// get ownerUserId
 
 			cursor.moveToNext();
 		}

@@ -23,6 +23,7 @@ public class Question implements Parcelable {
 	private String tags;
 	private AnswerList answers = new AnswerList();
 	private boolean queriedAnswers = false;
+	private int ownerUserId;
 	
 	/*
 	 * Creates a new question
@@ -36,7 +37,7 @@ public class Question implements Parcelable {
 	 * @param tag The tag for this question
 	 */
 	public Question(int id, String title, String body, int comment_count,
-					Date creation_date, int score, int viewCount, int favoriteCount, String tags){
+					Date creation_date, int score, int viewCount, int favoriteCount, String tags, int ownerUserId){
 		this.title = title;
 		this.body = body;
 		this.commentCount = comment_count;
@@ -45,6 +46,7 @@ public class Question implements Parcelable {
 		this.score = score;
 		this.favoriteCount = favoriteCount;
 		this.tags = tags;
+		this.ownerUserId = ownerUserId;
 	}
 	
 	/*
@@ -61,6 +63,7 @@ public class Question implements Parcelable {
 		this.favoriteCount = in.readInt();
 		this.answers = in.readParcelable(Answer.class.getClassLoader());
 		this.tags = in.readString();
+		this.ownerUserId = in.readInt();
 	}
 	
 	/*
@@ -78,8 +81,10 @@ public class Question implements Parcelable {
 		out.writeInt(favoriteCount);
 		out.writeParcelable(answers, flags);
 		out.writeString(tags);
+		out.writeInt(ownerUserId);
 	}
 	
+
 	/*
 	 * Gets the number of comments for this question.
 	 * @returns number of comments.
@@ -271,6 +276,15 @@ public class Question implements Parcelable {
 	public void setQueriedAnswers(boolean queriedAnswers) {
 		this.queriedAnswers = queriedAnswers;
 	}
+	
+	public int getOwnerUserId() {
+		return ownerUserId;
+	}
+
+	public void setOwnerUserId(int ownerUserId) {
+		this.ownerUserId = ownerUserId;
+	}
+
 
 	/*
 	 * Creates a new question based on a Parcel.

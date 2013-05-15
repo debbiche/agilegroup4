@@ -44,7 +44,6 @@ public class MainMenuActivity extends Activity {
 	 */
 	@Override 
 	public boolean onSearchRequested() {
-	    System.out.println("search pressed");
 	    SearchableActivity.SearchMode = SearchMode.QUESTION_FREETEXT;
 	    return super.onSearchRequested();
 	}

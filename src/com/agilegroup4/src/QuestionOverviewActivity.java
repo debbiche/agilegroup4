@@ -73,10 +73,11 @@ public class QuestionOverviewActivity extends Activity {
 		SharedPreferences settings = getSharedPreferences(
 				LoginActivity.PREFS_NAME, 0);
 
-		getIntentData();		
+		getIntentData();
 		displayQuestions();
-		//sort for latest questions at start
-		Collections.sort(questions, new LatestComparator());
+		
+		// question overview is a news feed since may 16th --> filter by latest
+		filterLatest(null);
 	}
 		
 	public void getIntentData(){
@@ -280,7 +281,9 @@ public class QuestionOverviewActivity extends Activity {
 		CharSequence text = "Sorting questions by creation date.";
 		int duration = Toast.LENGTH_LONG;
 
-		Toast.makeText(context, text, duration).show();		
+		// don't show toast when function was called internally
+		if (view != null)
+			Toast.makeText(context, text, duration).show();		
 		
 		// refresh list
 		displayQuestions();
@@ -306,7 +309,7 @@ public class QuestionOverviewActivity extends Activity {
 		displayQuestions();
 	}
 	
-	/*
+	/**
 	 * sort questions in questions object by amount of answers and comments
 	 * and if the answer was accepted
 	 * for more information see the AnsweredComparator class
@@ -320,7 +323,7 @@ public class QuestionOverviewActivity extends Activity {
 		Context context = getApplicationContext();
 		CharSequence text = "Sorting questions by amount of answers, accepted answers and comments.";
 		int duration = Toast.LENGTH_LONG;
-
+	
 		Toast.makeText(context, text, duration).show();
 		
 		// refresh list

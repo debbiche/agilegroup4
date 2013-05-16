@@ -11,15 +11,17 @@ public class Comment {
 	private int id;
 	private String text;
 	private int parent_id;
+	private int ownerId;
 	
 	/*
 	 * Creates a new comment
 	 * @param id The comment id
 	 * @param text The comment
 	 */
-	public Comment(int id, String text){
+	public Comment(int id, String text, int user_id){
 		this.id = id;
 		this.text = text;
+		this.ownerId = user_id;
 	}
 	
 	/*
@@ -30,6 +32,7 @@ public class Comment {
 		this.id = in.readInt();
 		this.parent_id = in.readInt();
 		this.text = in.readString();
+		this.ownerId = in.readInt();
 	}
 	
 	/*
@@ -41,7 +44,8 @@ public class Comment {
 		out.writeInt(id);
 		out.writeInt(parent_id);
 		out.writeString(text);
-	}
+		out.writeInt(ownerId);
+		}
 	
 	/*
 	 * Gets the comment text.
@@ -73,6 +77,14 @@ public class Comment {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public int getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
 	}
 	
 	/*

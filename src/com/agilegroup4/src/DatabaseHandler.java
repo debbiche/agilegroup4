@@ -157,11 +157,14 @@ public class DatabaseHandler {
 	//TODO: get user id
 	public static ArrayList<Answer> getAnswers(Question question){
 		Cursor answersCursor = db
-				.rawQuery("SELECT id,body,comment_count FROM posts WHERE post_type_id = 2 AND parent_id = ?",
+				.rawQuery("SELECT id,body,comment_count, owner_user_id FROM posts WHERE post_type_id = 2 AND parent_id = ?",
 						new String[] { Integer.toString(question.getId()) });
 		answersCursor.moveToFirst();
 		while (answersCursor.isAfterLast() == false) {
-			question.getAnswers().add(new Answer(answersCursor.getInt(0), answersCursor.getString(1), answersCursor.getInt(2)));
+			question.getAnswers().add(new Answer(answersCursor.getInt(0),	//id
+													answersCursor.getString(1), //body
+													answersCursor.getInt(2),	//comment_couont
+													answersCursor.getInt(3))); //owner_user_id
 			answersCursor.moveToNext();
 		}
 		answersCursor.close();
@@ -173,12 +176,13 @@ public class DatabaseHandler {
 		ArrayList<Comment> comments = new ArrayList<Comment>();
 		
 		Cursor commentsCursor = db.rawQuery(
-				"SELECT id,text FROM comments"
+				"SELECT id,text,user_id FROM comments"
 						+ " WHERE post_id = " + id, null);
 		commentsCursor.moveToFirst();
 		while (commentsCursor.isAfterLast() == false) {
-			comments.add(new Comment(commentsCursor.getInt(0),
-					commentsCursor.getString(1)));
+			comments.add(new Comment(commentsCursor.getInt(0), // id
+					commentsCursor.getString(1), //text
+					commentsCursor.getInt(2)));  //owner_user_id
 			commentsCursor.moveToNext();
 		}
 		commentsCursor.close();

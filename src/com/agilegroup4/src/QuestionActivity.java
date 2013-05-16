@@ -16,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,6 +44,8 @@ public class QuestionActivity extends Activity {
 	
     static final String KEY_ANSWER = "answer"; // parent node
     static final String KEY_NR_OF_COMMENTS = "nr_of_comments";
+    static final String KEY_USERNAME = "username";
+    static final String KEY_USERID = "userid";
     private static LayoutInflater inflater=null;
     public ArrayList<HashMap<String,String>> data;
 	
@@ -102,6 +106,12 @@ public class QuestionActivity extends Activity {
 		return (a.getCommentCount() > 0);
 	}
 	
+	//TODO: send to profile
+    public void gotoUserProfile(View view){
+    	System.out.println("hej");
+    	
+    	//@+id/answer
+    }
 	
 	/*
 	 * Displays the content
@@ -151,6 +161,8 @@ public class QuestionActivity extends Activity {
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put(KEY_ANSWER, StringUtility.convertHTMLtoString(answers.get(i).getBody()));
             map.put(KEY_NR_OF_COMMENTS, "Comments: " + Integer.toString(answers.get(i).getCommentCount()));
+            map.put(KEY_USERNAME, DatabaseHandler.getUserById(answers.get(i).getOwnerId()).getDisplay_name());
+            map.put(KEY_USERID, Integer.toString(answers.get(i).getOwnerId()));
 			asList.add(map);
 			ids.put(i, answers.get(i).getId());
 		}
@@ -238,6 +250,7 @@ public class QuestionActivity extends Activity {
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
+	
 	/*
 	 * Puts the elements in the listview.
 	 */
@@ -294,16 +307,31 @@ public class QuestionActivity extends Activity {
 	 
 	        TextView answer = (TextView)vi.findViewById(R.id.answer); 
 	        TextView nr_of_comments = (TextView)vi.findViewById(R.id.nr_of_comments);
-	 
+	        Button bt = (Button) vi.findViewById(R.id.gotoAnswersProfileButton); 
+	        
 	        HashMap<String, String> q = new HashMap<String, String>();
 	        q = data.get(position);
 	 
 	        // Setting all values in listview
 	        answer.setText(q.get(KEY_ANSWER));
 	        nr_of_comments.setText(q.get(KEY_NR_OF_COMMENTS));
+	        bt.setText(q.get(KEY_USERNAME));
+	        // int versionen => final int user_id = Integer.parseInt(q.get(KEY_USERID));
+	        final String user_id = q.get(KEY_USERID);
+	        
+	        bt.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+		        	Intent intent = new Intent(getThis(), UserProfileActivity.class);
+					intent.putExtra("ownerId", user_id);
+					startActivity(intent);					
+				}
+			});
 	        
 	        return vi;
 	    }
+	    
 
 	}	private class loadAnswers extends AsyncTask<Object, Object, Object>{
 

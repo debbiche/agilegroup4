@@ -12,6 +12,7 @@ public class Answer implements Parcelable {
 	private String body;
 	private int parent_id;
 	private int comment_count;
+	private int ownerId;
 	
 	/*
 	 * Creates a new answer
@@ -19,12 +20,21 @@ public class Answer implements Parcelable {
 	 * @param body The answer body
 	 * @param comment_count The number of comments.
 	 */
-	public Answer(int id, String body, int comment_count){
+	public Answer(int id, String body, int comment_count, int owner_user_id){
 		this.body = body;
 		this.comment_count = comment_count;
 		this.setId(id);
+		this.ownerId = owner_user_id;
 	}
 	
+	public int getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
+
 	/*
 	 * Creates a new answer based on a Parcel.
 	 * @param in The parcel to create a new answer from.

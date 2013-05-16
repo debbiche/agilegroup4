@@ -1,9 +1,20 @@
 package com.agilegroup4.src;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
@@ -44,12 +55,26 @@ public class UserProfileActivity extends Activity {
 		TextView userDisplayNameTextView = (TextView) findViewById(R.id.userDisplayName); 
 		TextView userAgeTextView = (TextView) findViewById(R.id.userAge); 
 		TextView userLocationTextView = (TextView) findViewById(R.id.userLocation); 
-		WebView profilePictureWebView = (WebView) findViewById(R.id.profilePictureWebView); 
+		ImageView profilePictureImageView = (ImageView) findViewById(R.id.profilePictureImageView); 
 		
 		userDisplayNameTextView.setText(user.getFriendlyDisplayName());
 		userAgeTextView.setText(Integer.toString(user.getAge()));
 		userLocationTextView.setText(user.getLocation());
-		profilePictureWebView.loadUrl("http://www.gravatar.com/avatar/729442eea8d8548842a6e0947e333c7b?s=48&d=identicon&r=PG");
+		Bitmap bitmapPicture = loadBitmap("http://www.gravatar.com/avatar/729442eea8d8548842a6e0947e333c7b?s=48&d=identicon&r=PG");
+		profilePictureImageView.setImageBitmap(bitmapPicture);
+	}
+	
+	public Bitmap loadBitmap(String url) {
+		Bitmap bitmap = null;
+		try {
+			bitmap = BitmapFactory.decodeStream((InputStream)new URL(url).getContent());
+			  
+			} catch (MalformedURLException e) {
+			  e.printStackTrace();
+			} catch (IOException e) {
+			  e.printStackTrace();
+			}
+		return bitmap;
 	}
 	
 	/*

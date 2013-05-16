@@ -10,23 +10,27 @@
 
     <Button android:id="@+id/latestButton" android:layout_width="0dp"
         android:layout_height="wrap_content" android:layout_weight="1"
-        android:text="@string/button_filter1" 
-		android:onClick="filterLatest"	/>
+        android:text="@string/button_filter1" android:textSize="12dip"
+		android:onClick="filterLatest" android:textColor="#040404"
+        android:typeface="sans"	/>
 
     <Button android:id="@+id/importantButton" android:layout_width="0dp"
         android:layout_height="wrap_content" android:layout_weight="1"
-        android:text="@string/button_filter2"
-        android:onClick="filterImportant" />
+        android:text="@string/button_filter2" android:textSize="12dip"
+        android:onClick="filterImportant" android:textColor="#040404"
+        android:typeface="sans" />
     
     <Button android:id="@+id/answeredButton" android:layout_width="0dp"
         android:layout_height="wrap_content" android:layout_weight="1"
-        android:text="@string/button_filter3"
-        android:onClick="filterAnswers" />
+        android:text="@string/button_filter3" android:textSize="12dip"
+        android:onClick="filterAnswers" android:textColor="#040404"
+        android:typeface="sans" />
     
     <Button android:id="@+id/heatButton" android:layout_width="0dp"
         android:layout_height="wrap_content" android:layout_weight="1"
-        android:text="@string/button_heat"
-        android:onClick="handleHeatOnClick" />
+        android:text="@string/button_heat" android:textSize="12dip"
+        android:onClick="handleHeatOnClick" android:textColor="#040404"
+        android:typeface="sans" />
 	</LinearLayout>
     
     <ListView

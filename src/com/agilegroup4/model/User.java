@@ -262,7 +262,7 @@ public class User {
 	 * @returns the user display name.
 	 */
 	public String getFriendlyDisplayName() {
-		return display_name + " (" + id + ")";
+		return display_name + " (" + age + ")";
 	}
 
 	/*

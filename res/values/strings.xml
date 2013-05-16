@@ -14,7 +14,7 @@
     <string name="title_activity_question_overview">Question Overview</string>
     <string name="title_activity_main_menu">Main Menu</string>
     <string name="button_users">Users</string>
-    <string name="button_questions">Questions</string>
+    <string name="button_questions">Newsfeed</string>
     <string name="button_tags">Tags</string>
     <string name="button_search">Search</string>
     <string name="button_profile">Profile</string>
@@ -40,4 +40,7 @@
     <color name="titletextcolor">#FFFF00</color>
     <string name="comments_button">Goto User</string>
     
+    <string name="userCreatedHeader">Registrated:</string>
+    <string name="userLocationHeader">Location:</string>
+    <string name="userLastSeenHeader">Last seen:</string>
 </resources>

@@ -18,56 +18,116 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:textIsSelectable="true"
+        android:textSize="14sp"
+        android:paddingBottom="5dp"
+    />
+    <TextView
+        android:id="@+id/userReputation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:textIsSelectable="true"
+        android:textSize="14sp"
+        android:textColor="#FFD700"
+        android:paddingBottom="5dp"
     />
     <View
     	android:layout_width="fill_parent"
 		android:layout_height="2dip"
-		android:background="#000000" 
+		android:background="#CCCCCC" 
 		android:layout_below="@id/userDisplayName"
 	/>
-    
 </RelativeLayout>
-    
 <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="0dp"
-    android:layout_weight=".20">
+    android:layout_weight=".25"
+    >
 	
     <ImageView
 	    android:id="@+id/profilePictureImageView"
-	    android:layout_width="48dp"
-	    android:layout_height="48dp"
-	    android:background="@drawable/image_view_white_border"
+	    android:layout_width="96dp"
+	    android:layout_height="96dp"
 	    android:layout_alignParentTop="true" 
     />
-    
+
     <TextView
-        android:id="@+id/userAge"
+        android:id="@+id/userLocationHeader"
+        android:textSize="8sp"
+        android:text="@string/userLocationHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profilePictureImageView"
+        android:layout_toRightOf="@id/profilePictureImageView"
         android:textIsSelectable="true"
+        android:paddingLeft="10dp"
     />
-
     <TextView
         android:id="@+id/userLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/profilePictureImageView"
+        android:layout_below="@id/userLocationHeader"
         android:textIsSelectable="true"
+        android:paddingLeft="10dp"
+        android:paddingBottom="4dp"
+    />
+    <TextView
+        android:id="@+id/userCreatedHeader"
+        android:textSize="8sp"
+        android:text="@string/userCreatedHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/profilePictureImageView"
+        android:layout_below="@id/userLocation"
+        android:textIsSelectable="true"
+        android:paddingLeft="10dp"
+    />
+     <TextView
+        android:id="@+id/userCreated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/profilePictureImageView"
+        android:layout_below="@id/userCreatedHeader"
+        android:textIsSelectable="true"
+        android:paddingLeft="10dp"
+        android:paddingBottom="4dp"
+    />
+    <TextView
+        android:id="@+id/userLastSeenHeader"
+        android:textSize="8sp"
+        android:text="@string/userLastSeenHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/profilePictureImageView"
+        android:layout_below="@id/userCreated"
+        android:textIsSelectable="true"
+        android:paddingLeft="10dp"
+    />
+     <TextView
+        android:id="@+id/userLastSeen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/profilePictureImageView"
+        android:layout_below="@id/userLastSeenHeader"
+        android:textIsSelectable="true"
+        android:paddingLeft="10dp"
+        android:paddingBottom="4dp"
     />
     
 </RelativeLayout>
 <RelativeLayout 
     android:layout_width="fill_parent"
     android:layout_height="0dp"
-    android:layout_weight=".70">
+    android:layout_weight=".65"
+    android:paddingTop="15dp"
+    >
 	
-    <TextView
+    <WebView
         android:id="@+id/userAbout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:textIsSelectable="true"
+        android:scrollbars="vertical"
     />
     
 </RelativeLayout>

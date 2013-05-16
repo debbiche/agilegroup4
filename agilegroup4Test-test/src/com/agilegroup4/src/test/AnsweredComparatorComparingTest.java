@@ -21,8 +21,8 @@ public class AnsweredComparatorComparingTest extends TestCase {
 		aComp = new AnsweredComparator();
 		
 		//Question(id, title, body, comment count, date of creation, score, view count, favorite count)
-		q1 = new Question(0,"","", 1000,new Date(0), 0,0,0, "");
-		q2 = new Question(1,"","", 1,new Date(0), 0,0,0, "");
+		q1 = new Question(0,"","", 1000,new Date(0), 0,0,0, "", 0); //added owner id as 0
+		q2 = new Question(1,"","", 1,new Date(0), 0,0,0, "", 0); //added owner id as 0
 		q1.setAnswerCount(1000);
 		q2.setAnswerCount(1);
 	}

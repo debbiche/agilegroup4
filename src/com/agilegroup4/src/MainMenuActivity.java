@@ -66,20 +66,12 @@ public class MainMenuActivity extends Activity {
 			intent = new Intent(this, QuestionOverviewActivity.class);
 			startActivity(intent);
 			break;
-		case R.id.button_users:
-			intent = new Intent(this, UsersActivity.class);
-			startActivity(intent);
-			break;
 		case R.id.button_tags:
 			intent = new Intent(this, TagsOverviewActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.button_search:
 			onSearchRequested();
-			break;
-		case R.id.button_settings:
-			intent = new Intent(this, SettingsActivity.class);
-			startActivity(intent);
 			break;
 		case R.id.button_logout:
 			// Check if the user really wants to log out.

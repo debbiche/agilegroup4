@@ -192,7 +192,7 @@ public class CommentsActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 		        	Intent intent = new Intent(getThis(), UserProfileActivity.class);
-					intent.putExtra("ownerId", user_id);
+					intent.putExtra("userID", Integer.parseInt(user_id));
 					startActivity(intent);					
 				}
 

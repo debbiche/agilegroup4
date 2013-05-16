@@ -106,13 +106,6 @@ public class QuestionActivity extends Activity {
 		return (a.getCommentCount() > 0);
 	}
 	
-	//TODO: send to profile
-    public void gotoUserProfile(View view){
-    	System.out.println("hej");
-    	
-    	//@+id/answer
-    }
-	
 	/*
 	 * Displays the content
 	 */
@@ -240,10 +233,8 @@ public class QuestionActivity extends Activity {
 				startActivity(intent);
 	            return true;
 	        case R.id.menuitem_user_profile:
-	        	System.out.println("owner id: " + question.getOwnerUserId());
-	        	
 	        	intent = new Intent(this, UserProfileActivity.class);
-				intent.putExtra("ownerId", Integer.toString(question.getOwnerUserId()));
+				intent.putExtra("userID", question.getOwnerUserId());
 				startActivity(intent);
 	            return true;
 	        default:
@@ -324,7 +315,7 @@ public class QuestionActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 		        	Intent intent = new Intent(getThis(), UserProfileActivity.class);
-					intent.putExtra("ownerId", user_id);
+					intent.putExtra("userID", Integer.parseInt(user_id));
 					startActivity(intent);					
 				}
 			});

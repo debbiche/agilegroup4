@@ -48,7 +48,7 @@ public class UserProfileActivity extends Activity {
 				//get model of currentUser from database
 				loggedInUserId = Integer.parseInt(getIntent().getStringExtra("loggedInUser"));
 				currentUser = DatabaseHandler.getUserById(loggedInUserId);
-
+				
 				//Temporarily display some user information in activity
 				TextView userIdText = (TextView) findViewById(R.id.userIdTitle); 
 				userIdText.setText(Integer.toString(userId)+ "\nname: " + currentUser.getDisplay_name() + "\nAbout: " + Html.fromHtml(currentUser.getAbout_me()).toString());

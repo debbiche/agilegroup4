@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.agilegroup4.helpers.StringUtility;
@@ -40,13 +42,14 @@ public class UserProfileActivity extends Activity {
 	{
 		TextView userAboutTextView = (TextView) findViewById(R.id.userAbout); 
 		TextView userDisplayNameTextView = (TextView) findViewById(R.id.userDisplayName); 
-		//TextView userAgeTextView = (TextView) findViewById(R.id.userAge); 
+		TextView userAgeTextView = (TextView) findViewById(R.id.userAge); 
 		TextView userLocationTextView = (TextView) findViewById(R.id.userLocation); 
+		WebView profilePictureWebView = (WebView) findViewById(R.id.profilePictureWebView); 
 		
 		userDisplayNameTextView.setText(user.getFriendlyDisplayName());
-		//userAgeTextView.setText(Integer.toString(user.getAge()));
+		userAgeTextView.setText(Integer.toString(user.getAge()));
 		userLocationTextView.setText(user.getLocation());
-		userAboutTextView.setText(Html.fromHtml(StringUtility.removeBackslashNFromString(user.getAbout_me())));
+		profilePictureWebView.loadUrl("http://www.gravatar.com/avatar/729442eea8d8548842a6e0947e333c7b?s=48&d=identicon&r=PG");
 	}
 	
 	/*

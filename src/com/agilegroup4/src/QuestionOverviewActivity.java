@@ -73,8 +73,10 @@ public class QuestionOverviewActivity extends Activity {
 		SharedPreferences settings = getSharedPreferences(
 				LoginActivity.PREFS_NAME, 0);
 
-		getIntentData();
+		getIntentData();		
 		displayQuestions();
+		//sort for latest questions at start
+		Collections.sort(questions, new LatestComparator());
 	}
 		
 	public void getIntentData(){
@@ -134,7 +136,7 @@ public class QuestionOverviewActivity extends Activity {
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 		}
-		
+				
 		ArrayList<HashMap<String, String>> qsList = new ArrayList<HashMap<String, String>>();
 		
 		// Make sure that we are expecting too many questions

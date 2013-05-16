@@ -206,6 +206,7 @@ public class TagsOverviewActivity extends Activity {
 			center = left;
 			break;
 		case R.id.button4:
+			center = mainTags.toString();
 			onSearchRequested();
 			break;
 		case R.id.button5:

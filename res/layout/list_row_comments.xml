@@ -21,8 +21,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+      	android:layout_below="@id/text"
         android:onClick="gotoUserProfile"
         android:focusable="false"
+       
         android:text="comments_button" />
    
 </RelativeLayout>

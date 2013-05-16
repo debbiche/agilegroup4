@@ -12,7 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +30,8 @@ public class CommentsActivity extends Activity {
 	private ArrayList<Comment> comments;
 	
     static final String KEY_COMMENT = "comment";
+    static final String KEY_USERNAME = "username";
+    static final String KEY_USERID = "userid";
     private static LayoutInflater inflater=null;
     public ArrayList<HashMap<String,String>> data;
 	
@@ -76,15 +80,6 @@ public class CommentsActivity extends Activity {
 	        case R.id.menuitem_search:
 	        	onSearchRequested();
 	            return true;
-	            
-	    
-	        case R.id.menuitem_user_profile: //TODO:
-	        	//System.out.println("owner id: " + comment.getOwnerUserId());
-	        	
-	        	intent = new Intent(this, UserProfileActivity.class);
-				//intent.putExtra("ownerId", Integer.toString(comment.getOwnerUserId()));
-				startActivity(intent);
-	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -110,6 +105,8 @@ public class CommentsActivity extends Activity {
 		for (int i = 0; i < comments.size(); i++){
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put(KEY_COMMENT, StringUtility.convertHTMLtoString(comments.get(i).getText()));
+		    map.put(KEY_USERNAME, DatabaseHandler.getUserById(comments.get(i).getOwnerId()).getDisplay_name());
+	        map.put(KEY_USERID, Integer.toString(comments.get(i).getOwnerId()));
 			csList.add(map);
 		}
 
@@ -179,15 +176,39 @@ public class CommentsActivity extends Activity {
 	            vi = inflater.inflate(R.layout.list_row_comments, null);
 	 
 	        TextView text = (TextView)vi.findViewById(R.id.text);
+	        Button bt = (Button) vi.findViewById(R.id.gotoCommentsProfileButton); 
 	 
 	        HashMap<String, String> q = new HashMap<String, String>();
 	        q = data.get(position);
+	        bt.setText(q.get(KEY_USERNAME));
 	 
 	        // Setting all values in listview
 	        text.setText(q.get(KEY_COMMENT));
 	        
+	        final String user_id = q.get(KEY_USERID);
+	        
+	        bt.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+		        	Intent intent = new Intent(getThis(), UserProfileActivity.class);
+					intent.putExtra("ownerId", user_id);
+					startActivity(intent);					
+				}
+
+			
+			});
+	        
 	        return vi;
 	    }
-
+	    
+	    
+	
+	}
+	/*
+	 * Returns the current comments activity object.
+	 */
+	private CommentsActivity getThis() {
+		return this;
 	}
 }

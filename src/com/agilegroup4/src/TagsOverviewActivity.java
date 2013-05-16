@@ -27,7 +27,7 @@ public class TagsOverviewActivity extends Activity {
 	// workaround for passing tag query to searchableActivity
 
 	public static String tagQuery = "";
-
+	private boolean heatOn = true;
 	
 	// Contains the combined tags in the center button
 	public static TagList mainTags;
@@ -80,14 +80,6 @@ public class TagsOverviewActivity extends Activity {
 		buttonSix = (Button) findViewById(R.id.button6);
 		buttonSeven = (Button) findViewById(R.id.button7);
 		
-		buttonOne.getBackground().setColorFilter(Color.CYAN,PorterDuff.Mode.MULTIPLY);
-		buttonTwo.getBackground().setColorFilter(Color.BLUE,PorterDuff.Mode.MULTIPLY);
-		buttonThree.getBackground().setColorFilter(Color.GREEN,PorterDuff.Mode.MULTIPLY);
-		buttonFour.getBackground().setColorFilter(Color.RED,PorterDuff.Mode.MULTIPLY);
-		buttonFive.getBackground().setColorFilter(Color.MAGENTA,PorterDuff.Mode.MULTIPLY);
-		buttonSix.getBackground().setColorFilter(Color.TRANSPARENT,PorterDuff.Mode.MULTIPLY);
-		buttonSeven.getBackground().setColorFilter(Color.YELLOW,PorterDuff.Mode.MULTIPLY);
-
 		longClickListener = new OnLongClickListener() {
 
 			@Override
@@ -366,10 +358,66 @@ public class TagsOverviewActivity extends Activity {
 
 	}
 
+	private void colorMeButton(int pos) {
+		
+		switch (pos) {
+		case 1:
+			int weight1 = getTagByName(center).getRelatedWeight(topLeft);
+			buttonOne.getBackground().setColorFilter(calculateColor(weight1), PorterDuff.Mode.MULTIPLY);
+//					Color.GREEN,PorterDuff.Mode.MULTIPLY);
+			break;
+		case 2:
+			int weight2 = getTagByName(center).getRelatedWeight(topRight);
+			buttonOne.getBackground().setColorFilter(calculateColor(weight2), PorterDuff.Mode.MULTIPLY);
+			break;
+		case 3:
+			/*
+			int weight3 = getTagByName(center).getRelatedWeight(left);
+			buttonOne.getBackground().setColorFilter(Color.argb(255, 100, 255/50*weight3, 100), PorterDuff.Mode.MULTIPLY);
+			*/
+			break;
+		case 4:
+			// Center button, do nothing
+			break;
+		case 5:
+			/*
+			int weight5 = getTagByName(center).getRelatedWeight(right);
+			buttonOne.getBackground().setColorFilter(Color.argb(255, 100, 255/50*weight5, 100), PorterDuff.Mode.MULTIPLY);
+			*/
+			break;
+		case 6:
+			int weight6 = getTagByName(center).getRelatedWeight(bottomLeft);
+			buttonOne.getBackground().setColorFilter(calculateColor(weight6), PorterDuff.Mode.MULTIPLY);
+			break;
+		case 7:
+			int weight7 = getTagByName(center).getRelatedWeight(bottomRight);
+			buttonOne.getBackground().setColorFilter(calculateColor(weight7), PorterDuff.Mode.MULTIPLY);
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private int calculateColor(int weight) {
+		int color = Color.WHITE;
+		if (heatOn) {
+			if (weight < 2) {
+				color = Color.RED;
+			} else if (weight < 5) {
+				color = Color.YELLOW;
+			} else {
+				color = Color.GREEN;
+			}
+		}
+		
+		return color;
+	}
+	
 	/**
 	 * Updates a button pos is the position of the button (1..7)
 	 */
 	private void updateButton(int pos, String tagName) {
+		
 		switch (pos) {
 		case 1:
 			buttonOne.setText(tagName);
@@ -395,6 +443,8 @@ public class TagsOverviewActivity extends Activity {
 		default:
 			break;
 		}
+		
+		colorMeButton(pos);
 	}
 
 	/*

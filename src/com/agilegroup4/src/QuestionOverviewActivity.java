@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Gravity;
@@ -48,8 +47,8 @@ public class QuestionOverviewActivity extends Activity {
 	public static String RED = "#FF0000";
 	public static String YELLOW = "#FFFF00";
 	public static String GREEN = "#00FF00";
-	public static int GREENSCORE = 300;
-	public static int YELLOWSCORE = 1000;
+	public static int REDSCORE = 50;
+	public static int YELLOWSCORE = 140;
 	
     static final String KEY_QUESTION = "question";
     static final String KEY_TITLE = "title";
@@ -77,7 +76,7 @@ public class QuestionOverviewActivity extends Activity {
 		getIntentData();
 		displayQuestions();
 	}
-	
+		
 	public void getIntentData(){
 	    Intent i = getIntent();
 	    if(i != null && i.hasExtra("questionsData")){   
@@ -251,13 +250,13 @@ public class QuestionOverviewActivity extends Activity {
 	        if(HEAT){
 	        	String col = q.get(QuestionOverviewActivity.KEY_COLOUR);
 	        	if(col.equals(RED)){
-	        		vi.setBackgroundColor(Color.RED);
+	        		vi.setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient_bg_red));
 	        	}
 	        	else if(col.equals(YELLOW)){
-	        		vi.setBackgroundColor(Color.YELLOW);
+	        		vi.setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient_bg_yellow));
 	        	}
 	        	else{
-	        		vi.setBackgroundColor(Color.GREEN);
+	        		vi.setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient_bg_green));
 	        	}
 	        }
 	        
@@ -348,19 +347,17 @@ public class QuestionOverviewActivity extends Activity {
 	 */
 	private String calculateColour(Question q){
 		int score = 0;
-		String colour = RED;
+		String colour = GREEN;
 		score = q.getViewCount();
 		score += (q.getScore() * 50);
 		score += (q.getFavoriteCount() * 100);
-		if(score<GREENSCORE)
-			colour = GREEN;
+		if(score<REDSCORE)
+			colour = RED;
 		else if(score<YELLOWSCORE)
 			colour = YELLOW;
-		else
-			colour = RED;
 		return colour;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see android.app.Activity#onBackPressed()

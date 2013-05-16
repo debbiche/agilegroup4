@@ -11,8 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="#343434"
-        android:textSize="15dip"
-        android:onClick="clickedAnswer"
+        android:textSize="10dip"
         android:layout_marginTop="1dip"/>
     
     <TextView

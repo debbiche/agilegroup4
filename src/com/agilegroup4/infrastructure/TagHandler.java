@@ -45,11 +45,17 @@ public class TagHandler extends DatabaseHandlerTagDB {
 		weightQuery = db.rawQuery("SELECT weight FROM imp WHERE tag = ? AND related = ?", new String[]{tagName, relatedTag});
 		
 		// TODO: if query equals empty --> return 0
-		
+
+		if (weightQuery == null) {
+			return -1;
+		}
 		weightQuery.moveToFirst();
+		if(weightQuery.getCount() == 0){
+			return -2;
+		} else {
 		weight = weightQuery.getInt(0);
 		weightQuery.close();
-		
+		}
 		return weight;
 	}
 

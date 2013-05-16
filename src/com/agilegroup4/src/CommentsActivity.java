@@ -80,15 +80,6 @@ public class CommentsActivity extends Activity {
 	        case R.id.menuitem_search:
 	        	onSearchRequested();
 	            return true;
-	            
-	    
-	        case R.id.menuitem_user_profile: //TODO:
-	        	//System.out.println("owner id: " + comment.getOwnerUserId());
-	        	
-	        	intent = new Intent(this, UserProfileActivity.class);
-				//intent.putExtra("ownerId", Integer.toString(comment.getOwnerUserId()));
-				startActivity(intent);
-	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

@@ -300,9 +300,11 @@ public class TagsOverviewActivity extends Activity {
 			break;
 		case 1:
 			topLeft = relTags.get(0).getTagName();
-			updateButton(1, topLeft);
 
 			buttonOne.setVisibility(View.VISIBLE);
+			
+			updateButton(1, topLeft);
+
 			buttonTwo.setVisibility(View.INVISIBLE);
 			buttonSix.setVisibility(View.INVISIBLE);
 			buttonSeven.setVisibility(View.INVISIBLE);
@@ -312,11 +314,12 @@ public class TagsOverviewActivity extends Activity {
 			topLeft = relTags.get(0).getTagName();
 			topRight = relTags.get(1).getTagName();
 
+			buttonOne.setVisibility(View.VISIBLE);
+			buttonTwo.setVisibility(View.VISIBLE);
+			
 			updateButton(1, topLeft);
 			updateButton(2, topRight);
 
-			buttonOne.setVisibility(View.VISIBLE);
-			buttonTwo.setVisibility(View.VISIBLE);
 			buttonSix.setVisibility(View.INVISIBLE);
 			buttonSeven.setVisibility(View.INVISIBLE);
 
@@ -326,13 +329,14 @@ public class TagsOverviewActivity extends Activity {
 			topRight = relTags.get(1).getTagName();
 			bottomLeft = relTags.get(2).getTagName();
 
+			buttonOne.setVisibility(View.VISIBLE);
+			buttonTwo.setVisibility(View.VISIBLE);
+			buttonSix.setVisibility(View.VISIBLE);
+			
 			updateButton(1, topLeft);
 			updateButton(2, topRight);
 			updateButton(6, bottomLeft);
 
-			buttonOne.setVisibility(View.VISIBLE);
-			buttonTwo.setVisibility(View.VISIBLE);
-			buttonSix.setVisibility(View.VISIBLE);
 			buttonSeven.setVisibility(View.INVISIBLE);
 
 			break;
@@ -345,65 +349,70 @@ public class TagsOverviewActivity extends Activity {
 			bottomLeft = relTags.get(2).getTagName();
 			bottomRight = relTags.get(3).getTagName();
 
+			buttonOne.setVisibility(View.VISIBLE);
+			buttonTwo.setVisibility(View.VISIBLE);
+			buttonSix.setVisibility(View.VISIBLE);
+			buttonSeven.setVisibility(View.VISIBLE);
+			
 			updateButton(1, topLeft);
 			updateButton(2, topRight);
 			updateButton(6, bottomLeft);
 			updateButton(7, bottomRight);
 
-			buttonOne.setVisibility(View.VISIBLE);
-			buttonTwo.setVisibility(View.VISIBLE);
-			buttonSix.setVisibility(View.VISIBLE);
-			buttonSeven.setVisibility(View.VISIBLE);
 		}
 
 	}
 
+	/**
+	 * colors the button specified by pos (1,2,6 or 7) - representing the button position in the adventure -
+	 * based on the weight of their relationship
+	 * 
+	 * */
 	private void colorMeButton(int pos) {
+		int color, weight;
 		
 		switch (pos) {
 		case 1:
-			int weight1 = getTagByName(center).getRelatedWeight(topLeft);
-			buttonOne.getBackground().setColorFilter(calculateColor(weight1), PorterDuff.Mode.MULTIPLY);
-//					Color.GREEN,PorterDuff.Mode.MULTIPLY);
+			weight = getTagByName(center).getRelatedWeight(topLeft);
+			color = calculateColor(weight);
+			
+			buttonOne.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
 			break;
 		case 2:
-			int weight2 = getTagByName(center).getRelatedWeight(topRight);
-			buttonOne.getBackground().setColorFilter(calculateColor(weight2), PorterDuff.Mode.MULTIPLY);
+			weight = getTagByName(center).getRelatedWeight(topRight);
+			color = calculateColor(weight);
+			
+			buttonTwo.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
 			break;
-		case 3:
-			/*
-			int weight3 = getTagByName(center).getRelatedWeight(left);
-			buttonOne.getBackground().setColorFilter(Color.argb(255, 100, 255/50*weight3, 100), PorterDuff.Mode.MULTIPLY);
-			*/
-			break;
-		case 4:
-			// Center button, do nothing
-			break;
-		case 5:
-			/*
-			int weight5 = getTagByName(center).getRelatedWeight(right);
-			buttonOne.getBackground().setColorFilter(Color.argb(255, 100, 255/50*weight5, 100), PorterDuff.Mode.MULTIPLY);
-			*/
-			break;
+			
+		//don't color buttons 3,4,5
+			
 		case 6:
-			int weight6 = getTagByName(center).getRelatedWeight(bottomLeft);
-			buttonOne.getBackground().setColorFilter(calculateColor(weight6), PorterDuff.Mode.MULTIPLY);
+			weight = getTagByName(center).getRelatedWeight(bottomLeft);
+			color = calculateColor(weight);
+			
+			buttonSix.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
 			break;
 		case 7:
-			int weight7 = getTagByName(center).getRelatedWeight(bottomRight);
-			buttonOne.getBackground().setColorFilter(calculateColor(weight7), PorterDuff.Mode.MULTIPLY);
+			weight = getTagByName(center).getRelatedWeight(bottomRight);
+			color = calculateColor(weight);
+			
+			buttonSeven.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
 			break;
 		default:
 			break;
 		}
 	}
 	
+	/**
+	 * returns a integer value representing a color matching the weight
+	 */
 	private int calculateColor(int weight) {
 		int color = Color.WHITE;
 		if (heatOn) {
-			if (weight < 2) {
+			if (weight <= 1) {
 				color = Color.RED;
-			} else if (weight < 5) {
+			} else if (weight <= 5) {
 				color = Color.YELLOW;
 			} else {
 				color = Color.GREEN;
@@ -467,6 +476,9 @@ public class TagsOverviewActivity extends Activity {
 		return super.onSearchRequested();
 	}
 
+	/**
+	 * calls a search for selected tags without any free text
+	 */
 	private void onSearchRequestedTagsOnly() {
 		QuestionList searchResultQuestions = QuestionHandler
 				.searchForQuestionsByTag("", mainTags,

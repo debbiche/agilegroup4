@@ -12,7 +12,7 @@ public class User {
 	private String last_access_date;
 	private String website_url;
 	private String location;
-	private int age;
+	private int age; 
 	private String about_me;
 	private int views;
 	private int up_votes;
@@ -255,6 +255,14 @@ public class User {
 	 */
 	public String getDisplay_name() {
 		return display_name;
+	}
+	
+	/*
+	 * Gets the display name for this user.
+	 * @returns the user display name.
+	 */
+	public String getFriendlyDisplayName() {
+		return display_name + " (" + id + ")";
 	}
 
 	/*

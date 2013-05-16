@@ -8,13 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.agilegroup4.helpers.StringUtility;
 import com.agilegroup4.model.User;
 
 public class UserProfileActivity extends Activity {
-
-	private int userId;
-	private int loggedInUserId;
-	private User currentUser;
 
 	/*
 	 * The "constructor" for this activity
@@ -22,45 +19,36 @@ public class UserProfileActivity extends Activity {
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//super.setHeader(R.string.title_activity_user_profile);
-		//super.setContentResourceID(R.layout.activity_user_profile);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_profile);
 
 		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			if(this.getIntent().getStringExtra("ownerId") != null){
-				//get ownerId from activity that called UserProfileActivity with ownerId and convert to int
-				userId = Integer.parseInt(this.getIntent().getStringExtra("ownerId"));
+		if (extras == null)
+			return;
+		
+		int userId = extras.getInt("userID", -1);
+		
+		if (userId < 1)
+			return;
 
-
-				//get model of question/answer/comment -owner from database
-				currentUser = DatabaseHandler.getUserById(userId);
-				
-				//System.out.println("profile of owner id: " + userId);
-
-				//Temporarily display some user information in activity
-				TextView userIdText = (TextView) findViewById(R.id.userIdTitle); 
-				userIdText.setText(Integer.toString(userId)+ "\nname: " + currentUser.getDisplay_name() + "\nAbout: " + Html.fromHtml(currentUser.getAbout_me()).toString());
-			}
-			else{
-				
-				//get model of currentUser from database
-				loggedInUserId = Integer.parseInt(getIntent().getStringExtra("loggedInUser"));
-				currentUser = DatabaseHandler.getUserById(loggedInUserId);
-				
-				//Temporarily display some user information in activity
-				TextView userIdText = (TextView) findViewById(R.id.userIdTitle); 
-				userIdText.setText(Integer.toString(userId)+ "\nname: " + currentUser.getDisplay_name() + "\nAbout: " + Html.fromHtml(currentUser.getAbout_me()).toString());
-
-
-				//TODO: present in some pretty and grapically nice way
-
-			}
-		}
+		User userObject = DatabaseHandler.getUserById(userId);	
+		
+		loadControlsWithData(userObject);
 	}
 
-
+	private void loadControlsWithData(User user)
+	{
+		TextView userAboutTextView = (TextView) findViewById(R.id.userAbout); 
+		TextView userDisplayNameTextView = (TextView) findViewById(R.id.userDisplayName); 
+		//TextView userAgeTextView = (TextView) findViewById(R.id.userAge); 
+		TextView userLocationTextView = (TextView) findViewById(R.id.userLocation); 
+		
+		userDisplayNameTextView.setText(user.getFriendlyDisplayName());
+		//userAgeTextView.setText(Integer.toString(user.getAge()));
+		userLocationTextView.setText(user.getLocation());
+		userAboutTextView.setText(Html.fromHtml(StringUtility.removeBackslashNFromString(user.getAbout_me())));
+	}
+	
 	/*
 	 * The eventhandler for the phone menu-button pressed
 	 * @param menu The menu

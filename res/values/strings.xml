@@ -5,6 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="menuitem_newuser">New user</string>
     <string name="menuitem_mainmenu">Main menu</string>
+    <string name="menuitem_heat">Toggle Heat</string>
     <string name="menuitem_user_profile">Goto User Profile</string><string name="menuitem_search">Search</string>
     <string name="hello_world">Hello world!</string>
     <string name="login_header">Welcome to AgileGroup4Life\'s Pocket Library. Please enter your username to login.</string>

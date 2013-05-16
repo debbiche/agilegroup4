@@ -82,6 +82,10 @@ public class TagsOverviewActivity extends Activity {
 		buttonSix = (Button) findViewById(R.id.button6);
 		buttonSeven = (Button) findViewById(R.id.button7);
 		
+		buttonThree.setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient_bg_white_circle));
+		buttonFour.setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient_bg_white_circle));
+		buttonFive.setBackgroundDrawable(getResources().getDrawable(R.drawable.gradient_bg_white_circle));
+		
 		longClickListener = new OnLongClickListener() {
 
 			@Override
@@ -371,18 +375,26 @@ public class TagsOverviewActivity extends Activity {
 	 * 
 	 * */
 	private void colorMeButton(int pos) {
-		int weight;
+		int weight = 0, result;
 		Drawable color;
 		
 		switch (pos) {
 		case 1:
-			weight = getTagByName(center).getRelatedWeight(topLeft);
+			for (int i = 0; i < mainTags.size(); i++){
+				result = mainTags.get(i).getRelatedWeight(topLeft);
+				if (result > 0)
+					weight += result;
+			}
 			color = calculateColor(weight);
 			
 			buttonOne.setBackgroundDrawable(color);
 			break;
 		case 2:
-			weight = getTagByName(center).getRelatedWeight(topRight);
+			for (int i = 0; i < mainTags.size(); i++){
+				result = mainTags.get(i).getRelatedWeight(topLeft);
+				if (result > 0)
+					weight += result;
+			}
 			color = calculateColor(weight);
 			
 			buttonTwo.setBackgroundDrawable(color);
@@ -391,13 +403,21 @@ public class TagsOverviewActivity extends Activity {
 		//don't color buttons 3,4,5
 			
 		case 6:
-			weight = getTagByName(center).getRelatedWeight(bottomLeft);
+			for (int i = 0; i < mainTags.size(); i++){
+				result = mainTags.get(i).getRelatedWeight(topLeft);
+				if (result > 0)
+					weight += result;
+			}
 			color = calculateColor(weight);
 			
 			buttonSix.setBackgroundDrawable(color);
 			break;
 		case 7:
-			weight = getTagByName(center).getRelatedWeight(bottomRight);
+			for (int i = 0; i < mainTags.size(); i++){
+				result = mainTags.get(i).getRelatedWeight(topLeft);
+				if (result > 0)
+					weight += result;
+			}
 			color = calculateColor(weight);
 			
 			buttonSeven.setBackgroundDrawable(color);
@@ -411,10 +431,10 @@ public class TagsOverviewActivity extends Activity {
 	 * returns a integer value representing a color matching the weight
 	 */
 	private Drawable calculateColor(int weight) {
-		Drawable color = getResources().getDrawable(R.drawable.gradient_bg_red_circle);
+		Drawable color = getResources().getDrawable(R.drawable.gradient_bg_white_circle);
 		if (heatOn) {
 			if (weight < 1){
-				// hallo
+				color = getResources().getDrawable(R.drawable.gradient_bg_white_circle);
 			} else if (weight == 1) {
 				color = getResources().getDrawable(R.drawable.gradient_bg_red_circle);
 			} else if (weight <= 3) {
@@ -517,6 +537,10 @@ public class TagsOverviewActivity extends Activity {
 			return true;
 		case R.id.menuitem_search:
 			onSearchRequested();
+			return true;
+		case R.id.menuitem_heat:
+			this.heatOn = !this.heatOn;
+			updateRelatedTags();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

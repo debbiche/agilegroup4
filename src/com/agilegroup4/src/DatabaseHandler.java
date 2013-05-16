@@ -130,7 +130,7 @@ public class DatabaseHandler {
 		if (queriedQuestions == 0) {
 			Cursor questionsCursor = db
 					.rawQuery("SELECT id,title,body,comment_count,creation_date, " +
-									 "score, view_count, favorite_count, tags FROM posts " +
+									 "score, view_count, favorite_count, tags, owner_user_id FROM posts " +
 									 "WHERE post_type_id = 1 LIMIT ?",
 							new String[] { Integer.toString(numberOfQuestions) });
 
@@ -145,7 +145,8 @@ public class DatabaseHandler {
 										   questionsCursor.getInt(5), // score
 										   questionsCursor.getInt(6), // view count
 										   questionsCursor.getInt(7),
-										   questionsCursor.getString(8))); // tag
+										   questionsCursor.getString(8), // tag
+										   questionsCursor.getInt(9)));// get owner_user_id
 				questionsCursor.moveToNext();
 			}	
 			questionsCursor.close();
@@ -153,7 +154,7 @@ public class DatabaseHandler {
 		}
 		
 	}
-	
+	//TODO: get user id
 	public static ArrayList<Answer> getAnswers(Question question){
 		Cursor answersCursor = db
 				.rawQuery("SELECT id,body,comment_count FROM posts WHERE post_type_id = 2 AND parent_id = ?",
@@ -167,7 +168,7 @@ public class DatabaseHandler {
 		return question.getAnswers();
 	}
 	
-	
+	//TODO: get user id
 	public static ArrayList<Comment> getComments(int id){
 		ArrayList<Comment> comments = new ArrayList<Comment>();
 		

@@ -25,11 +25,32 @@ public class TagHandler extends DatabaseHandlerTagDB {
 				
 		tagsImportance.moveToFirst();
 		while (!tagsImportance.isAfterLast()) {
+			System.out.println(tagsImportance.getString(0) + " " + tagsImportance.getString(1) + " " + tagsImportance.getInt(2) + " " + tagsImportance.getInt(3) + " " + tagsImportance.getString(4) + " " + tagsImportance.getString(5));
 			relatedTags.add(new Tag(tagsImportance.getInt(3), tagsImportance.getString(1)));
 			tagsImportance.moveToNext();
 		}
 		tagsImportance.close();
 		return relatedTags;
 	} 
+	
+	/**
+	 * queries for the weight of a tags related tag
+	 * 
+	 * @author Eumelbert
+	 */
+	public static int queryWeight(String tagName, String relatedTag) {
+		int weight = -1;
+		Cursor weightQuery;
+		
+		weightQuery = db.rawQuery("SELECT weight FROM imp WHERE tag = ? AND related = ?", new String[]{tagName, relatedTag});
+		
+		// TODO: if query equals empty --> return 0
+		
+		weightQuery.moveToFirst();
+		weight = weightQuery.getInt(0);
+		weightQuery.close();
+		
+		return weight;
+	}
 
 }

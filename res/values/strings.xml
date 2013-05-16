@@ -5,7 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="menuitem_newuser">New user</string>
     <string name="menuitem_mainmenu">Main menu</string>
-    <string name="menuitem_search">Search</string>
+    <string name="menuitem_user_profile">Goto User Profile</string><string name="menuitem_search">Search</string>
     <string name="hello_world">Hello world!</string>
     <string name="login_header">Welcome to AgileGroup4Life\'s Pocket Library. Please enter your username to login.</string>
     <string name="text_login_username">Login - Pocket Library</string>
@@ -29,6 +29,7 @@
     <string name="button_filter1">Latest</string>
     <string name="button_filter2">Important</string>
     <string name="button_filter3">Answered</string>
+    <string name="button_heat">Heat</string>
     <string name="title_activity_comments">Comments</string>
     <string name="title_activity_custom_title_bar">CustomTitleBarActivity</string>
     <string name="headerImageContentDesc">This is an header image for Pocket Library</string>
@@ -36,4 +37,5 @@
 
   	<color name="titlebackgroundcolor">#3232CD</color>
     <color name="titletextcolor">#FFFF00</color>
+    
 </resources>

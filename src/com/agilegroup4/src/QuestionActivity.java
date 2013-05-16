@@ -227,6 +227,13 @@ public class QuestionActivity extends Activity {
 				intent = new Intent(this, MainMenuActivity.class);
 				startActivity(intent);
 	            return true;
+	        case R.id.menuitem_user_profile:
+	        	System.out.println("owner id: " + question.getOwnerUserId());
+	        	
+	        	intent = new Intent(this, UserProfileActivity.class);
+				intent.putExtra("ownerId", Integer.toString(question.getOwnerUserId()));
+				startActivity(intent);
+	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }

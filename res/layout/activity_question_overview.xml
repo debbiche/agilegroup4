@@ -22,6 +22,11 @@
         android:layout_height="wrap_content" android:layout_weight="1"
         android:text="@string/button_filter3"
         android:onClick="filterAnswers" />
+    
+    <Button android:id="@+id/heatButton" android:layout_width="0dp"
+        android:layout_height="wrap_content" android:layout_weight="1"
+        android:text="@string/button_heat"
+        android:onClick="handleHeatOnClick" />
 	</LinearLayout>
     
     <ListView

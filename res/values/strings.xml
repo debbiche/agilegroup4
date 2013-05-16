@@ -39,7 +39,7 @@
     <color name="titletextcolor">#FFFF00</color>
     <string name="comments_button">Goto User</string>
     
-    <string name="userCreatedHeader">Created:</string>
+    <string name="userCreatedHeader">Registrated:</string>
     <string name="userLocationHeader">Location:</string>
-    <string name="userLastSeenHeader">Seen:</string>
+    <string name="userLastSeenHeader">Last seen:</string>
 </resources>

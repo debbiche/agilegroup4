@@ -28,6 +28,15 @@ public class StringUtility {
 	}
 	
 	/* 
+	 * Removes null values from string
+	 * @param string The string containing null tags.
+	 * @return A string without null tags.
+	 */
+	public static String washStringFromNULLTags (String string) {
+		return string.replace("NULL", "");
+	}
+	
+	/* 
 	 * Removes backslash from string "\\n"
 	 * @param input The string containing backslash tags.
 	 * @return A string without backslash tags. 

@@ -25,9 +25,11 @@
         android:id="@+id/userReputation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="@id/userDisplayName"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
         android:textIsSelectable="true"
         android:textSize="14sp"
+        android:textColor="#FFD700"
         android:paddingBottom="5dp"
     />
     <View
@@ -47,17 +49,7 @@
 	    android:id="@+id/profilePictureImageView"
 	    android:layout_width="96dp"
 	    android:layout_height="96dp"
-	    android:background="@drawable/image_view_white_border"
 	    android:layout_alignParentTop="true" 
-    />
-    
-    <TextView
-        android:id="@+id/userAge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profilePictureImageView"
-        android:textIsSelectable="true"
-        android:paddingLeft="10dp"
     />
 
     <TextView
@@ -104,7 +96,7 @@
     <TextView
         android:id="@+id/userLastSeenHeader"
         android:textSize="8sp"
-        android:text="@string/userCreatedHeader"
+        android:text="@string/userLastSeenHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/profilePictureImageView"
@@ -131,11 +123,11 @@
     android:paddingTop="15dp"
     >
 	
-    <TextView
+    <WebView
         android:id="@+id/userAbout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:textIsSelectable="true"
+        android:scrollbars="vertical"
     />
     
 </RelativeLayout>

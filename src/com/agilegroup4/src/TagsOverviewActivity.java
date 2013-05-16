@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.graphics.*;
+import android.graphics.drawable.Drawable;
 
 import com.agilegroup4.infrastructure.QuestionHandler;
 import com.agilegroup4.model.QuestionList;
@@ -369,20 +371,21 @@ public class TagsOverviewActivity extends Activity {
 	 * 
 	 * */
 	private void colorMeButton(int pos) {
-		int color, weight;
+		int weight;
+		Drawable color;
 		
 		switch (pos) {
 		case 1:
 			weight = getTagByName(center).getRelatedWeight(topLeft);
 			color = calculateColor(weight);
 			
-			buttonOne.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+			buttonOne.setBackgroundDrawable(color);
 			break;
 		case 2:
 			weight = getTagByName(center).getRelatedWeight(topRight);
 			color = calculateColor(weight);
 			
-			buttonTwo.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+			buttonTwo.setBackgroundDrawable(color);
 			break;
 			
 		//don't color buttons 3,4,5
@@ -391,13 +394,13 @@ public class TagsOverviewActivity extends Activity {
 			weight = getTagByName(center).getRelatedWeight(bottomLeft);
 			color = calculateColor(weight);
 			
-			buttonSix.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+			buttonSix.setBackgroundDrawable(color);
 			break;
 		case 7:
 			weight = getTagByName(center).getRelatedWeight(bottomRight);
 			color = calculateColor(weight);
 			
-			buttonSeven.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+			buttonSeven.setBackgroundDrawable(color);
 			break;
 		default:
 			break;
@@ -407,15 +410,17 @@ public class TagsOverviewActivity extends Activity {
 	/**
 	 * returns a integer value representing a color matching the weight
 	 */
-	private int calculateColor(int weight) {
-		int color = Color.WHITE;
+	private Drawable calculateColor(int weight) {
+		Drawable color = getResources().getDrawable(R.drawable.gradient_bg_red_circle);
 		if (heatOn) {
-			if (weight <= 1) {
-				color = Color.RED;
-			} else if (weight <= 5) {
-				color = Color.YELLOW;
+			if (weight < 1){
+				// hallo
+			} else if (weight == 1) {
+				color = getResources().getDrawable(R.drawable.gradient_bg_red_circle);
+			} else if (weight <= 3) {
+				color = getResources().getDrawable(R.drawable.gradient_bg_yellow_circle);
 			} else {
-				color = Color.GREEN;
+				color = getResources().getDrawable(R.drawable.gradient_bg_green_circle);
 			}
 		}
 		

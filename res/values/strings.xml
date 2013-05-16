@@ -13,7 +13,7 @@
     <string name="title_activity_question_overview">Question Overview</string>
     <string name="title_activity_main_menu">Main Menu</string>
     <string name="button_users">Users</string>
-    <string name="button_questions">Questions</string>
+    <string name="button_questions">Newsfeed</string>
     <string name="button_tags">Tags</string>
     <string name="button_search">Search</string>
     <string name="button_profile">Profile</string>

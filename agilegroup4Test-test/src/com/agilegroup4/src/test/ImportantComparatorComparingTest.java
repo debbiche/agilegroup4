@@ -21,8 +21,8 @@ public class ImportantComparatorComparingTest extends TestCase {
 		aComp = new ImportantComparator();
 		
 		//Question(id, title, body, comment count, date of creation, score, view count, favorite count)
-		q1 = new Question(0,"","", 0,new Date(0), 1,2,3, "");
-		q2 = new Question(1,"","", 0,new Date(0), 1,2,3, "");
+		q1 = new Question(0,"","", 0,new Date(0), 1,2,3, "", 0); //added owner id as 0
+		q2 = new Question(1,"","", 0,new Date(0), 1,2,3, "",  0); //added owner id as 0
 	}
 	
 	/**

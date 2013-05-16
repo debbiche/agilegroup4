@@ -22,8 +22,8 @@ public class LatestComparatorComparingTest extends TestCase {
 		aComp = new LatestComparator();
 		
 		//Question(id, title, body, comment count, date of creation, score, view count, favorite count)
-		q1 = new Question(0,"","", 0,new Date(2013, 1, 1, 1, 1, 1), 0,0,0, "");
-		q2 = new Question(1,"","", 0,new Date(2014, 1, 1, 1, 1, 1), 0,0,0, "");
+		q1 = new Question(0,"","", 0,new Date(2013, 1, 1, 1, 1, 1), 0,0,0, "", 0); //added owner id as 0
+		q2 = new Question(1,"","", 0,new Date(2014, 1, 1, 1, 1, 1), 0,0,0, "", 0); //added owner id as 0
 	}
 	
 	/**

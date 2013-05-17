@@ -64,6 +64,8 @@ public class QuestionActivity extends Activity {
 		progress = new ProgressDialog(this);
 		getIntentData();
 		loadAnswers();
+	
+		
 	}
 	
 	/*
@@ -128,10 +130,31 @@ public class QuestionActivity extends Activity {
 		int bID = getIdAssignedByR(this, "question_body");
 		int cID = getIdAssignedByR(this, "comments");
 		int aID = getIdAssignedByR(this, "question_answers");
+		int buID = getIdAssignedByR(this, "gotoQuestionProfileButton");
+		
+		
+		
+		
+		
 		TextView title = (TextView) findViewById(tID);
 		TextView body = (TextView) findViewById(bID);
 		TextView commenttext = (TextView) findViewById(cID);
 		TextView answ = (TextView) findViewById(aID);
+		Button bt = (Button) findViewById(buID); 
+		
+		bt.setText(DatabaseHandler.getUserById(question.getOwnerUserId()).getDisplay_name());
+		
+		 bt.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+		        	Intent intent = new Intent(getThis(), UserProfileActivity.class);
+					intent.putExtra("userID", question.getOwnerUserId());
+					startActivity(intent);					
+				}
+			});
+		
+		
 		title.setText(question.getTitle());
 		body.setText(StringUtility.convertHTMLtoString(question.getBody()));
 		title.setTypeface(null,Typeface.BOLD);
@@ -159,6 +182,9 @@ public class QuestionActivity extends Activity {
 			asList.add(map);
 			ids.put(i, answers.get(i).getId());
 		}
+		
+		
+		
 
 		final StableArrayAdapter adapter = new StableArrayAdapter(this,
 				android.R.layout.simple_list_item_1, asList);
@@ -185,6 +211,7 @@ public class QuestionActivity extends Activity {
 				}
 			}
 		});
+		
 	}
 	
 	/**

@@ -9,12 +9,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,7 +53,6 @@ public class UserProfileActivity extends Activity {
 		TextView userReputationTextView = (TextView) findViewById(R.id.userReputation); 
 		TextView userCreatedTextView = (TextView) findViewById(R.id.userCreated); 
 		TextView userLastSeenTextView = (TextView) findViewById(R.id.userLastSeen); 
-		ImageView profilePictureImageView = (ImageView) findViewById(R.id.profilePictureImageView); 
 		
 		userDisplayNameTextView.setText(user.getFriendlyDisplayName());
 		
@@ -72,26 +70,8 @@ public class UserProfileActivity extends Activity {
 		userAboutWebView.loadData(about, "text/html", "UTF-8");
 		
 		String imageURL = String.format("http://www.gravatar.com/avatar/%s?s=96", user.getEmail_hash());
-		Bitmap bitmapPicture = loadBitmap(imageURL);
-		profilePictureImageView.setImageBitmap(bitmapPicture);
-	}
-	
-	public Bitmap loadBitmap(String url) {
-		Bitmap bitmap = null;
-		try {
-			bitmap = BitmapFactory.decodeStream((InputStream)new URL(url).getContent());
-		} 
-		catch (MalformedURLException e) {
-			e.printStackTrace();
-		} 
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return bitmap;
+		
+		new RetrieveProfileImageTask().execute(imageURL);
 	}
 	
 	/*
@@ -122,6 +102,40 @@ public class UserProfileActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	private class RetrieveProfileImageTask extends AsyncTask<String, Void, Bitmap> {
+
+	    private Exception exception;
+	    
+	    protected Bitmap doInBackground(String... urls) {
+	    	Bitmap bitmap = null;
+			try {
+				bitmap = BitmapFactory.decodeStream((InputStream)new URL(urls[0]).getContent());
+			} 
+			catch (MalformedURLException e) {
+				this.exception = e;
+	            return null;
+			} 
+			catch (IOException e) {
+				this.exception = e;
+	            return null;
+			}
+			catch (Exception e) {
+				this.exception = e;
+	            return null;
+			}
+			return bitmap;
+	    }
+
+	    protected void onPostExecute(Bitmap bitmap) {
+	    	ImageView profilePictureImageView = (ImageView) findViewById(R.id.profilePictureImageView); 
+	    	profilePictureImageView.setImageBitmap(bitmap);
+	    }
+
+	 }
+	
 }
+
+
 
 

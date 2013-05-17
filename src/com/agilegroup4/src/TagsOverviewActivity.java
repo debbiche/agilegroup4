@@ -560,6 +560,13 @@ public class TagsOverviewActivity extends Activity {
 		SearchableActivity.SearchMode = SearchMode.QUESTION_WITHTAGS;
 		return super.onSearchRequested();
 	}
+	
+	@Override
+	public void onBackPressed() {
+		mPlayer.stop();
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+	}
 
 	/**
 	 * calls a search for selected tags without any free text

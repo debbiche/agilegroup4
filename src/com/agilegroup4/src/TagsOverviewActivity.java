@@ -1,12 +1,15 @@
 package com.agilegroup4.src;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,6 +31,8 @@ public class TagsOverviewActivity extends Activity {
 	// workaround for passing tag query to searchableActivity
 
 	public static String tagQuery = "";
+	public static MediaPlayer mPlayer;
+	
 	private boolean heatOn = true;
 	
 	// Contains the combined tags in the center button
@@ -103,6 +108,32 @@ public class TagsOverviewActivity extends Activity {
 		buttonSeven.setOnLongClickListener(longClickListener);
 
 		queryTags();
+		
+		
+		// the song
+		
+		AssetFileDescriptor descriptor;
+		
+		try {
+			if (mPlayer == null){
+				mPlayer = new MediaPlayer();
+				descriptor = getAssets().openFd( "indiSong.mp3" );
+				mPlayer.setDataSource( descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength() );
+				descriptor.close();
+			}
+			
+			if (!mPlayer.isPlaying()) {
+				mPlayer.prepare();
+				mPlayer.setLooping(true);
+				mPlayer.start();
+			}
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
 	}
 

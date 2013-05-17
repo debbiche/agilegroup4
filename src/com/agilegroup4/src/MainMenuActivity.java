@@ -24,6 +24,9 @@ public class MainMenuActivity extends Activity {
 		//super.setHeader(R.string.title_activity_main_menu);
 		//super.setContentResourceID(R.layout.activity_main_menu);
 		
+		if(TagsOverviewActivity.mPlayer != null)
+			TagsOverviewActivity.mPlayer.stop();
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
 	}

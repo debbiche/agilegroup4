@@ -463,11 +463,9 @@ public class TagsOverviewActivity extends Activity {
 	private Drawable calculateColor(int weight) {
 		Drawable color = getResources().getDrawable(R.drawable.gradient_bg_white_circle);
 		if (heatOn) {
-			if (weight < 1){
-				color = getResources().getDrawable(R.drawable.gradient_bg_white_circle);
-			} else if (weight == 1) {
+			if (weight <= 0){
 				color = getResources().getDrawable(R.drawable.gradient_bg_red_circle);
-			} else if (weight <= 3) {
+			} else if (weight == 1) {
 				color = getResources().getDrawable(R.drawable.gradient_bg_yellow_circle);
 			} else {
 				color = getResources().getDrawable(R.drawable.gradient_bg_green_circle);

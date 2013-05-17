@@ -305,10 +305,10 @@ public class TagsOverviewActivity extends Activity {
 			buttonSeven.setVisibility(View.VISIBLE);
 			
 			// get some random tags... hell yeah
-			topLeft = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size()) + 1).getTagName();
-			topRight = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size()) + 1).getTagName();
-			bottomLeft = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size()) + 1).getTagName();
-			bottomRight = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size()) + 1).getTagName();
+			topLeft = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size())).getTagName();
+			topRight = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size())).getTagName();
+			bottomLeft = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size())).getTagName();
+			bottomRight = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size())).getTagName();
 			
 			updateButton(1, topLeft);
 			updateButton(2, topRight);
@@ -327,9 +327,9 @@ public class TagsOverviewActivity extends Activity {
 			updateButton(1, topLeft);
 
 			// get some random tags... oh yeah
-			topRight = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size()) + 1).getTagName();
-			bottomLeft = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size()) + 1).getTagName();
-			bottomRight = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size()) + 1).getTagName();
+			topRight = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size())).getTagName();
+			bottomLeft = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size())).getTagName();
+			bottomRight = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size())).getTagName();
 			
 			updateButton(2, topRight);
 			updateButton(6, bottomLeft);
@@ -349,8 +349,8 @@ public class TagsOverviewActivity extends Activity {
 			updateButton(2, topRight);
 
 			// random values
-			bottomLeft = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size()) + 1).getTagName();
-			bottomRight = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size()) + 1).getTagName();
+			bottomLeft = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size())).getTagName();
+			bottomRight = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size())).getTagName();
 			
 			updateButton(6, bottomLeft);
 			updateButton(7, bottomRight);
@@ -371,7 +371,7 @@ public class TagsOverviewActivity extends Activity {
 			updateButton(6, bottomLeft);
 
 			// random values
-			bottomRight = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size()) + 1).getTagName();
+			bottomRight = DatabaseHandlerTagDB.tags.get(new Random().nextInt(DatabaseHandlerTagDB.tags.size())).getTagName();
 
 			updateButton(7, bottomRight);
 

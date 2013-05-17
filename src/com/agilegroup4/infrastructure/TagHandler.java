@@ -25,7 +25,6 @@ public class TagHandler extends DatabaseHandlerTagDB {
 				
 		tagsImportance.moveToFirst();
 		while (!tagsImportance.isAfterLast()) {
-			System.out.println(tagsImportance.getString(0) + " " + tagsImportance.getString(1) + " " + tagsImportance.getInt(2) + " " + tagsImportance.getInt(3) + " " + tagsImportance.getString(4) + " " + tagsImportance.getString(5));
 			relatedTags.add(new Tag(tagsImportance.getInt(3), tagsImportance.getString(1)));
 			tagsImportance.moveToNext();
 		}

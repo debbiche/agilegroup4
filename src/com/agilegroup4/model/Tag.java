@@ -121,13 +121,9 @@ public class Tag implements Comparable<Tag> {
 	 * get weight for related tag
 	 */
 	public int getRelatedWeight (String relatedTag){
-		
 		int weight = -1;
 		
-		// if 'relatedTag' is not related to the tag return error (set weight to negative???)
-		
 		weight = TagHandler.queryWeight(this.tagName, relatedTag);
-		
 		return weight;
 	}
 	

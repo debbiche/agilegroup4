@@ -379,6 +379,7 @@ public class TagsOverviewActivity extends Activity {
 		default:
 			break;
 		}
+		
 		if (relTags.size() > 3) {
 			topLeft = relTags.get(0).getTagName();
 			topRight = relTags.get(1).getTagName();
@@ -400,11 +401,11 @@ public class TagsOverviewActivity extends Activity {
 	}
 
 	/**
-	 * colors the button specified by pos (1,2,6 or 7) - representing the button position in the adventure -
+	 * colors the button specified by <b>pos</b> (1,2,6 or 7) - representing the button position in the adventure -
 	 * based on the weight of their relationship
 	 * 
 	 * */
-	private void colorMeButton(int pos) {
+	private void colorMyButton(int pos) {
 		int weight = 0, result;
 		Drawable color;
 		
@@ -458,7 +459,7 @@ public class TagsOverviewActivity extends Activity {
 	}
 	
 	/**
-	 * returns a integer value representing a color matching the weight
+	 * calculates a Drawable object representing a color matching the weight given as parameter
 	 */
 	private Drawable calculateColor(int weight) {
 		Drawable color = getResources().getDrawable(R.drawable.gradient_bg_white_circle);
@@ -476,7 +477,7 @@ public class TagsOverviewActivity extends Activity {
 	}
 	
 	/**
-	 * Updates a button pos is the position of the button (1..7)
+	 * Updates a button text - <b>pos</b> is the position of the button (1..7) to be changed
 	 */
 	private void updateButton(int pos, String tagName) {
 		
@@ -506,7 +507,7 @@ public class TagsOverviewActivity extends Activity {
 			break;
 		}
 		
-		colorMeButton(pos);
+		colorMyButton(pos);
 	}
 
 	/*
@@ -575,7 +576,7 @@ public class TagsOverviewActivity extends Activity {
 		}
 	}
 
-	/*
+	/**
 	 * Queries the <b>tags</b> object of this class for one Tag by it's name
 	 * 
 	 * @param name String containing the name of the tag you are looking for

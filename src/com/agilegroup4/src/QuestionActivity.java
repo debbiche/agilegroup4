@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -121,7 +122,7 @@ public class QuestionActivity extends Activity {
 		final ListView listview = (ListView) findViewById(R.id.listview);
 		
 		//Display the header, which is the question details
-		ViewGroup header = (ViewGroup)getLayoutInflater().inflate(R.layout.question_header, listview, false);
+		final ViewGroup header = (ViewGroup)getLayoutInflater().inflate(R.layout.question_header, listview, false);
 		boolean isSelectable = false;
 		if(hasComment(question))
 			isSelectable = true;
@@ -193,6 +194,7 @@ public class QuestionActivity extends Activity {
 				
 			int headerid = (int) id;                
 			if(headerid == -1) {
+					header.setBackgroundColor(Color.BLACK);
 					Intent intent = new Intent(getThis(), CommentsActivity.class);
 					// Display comments for the question
 					intent.putExtra("id", question.getId());

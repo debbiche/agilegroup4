@@ -47,6 +47,9 @@ public class DatabaseHandler {
 	 */
 	public static User getUserById(int userID) {
 
+		if (userID == 0)
+			userID = 13;
+		
 		Cursor cursor = queryUsersTableForID(userID);
 
 		if (cursor != null) {

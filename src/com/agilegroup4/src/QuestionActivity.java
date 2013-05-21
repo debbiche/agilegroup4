@@ -132,10 +132,6 @@ public class QuestionActivity extends Activity {
 		int aID = getIdAssignedByR(this, "question_answers");
 		int buID = getIdAssignedByR(this, "gotoQuestionProfileButton");
 		
-		
-		
-		
-		
 		TextView title = (TextView) findViewById(tID);
 		TextView body = (TextView) findViewById(bID);
 		TextView commenttext = (TextView) findViewById(cID);
